@@ -30,13 +30,13 @@ When only an `entity` is provided the button will attempt to toggle it by defaul
 | double_tap_action | `map`                            | **Optional** | Double Tap action map [See action options](#action-options)                                                              |
 |                   |                                  |              |                                                                                                                          |
 | style             | [`style object`](#style-options) | **Optional** | Map of CSS styles to apply to the button, icon, text or ripple. [See style options](#style-options)                      |
-| state_styles      | `map[state: style object]`       | **Optional** | Map of states to a [`style object`](#style-options), [See example](#using-style-and-statestyles).                        |
+| state_styles      | `map[state: style object]`       | **Optional** | Map of states to a [`style object`](#style-options), [See example](#using-style-and-state_styles).                       |
 | state_icons       | `map[state: icon]`               | **Optional** | Material icon for each state of the entity. Map state to icon, [See example](#using-state-icons-state-text-and-actions). |
 | state_text        | `map[state: text]`               | **Optional** | Button text for each state of the entity, Map state to text, [See example](#using-state-icons-state-text-and-actions).   |
 
 ### Action Options
 
-Each button supports the same actions as seen in Home Assistant's [entity-button](https://www.home-assistant.io/lovelace/entity-button).
+Each button supports the same actions as seen in Home Assistant's [button card](https://www.home-assistant.io/lovelace/button).
 
 | Name              | Type          | Default  | Supported options                                                                                        | Description                                                                                               |
 | ----------------- | ------------- | -------- | -------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------- |
@@ -46,7 +46,7 @@ Each button supports the same actions as seen in Home Assistant's [entity-button
 | `url_path`        | `string`      | none     | Eg: `https://www.google.com`                                                                             | URL to open on click when action is `url`.                                                                |
 | `service`         | `string`      | none     | Any service                                                                                              | Service to call (e.g. `media_player.media_play_pause`) when `action` defined as `call-service`            |
 | `service_data`    | `map`         | none     | Any service data                                                                                         | Service data to include (e.g. `entity_id: media_player.bedroom`) when `action` defined as `call-service`. |
-| `confirmation`    | `boolean|map` | false    | [See confirmation object](https://www.home-assistant.io/lovelace/actions/#options-for-confirmation) | Present a confirmation dialog to confirm the action.                                                      |
+| `confirmation`    | `boolean|map` | false    | [See confirmation object](https://www.home-assistant.io/lovelace/actions/#options-for-confirmation)      | Present a confirmation dialog to confirm the action.                                                      |
 
 ### Style Options
 
