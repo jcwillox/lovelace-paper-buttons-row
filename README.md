@@ -49,7 +49,7 @@ Each button supports the same actions as seen in Home Assistant's [entity-button
 | `url_path`        | `string`      | none     | Eg: `https://www.google.com`                                                                             | URL to open on click when action is `url`.                                                                |
 | `service`         | `string`      | none     | Any service                                                                                              | Service to call (e.g. `media_player.media_play_pause`) when `action` defined as `call-service`            |
 | `service_data`    | `map`         | none     | Any service data                                                                                         | Service data to include (e.g. `entity_id: media_player.bedroom`) when `action` defined as `call-service`. |
-| `confirmation`    | `boolean|map` | false    | [See confirmation object](https://www.home-assistant.io/lovelace/entity-button#options-for-confirmation) | Present a confirmation dialog to confirm the action.                                                      |
+| `confirmation`    | `boolean|map` | false    | [See confirmation object](https://www.home-assistant.io/lovelace/actions/#options-for-confirmation) | Present a confirmation dialog to confirm the action.                                                      |
 
 ### Style Options
 
