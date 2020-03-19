@@ -50,11 +50,11 @@ export function handleAction(node, hass, config, action) {
 
   switch (actionConfig.action) {
     case "more-info":
-      if (config.entity || config.camera_image) {
+      if (actionConfig.entity || config.entity) {
         fireEvent(
           "hass-more-info",
           {
-            entityId: config.entity ? config.entity : config.camera_image
+            entityId: actionConfig.entity || config.entity
           },
           node
         );
