@@ -88,6 +88,17 @@ export function handleAction(node, hass, config, action) {
       hass.callService(domain, service, actionConfig.service_data);
       forwardHaptic("light");
       break;
+    case "fire-event":
+      if (!actionConfig.event_type) {
+        forwardHaptic("failure");
+        return;
+      }
+      hass.callApi(
+        "POST",
+        `events/${actionConfig.event_type}`,
+        actionConfig.event_data
+      );
+      break;
     case "fire-dom-event":
       fireEvent("ll-custom", actionConfig, node);
   }
