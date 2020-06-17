@@ -8,11 +8,13 @@ This is a complete rewrite of the original [`button-entity-row`](https://github.
 
 ## Options
 
-| Name        | Type                                                  | Requirement  | Description                                                                                                     |
-| ----------- | ----------------------------------------------------- | ------------ | --------------------------------------------------------------------------------------------------------------- |
-| type        | `string`                                              | **Required** | `custom:paper-buttons-row`                                                                                      |
-| buttons     | List [`string` or [`button object`](#button-options)] | **Required** | List of buttons to display. [See button options](#button-options)                                               |
-| align_icons | `string`                                              | **Optional** | Specify the default alignment for icons, must be one of [`top`, `left`, `right`, `bottom`], defaults to `left`. |
+| Name              | Type                                                  | Requirement  | Description                                                                                                     |
+| ----------------- | ----------------------------------------------------- | ------------ | --------------------------------------------------------------------------------------------------------------- |
+| type              | `string`                                              | **Required** | `custom:paper-buttons-row`                                                                                      |
+| buttons           | List [`string` or [`button object`](#button-options)] | **Required** | List of buttons to display. [See button options](#button-options)                                               |
+| align_icons       | `string`                                              | **Optional** | Specify the default alignment for icons, must be one of [`top`, `left`, `right`, `bottom`], defaults to `left`. |
+| base_style        | [`style object`](#style-options)                      | **Optional** | Specify a default `style` by each button, this can be overriden for each button                                 |
+| base_state_styles | `map[state: style object]`                            | **Optional** | Specify a default `state_styles` by each button, this can be overriden for each button                          |
 
 ### Button Options
 
@@ -38,15 +40,20 @@ When only an `entity` is provided the button will attempt to toggle it by defaul
 
 Each button supports the same actions as seen in Home Assistant's [button card](https://www.home-assistant.io/lovelace/button).
 
-| Name              | Type           | Default  | Supported options                                                                                        | Description                                                                                               |
-| ----------------- | -------------- | -------- | -------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------- |
-| `action`          | `string`       | `toggle` | `more-info`, `toggle`, `call-service`, `none`, `navigate`, `url`                                         | Action to perform                                                                                         |
-| `entity`          | `string`       | none     | Any entity id                                                                                            | **Only valid for `action: more-info`** to override the entity on which you want to call `more-info`       |
-| `navigation_path` | `string`       | none     | Eg: `/lovelace/0/`                                                                                       | Path to navigate to (e.g. `/lovelace/0/`) when action defined as navigate                                 |
-| `url_path`        | `string`       | none     | Eg: `https://www.google.com`                                                                             | URL to open on click when action is `url`.                                                                |
-| `service`         | `string`       | none     | Any service                                                                                              | Service to call (e.g. `media_player.media_play_pause`) when `action` defined as `call-service`            |
-| `service_data`    | `map`          | none     | Any service data                                                                                         | Service data to include (e.g. `entity_id: media_player.bedroom`) when `action` defined as `call-service`. |
-| `confirmation`    | `boolean\|map` | false    | [See confirmation object](https://www.home-assistant.io/lovelace/actions/#options-for-confirmation)      | Present a confirmation dialog to confirm the action.                                                      |
+| Name              | Type           | Default  | Supported options                                                                                   | Description                                                                                               |
+| ----------------- | -------------- | -------- | --------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------- |
+| `action`          | `string`       | `toggle` | `more-info`, `toggle`, `call-service`, `fire-event`, `none`, `navigate`, `url`                      | Action to perform                                                                                         |
+| `entity`          | `string`       | none     | Any entity id                                                                                       | **Only valid for `action: more-info`** to override the entity on which you want to call `more-info`       |
+| `navigation_path` | `string`       | none     | Eg: `/lovelace/0/`                                                                                  | Path to navigate to (e.g. `/lovelace/0/`) when action defined as navigate                                 |
+| `url_path`        | `string`       | none     | Eg: `https://www.google.com`                                                                        | URL to open on click when action is `url`.                                                                |
+|                   |                |          |                                                                                                     |                                                                                                           |
+| `service`         | `string`       | none     | Any service                                                                                         | Service to call (e.g. `media_player.media_play_pause`) when `action` defined as `call-service`            |
+| `service_data`    | `map`          | none     | Any service data                                                                                    | Service data to include (e.g. `entity_id: media_player.bedroom`) when `action` defined as `call-service`. |
+|                   |                |          |                                                                                                     |                                                                                                           |
+| `event_type`      | `string`       | none     | Any event                                                                                           | Event to call (e.g. `custom_event`) when `action` defined as `fire-event`                                 |
+| `event_data`      | `map`          | none     | Any event data                                                                                      | Event data to include when `action` defined as `fire-event`.                                              |
+|                   |                |          |                                                                                                     |                                                                                                           |
+| `confirmation`    | `boolean\|map` | false    | [See confirmation object](https://www.home-assistant.io/lovelace/actions/#options-for-confirmation) | Present a confirmation dialog to confirm the action.                                                      |
 
 ### Style Options
 
@@ -124,8 +131,7 @@ entities:
             font-size: 1.2rem
             padding: 8px
           icon:
-            width: 40px # make the icon bigger.
-            height: auto
+            --mdc-icon-size: 40px # make the icon bigger.
         state_styles:
           "on":
             button:
