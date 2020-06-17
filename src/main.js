@@ -12,7 +12,7 @@ import {
 import { name, version } from "../package.json";
 import { coerceObject, mapStyle } from "./styles";
 
-logVersion(name, version, "#9c27b0");
+logVersion(name, version, "#039be5");
 
 const computeIcon = (state, config) => {
   return config.state_icons && config.state_icons[state];
