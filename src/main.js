@@ -130,6 +130,10 @@ class PaperButtonsRow extends LitElement {
           <div class="flex-box">
             ${row.map(config => {
               const stateObj = this._hass.states[config.entity] || {};
+              const baseStateStyle =
+                (this._config.base_state_styles &&
+                  this._config.base_state_styles[stateObj.state]) ||
+                {};
               const stateStyle =
                 (config.state_styles && config.state_styles[stateObj.state]) ||
                 {};
@@ -147,6 +151,7 @@ class PaperButtonsRow extends LitElement {
                   .config=${config}
                   style="${this._getStyle(
                     config,
+                    baseStateStyle,
                     stateStyle,
                     "button"
                   )}${this._getFlexDirection(config)}"
@@ -155,7 +160,12 @@ class PaperButtonsRow extends LitElement {
                   ${icon
                     ? html`
                         <ha-icon
-                          style="${this._getStyle(config, stateStyle, "icon")}"
+                          style="${this._getStyle(
+                            config,
+                            baseStateStyle,
+                            stateStyle,
+                            "icon"
+                          )}"
                           .icon=${icon}
                         ></ha-icon>
                       `
@@ -163,7 +173,12 @@ class PaperButtonsRow extends LitElement {
                   ${config.name !== false && (config.name || config.entity)
                     ? html`
                         <span
-                          style="${this._getStyle(config, stateStyle, "text")}"
+                          style="${this._getStyle(
+                            config,
+                            baseStateStyle,
+                            stateStyle,
+                            "text"
+                          )}"
                         >
                           ${computeText(stateObj.state, config) ||
                             config.name ||
@@ -174,7 +189,12 @@ class PaperButtonsRow extends LitElement {
 
                   <paper-ripple
                     center
-                    style="${this._getStyle(config, stateStyle, "ripple")}"
+                    style="${this._getStyle(
+                      config,
+                      baseStateStyle,
+                      stateStyle,
+                      "ripple"
+                    )}"
                     class=${config.name === false ||
                     (!config.name && !config.entity)
                       ? "circle"
@@ -216,9 +236,14 @@ class PaperButtonsRow extends LitElement {
     return "";
   }
 
-  _getStyle(config, stateStyle, attribute) {
+  _getStyle(config, baseStateStyle, stateStyle, attribute) {
+    console.log(baseStateStyle);
     return mapStyle({
+      ...coerceObject(
+        (this._config.base_style && this._config.base_style[attribute]) || {}
+      ),
       ...coerceObject((config.style && config.style[attribute]) || {}),
+      ...coerceObject((baseStateStyle && baseStateStyle[attribute]) || {}),
       ...coerceObject(stateStyle[attribute] || {})
     });
   }
