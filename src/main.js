@@ -237,7 +237,6 @@ class PaperButtonsRow extends LitElement {
   }
 
   _getStyle(config, baseStateStyle, stateStyle, attribute) {
-    console.log(baseStateStyle);
     return mapStyle({
       ...coerceObject(
         (this._config.base_style && this._config.base_style[attribute]) || {}
