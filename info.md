@@ -9,6 +9,7 @@ Check out the [documentation](https://github.com/jcwillox/lovelace-paper-buttons
 <img src="https://github.com/jcwillox/lovelace-paper-buttons-row/blob/master/examples/example-1-1.gif?raw=true" width="400px">
 <img src="https://github.com/jcwillox/lovelace-paper-buttons-row/blob/master/examples/example-4.gif?raw=true" width="400px">
 <img src="https://github.com/jcwillox/lovelace-paper-buttons-row/blob/master/examples/example-2.png?raw=true" width="400px">
+<img src="https://github.com/jcwillox/lovelace-paper-buttons-row/blob/master/examples/example-embedded.png?raw=true" width="400px">
 
 More example images than you could poke a stick at, I know...
 
@@ -19,3 +20,5 @@ More example images than you could poke a stick at, I know...
 * Change the icon alignment.
 * Add actions for `tap_action`, `double_tap_action` and `hold_action`.
 * Create multiple rows of buttons.
+* Embed buttons in other entity rows.
+* Tooltips.

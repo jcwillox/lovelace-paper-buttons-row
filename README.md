@@ -8,13 +8,12 @@ This is a complete rewrite of the original [`button-entity-row`](https://github.
 
 ## Options
 
-| Name              | Type                                                  | Requirement  | Description                                                                                                     |
-| ----------------- | ----------------------------------------------------- | ------------ | --------------------------------------------------------------------------------------------------------------- |
-| type              | `string`                                              | **Required** | `custom:paper-buttons-row`                                                                                      |
-| buttons           | List [`string` or [`button object`](#button-options)] | **Required** | List of buttons to display. [See button options](#button-options)                                               |
-| align_icons       | `string`                                              | **Optional** | Specify the default alignment for icons, must be one of [`top`, `left`, `right`, `bottom`], defaults to `left`. |
-| base_style        | [`style object`](#style-options)                      | **Optional** | Specify a default `style` by each button, this can be overriden for each button                                 |
-| base_state_styles | `map[state: style object]`                            | **Optional** | Specify a default `state_styles` by each button, this can be overriden for each button                          |
+| Name        | Type                                                  | Requirement  | Description                                                                                                     |
+| ----------- | ----------------------------------------------------- | ------------ | --------------------------------------------------------------------------------------------------------------- |
+| type        | `string`                                              | **Required** | `custom:paper-buttons-row`                                                                                      |
+| buttons     | List [`string` or [`button object`](#button-options)] | **Required** | List of buttons to display. [See button options](#button-options)                                               |
+| align_icons | `string`                                              | **Optional** | Specify the default alignment for icons, must be one of [`top`, `left`, `right`, `bottom`], defaults to `left`. |
+| base_config | [`button object`](#button-options)                    | **Optional** | Specify a base config that will be deep-merged with each buttons config. Buttons can override the base config   |
 
 ### Button Options
 
@@ -26,6 +25,7 @@ When only an `entity` is provided the button will attempt to toggle it by defaul
 | name              | `string`                         | **Optional** | Name to use for entity. Use `false` to hide name.                                                                        |
 | icon              | `string`                         | **Optional** | The icon to display. Use `false` to hide icon.                                                                           |
 | align_icon        | `string`                         | **Optional** | Override the default alignment for icon, must be one of [`top`, `left`, `right`, `bottom`].                              |
+| tooltip           | `string`                         | **Optional** | Override the default tooltip. Use `false` to hide tooltip.                                                               |
 |                   |                                  |              |                                                                                                                          |
 | tap_action        | `map`                            | **Optional** | Tap action map [See action options](#action-options)                                                                     |
 | hold_action       | `map`                            | **Optional** | Hold action map [See action options](#action-options)                                                                    |
@@ -40,20 +40,22 @@ When only an `entity` is provided the button will attempt to toggle it by defaul
 
 Each button supports the same actions as seen in Home Assistant's [button card](https://www.home-assistant.io/lovelace/button).
 
-| Name              | Type           | Default  | Supported options                                                                                   | Description                                                                                               |
-| ----------------- | -------------- | -------- | --------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------- |
-| `action`          | `string`       | `toggle` | `more-info`, `toggle`, `call-service`, `fire-event`, `none`, `navigate`, `url`                      | Action to perform                                                                                         |
-| `entity`          | `string`       | none     | Any entity id                                                                                       | **Only valid for `action: more-info`** to override the entity on which you want to call `more-info`       |
-| `navigation_path` | `string`       | none     | Eg: `/lovelace/0/`                                                                                  | Path to navigate to (e.g. `/lovelace/0/`) when action defined as navigate                                 |
-| `url_path`        | `string`       | none     | Eg: `https://www.google.com`                                                                        | URL to open on click when action is `url`.                                                                |
-|                   |                |          |                                                                                                     |                                                                                                           |
-| `service`         | `string`       | none     | Any service                                                                                         | Service to call (e.g. `media_player.media_play_pause`) when `action` defined as `call-service`            |
-| `service_data`    | `map`          | none     | Any service data                                                                                    | Service data to include (e.g. `entity_id: media_player.bedroom`) when `action` defined as `call-service`. |
-|                   |                |          |                                                                                                     |                                                                                                           |
-| `event_type`      | `string`       | none     | Any event                                                                                           | Event to call (e.g. `custom_event`) when `action` defined as `fire-event`                                 |
-| `event_data`      | `map`          | none     | Any event data                                                                                      | Event data to include when `action` defined as `fire-event`.                                              |
-|                   |                |          |                                                                                                     |                                                                                                           |
-| `confirmation`    | `boolean\|map` | false    | [See confirmation object](https://www.home-assistant.io/lovelace/actions/#options-for-confirmation) | Present a confirmation dialog to confirm the action.                                                      |
+| Name              | Type           | Default  | Supported options                                                                                   | Description                                                                                                         |
+| ----------------- | -------------- | -------- | --------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------- |
+| `action`          | `string`       | `toggle` | `more-info`, `toggle`, `call-service`, `fire-event`, `none`, `navigate`, `url`                      | Action to perform                                                                                                   |
+| `entity`          | `string`       | none     | Any entity id                                                                                       | **Only valid for `action: more-info`** to override the entity on which you want to call `more-info`                 |
+| `navigation_path` | `string`       | none     | Eg: `/lovelace/0/`                                                                                  | Path to navigate to (e.g. `/lovelace/0/`) when action defined as navigate                                           |
+| `url_path`        | `string`       | none     | Eg: `https://www.google.com`                                                                        | URL to open on click when action is `url`.                                                                          |
+|                   |                |          |                                                                                                     |                                                                                                                     |
+| `service`         | `string`       | none     | Any service                                                                                         | Service to call (e.g. `media_player.media_play_pause`) when `action` defined as `call-service`                      |
+| `service_data`    | `map`          | none     | Any service data                                                                                    | Service data to include (e.g. `entity_id: media_player.bedroom`) when `action` defined as `call-service`.           |
+|                   |                |          |                                                                                                     |                                                                                                                     |
+| `event_type`      | `string`       | none     | Any event                                                                                           | Event to call (e.g. `custom_event`) when `action` defined as `fire-event`                                           |
+| `event_data`      | `map`          | none     | Any event data                                                                                      | Event data to include when `action` defined as `fire-event`.                                                        |
+|                   |                |          |                                                                                                     |                                                                                                                     |
+| `repeat`          | `number`       | none     | Eg: `500`                                                                                           | **Only valid for `hold_action`** optionally set the action to repeat every N milliseconds while the button is held. |
+|                   |                |          |                                                                                                     |                                                                                                                     |
+| `confirmation`    | `boolean\|map` | false    | [See confirmation object](https://www.home-assistant.io/lovelace/actions/#options-for-confirmation) | Present a confirmation dialog to confirm the action.                                                                |
 
 ### Style Options
 
@@ -63,6 +65,71 @@ Each button supports the same actions as seen in Home Assistant's [button card](
 | icon   | `object` | **Optional** | CSS styles to apply to specifically the icon.          |
 | text   | `object` | **Optional** | CSS styles to apply to specifically the button text.   |
 | ripple | `object` | **Optional** | CSS styles to apply to specifically the ripple effect. |
+
+## Embedding in other entity rows
+
+![example-minimal-setup](examples/example-embedded.png)
+
+Paper Buttons Row can be embedded within most entity rows. As shown in the image above it inserts a `paper-buttons-row` row inline, this can be either before or after the final element.
+
+```yaml
+type: entities
+entities:
+  - entity: light.bedroom_light
+    # add the following to a normal entity row to embed paper buttons.
+    extend_paper_buttons_row:
+      position: # can be either `center` or `right`, defaults to `center`.
+      # ... normal paper-buttons-row config goes here.
+```
+
+<details>
+<summary>Example for the image above</summary>
+
+```yaml
+type: entities
+show_header_toggle: false
+entities:
+  - entity: light.bedroom_light
+    extend_paper_buttons_row:
+      # position defaults to center.
+      buttons:
+        - entity: scene.daylight
+          icon: "mdi:brightness-5"
+          name: false
+        - entity: script.light_colour_flow
+          icon: "mdi:all-inclusive"
+          name: false
+        - entity: scene.evening
+          icon: "mdi:brightness-3"
+          name: false
+          style:
+            button:
+              margin-right: 8px
+
+  - type: divider
+
+  - entity: media_player.family_room_tv
+    name: TV
+    extend_paper_buttons_row:
+      # position after power button.
+      position: right
+      # use base config to set the default margin for all buttons.
+      base_config:
+        style:
+          button:
+            margin-left: 2px
+            margin-right: 2px
+      buttons:
+        - icon: "mdi:volume-mute"
+          # override left margin for first button.
+          style:
+            button:
+              margin-left: 0px
+        - icon: "mdi:volume-minus"
+        - icon: "mdi:volume-plus"
+```
+
+</details>
 
 ## Examples
 
