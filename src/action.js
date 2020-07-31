@@ -2,18 +2,6 @@ import { forwardHaptic } from "./haptic";
 import { fireEvent } from "card-tools/src/event";
 import { navigate } from "./navigate";
 
-export function bindActionHandler(element, options = {}) {
-  customElements.whenDefined("long-press").then(() => {
-    const longpress = document.body.querySelector("long-press");
-    longpress.bind(element);
-  });
-  customElements.whenDefined("action-handler").then(() => {
-    const actionHandler = document.body.querySelector("action-handler");
-    if (actionHandler) actionHandler.bind(element, options);
-  });
-  return element;
-}
-
 export function handleAction(node, hass, config, action) {
   let actionConfig = undefined;
 

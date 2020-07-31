@@ -13,6 +13,7 @@ import {
 import { name, version } from "../package.json";
 import { coerceObject, mapStyle } from "./styles";
 import deepmerge from "deepmerge";
+import { actionHandlerBind } from "./action-handler";
 import "./generic-entity-row";
 
 logVersion(name, version, "#039be5");
@@ -226,7 +227,7 @@ class PaperButtonsRow extends LitElement {
 
   firstUpdated() {
     this.shadowRoot.querySelectorAll("paper-button").forEach(button => {
-      bindActionHandler(button, {
+      actionHandlerBind(button, {
         hasHold: hasAction(button.config.hold_action),
         hasDoubleClick: hasAction(button.config.double_tap_action)
       });
