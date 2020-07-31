@@ -7,7 +7,8 @@ import {
   computeDomain,
   computeDomainIcon,
   computeStateIcon,
-  computeStateName
+  computeStateName,
+  computeTooltip
 } from "./entity";
 import { name, version } from "../package.json";
 import { coerceObject, mapStyle } from "./styles";
@@ -168,6 +169,7 @@ class PaperButtonsRow extends LitElement {
                     "button"
                   )}${this._getFlexDirection(config)}"
                   class="${this._getClass(stateObj.state)}"
+                  title=${computeTooltip(this._hass, config)}
                 >
                   ${icon
                     ? html`
