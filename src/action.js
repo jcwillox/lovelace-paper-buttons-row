@@ -95,3 +95,7 @@ export function handleAction(node, hass, config, action) {
 export function hasAction(config) {
   return config !== undefined && config.action !== "none";
 }
+
+export function hasRepeat(config) {
+  return config !== undefined && config.repeat;
+}

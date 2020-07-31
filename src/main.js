@@ -1,5 +1,5 @@
 import { css, html, LitElement } from "card-tools/src/lit-element";
-import { bindActionHandler, handleAction, hasAction } from "./action";
+import { handleAction, hasAction, hasRepeat } from "./action";
 import { hass } from "card-tools/src/hass";
 import { logVersion } from "./logging";
 import { DOMAINS_TOGGLE, STATE_UNAVAILABLE, STATES_ON } from "./const";
@@ -229,7 +229,8 @@ class PaperButtonsRow extends LitElement {
     this.shadowRoot.querySelectorAll("paper-button").forEach(button => {
       actionHandlerBind(button, {
         hasHold: hasAction(button.config.hold_action),
-        hasDoubleClick: hasAction(button.config.double_tap_action)
+        hasDoubleClick: hasAction(button.config.double_tap_action),
+        repeat: hasRepeat(button.config.hold_action)
       });
     });
   }
