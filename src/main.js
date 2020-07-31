@@ -13,6 +13,7 @@ import {
 import { name, version } from "../package.json";
 import { coerceObject, mapStyle } from "./styles";
 import deepmerge from "deepmerge";
+import "./generic-entity-row";
 
 logVersion(name, version, "#039be5");
 
