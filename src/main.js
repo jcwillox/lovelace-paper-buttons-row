@@ -11,6 +11,7 @@ import {
 } from "./entity";
 import { name, version } from "../package.json";
 import { coerceObject, mapStyle } from "./styles";
+import deepmerge from "deepmerge";
 
 logVersion(name, version, "#039be5");
 
@@ -102,6 +103,13 @@ class PaperButtonsRow extends LitElement {
     this._hass = hass();
     this._entities = [];
 
+    // notify deprecated options
+    if (this._config.base_style || this._config.base_state_styles) {
+      console.warn(
+        "The base_style and base_state_styles options are deprecated and will be removed in 0.4.0, use base_config instead."
+      );
+    }
+
     // fix config.
     this._config.buttons = this._config.buttons.map(row => {
       return row.map(config => {
@@ -110,8 +118,12 @@ class PaperButtonsRow extends LitElement {
           config = { entity: config };
         }
 
+        config = config || {};
+
+        config = deepmerge(this._config.base_config || {}, config);
+
         // apply default services.
-        config = this._defaultConfig(config || {});
+        config = this._defaultConfig(config);
 
         // create list of entities to monitor for changes.
         if (config.entity) {

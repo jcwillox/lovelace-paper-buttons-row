@@ -15,7 +15,8 @@
     "prettier": "^1.19.1"
   },
   "dependencies": {
-    "card-tools": "github:thomasloven/lovelace-card-tools"
+    "card-tools": "github:thomasloven/lovelace-card-tools",
+    "deepmerge": "^4.2.2"
   },
   "author": "Joshua Cowie-Willox",
   "license": "MIT"
