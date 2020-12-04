@@ -1,6 +1,7 @@
 import { forwardHaptic } from "./haptic";
 import { fireEvent } from "card-tools/src/event";
 import { navigate } from "./navigate";
+import { toggleEntity } from "./entity";
 
 export function handleAction(node, hass, config, action) {
   let actionConfig = undefined;
@@ -15,14 +16,16 @@ export function handleAction(node, hass, config, action) {
 
   if (!actionConfig) {
     actionConfig = {
-      action: "more-info"
+      action: "more-info",
     };
   }
 
   if (
     actionConfig.confirmation &&
     (!actionConfig.confirmation.exemptions ||
-      !actionConfig.confirmation.exemptions.some(e => e.user === hass.user.id))
+      !actionConfig.confirmation.exemptions.some(
+        (e) => e.user === hass.user.id
+      ))
   ) {
     forwardHaptic("warning");
 
@@ -42,7 +45,7 @@ export function handleAction(node, hass, config, action) {
         fireEvent(
           "hass-more-info",
           {
-            entityId: actionConfig.entity || config.entity
+            entityId: actionConfig.entity || config.entity,
           },
           node
         );
@@ -60,10 +63,7 @@ export function handleAction(node, hass, config, action) {
       break;
     case "toggle":
       if (config.entity) {
-        // toggleEntity(hass, config.entity);
-        hass.callService("homeassistant", "toggle", {
-          entity_id: config.entity
-        });
+        toggleEntity(hass, config.entity);
         forwardHaptic("light");
       }
       break;
