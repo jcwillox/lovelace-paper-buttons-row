@@ -8,7 +8,7 @@ import {
   computeDomainIcon,
   computeStateIcon,
   computeStateName,
-  computeTooltip
+  computeTooltip,
 } from "./entity";
 import { name, version } from "../package.json";
 import { coerceObject, mapStyle } from "./styles";
@@ -26,7 +26,7 @@ const computeText = (state, config) => {
   return config.state_text && config.state_text[state];
 };
 
-const computeFlexDirection = alignment => {
+const computeFlexDirection = (alignment) => {
   switch (alignment) {
     case "top":
       return "column";
@@ -43,7 +43,7 @@ class PaperButtonsRow extends LitElement {
   static get properties() {
     return {
       _config: {},
-      _hass: {}
+      _hass: {},
     };
   }
 
@@ -114,8 +114,8 @@ class PaperButtonsRow extends LitElement {
     }
 
     // fix config.
-    this._config.buttons = this._config.buttons.map(row => {
-      return row.map(config => {
+    this._config.buttons = this._config.buttons.map((row) => {
+      return row.map((config) => {
         // handle when config is not defined as a dictionary.
         if (typeof config === "string") {
           config = { entity: config };
@@ -140,10 +140,10 @@ class PaperButtonsRow extends LitElement {
 
   render() {
     return html`
-      ${this._config.buttons.map(row => {
+      ${this._config.buttons.map((row) => {
         return html`
           <div class="flex-box">
-            ${row.map(config => {
+            ${row.map((config) => {
               const stateObj = this._hass.states[config.entity] || {};
               const baseStateStyle =
                 (this._config.base_state_styles &&
@@ -162,7 +162,7 @@ class PaperButtonsRow extends LitElement {
 
               return html`
                 <paper-button
-                  @action=${ev => this._handleAction(ev, config)}
+                  @action=${(ev) => this._handleAction(ev, config)}
                   .config=${config}
                   style="${this._getStyle(
                     config,
@@ -197,8 +197,8 @@ class PaperButtonsRow extends LitElement {
                           )}"
                         >
                           ${computeText(stateObj.state, config) ||
-                            config.name ||
-                            computeStateName(stateObj)}
+                          config.name ||
+                          computeStateName(stateObj)}
                         </span>
                       `
                     : ""}
@@ -226,11 +226,11 @@ class PaperButtonsRow extends LitElement {
   }
 
   firstUpdated() {
-    this.shadowRoot.querySelectorAll("paper-button").forEach(button => {
+    this.shadowRoot.querySelectorAll("paper-button").forEach((button) => {
       actionHandlerBind(button, {
         hasHold: hasAction(button.config.hold_action),
         hasDoubleClick: hasAction(button.config.double_tap_action),
-        repeat: hasRepeat(button.config.hold_action)
+        repeat: hasRepeat(button.config.hold_action),
       });
     });
   }
@@ -260,7 +260,7 @@ class PaperButtonsRow extends LitElement {
       ),
       ...coerceObject((config.style && config.style[attribute]) || {}),
       ...coerceObject((baseStateStyle && baseStateStyle[attribute]) || {}),
-      ...coerceObject(stateStyle[attribute] || {})
+      ...coerceObject(stateStyle[attribute] || {}),
     });
   }
 
@@ -271,9 +271,9 @@ class PaperButtonsRow extends LitElement {
       if (DOMAINS_TOGGLE.has(domain)) {
         return {
           tap_action: {
-            action: "toggle"
+            action: "toggle",
           },
-          ...config
+          ...config,
         };
       }
       if (domain === "scene") {
@@ -282,10 +282,10 @@ class PaperButtonsRow extends LitElement {
             action: "call-service",
             service: "scene.turn_on",
             service_data: {
-              entity_id: config.entity
-            }
+              entity_id: config.entity,
+            },
           },
-          ...config
+          ...config,
         };
       }
     }
@@ -305,7 +305,7 @@ class PaperButtonsRow extends LitElement {
 
     // only update if monitored entity changed state.
     return this._entities.some(
-      entity => oldHass.states[entity] !== this._hass.states[entity]
+      (entity) => oldHass.states[entity] !== this._hass.states[entity]
     );
   }
 }
