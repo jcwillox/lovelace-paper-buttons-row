@@ -82,6 +82,19 @@ class PaperButtonsRow extends LitElement {
       .button-unavailable {
         color: var(--state-icon-unavailable-color);
       }
+
+      .image {
+        position: relative;
+        display: inline-block;
+        width: 28px;
+        border-radius: 50%;
+        height: 28px;
+        text-align: center;
+        background-size: cover;
+        line-height: 28px;
+        vertical-align: middle;
+        box-sizing: border-box;
+      }
     `;
   }
 
@@ -173,7 +186,20 @@ class PaperButtonsRow extends LitElement {
                   class="${this._getClass(stateObj.state)}"
                   title=${computeTooltip(this._hass, config)}
                 >
-                  ${icon
+                  ${config.image
+                    ? html`
+                        <img
+                          src="${config.image}"
+                          class="image"
+                          style="${this._getStyle(
+                            config,
+                            baseStateStyle,
+                            stateStyle,
+                            "icon"
+                          )}"
+                        />
+                      `
+                    : icon
                     ? html`
                         <ha-icon
                           style="${this._getStyle(

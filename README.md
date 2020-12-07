@@ -24,6 +24,7 @@ When only an `entity` is provided the button will attempt to toggle it by defaul
 | entity            | `string`                         | **Optional** | The entity_id of the entity you want to show.                                                                            |
 | name              | `string`                         | **Optional** | Name to use for entity. Use `false` to hide name.                                                                        |
 | icon              | `string`                         | **Optional** | The icon to display. Use `false` to hide icon.                                                                           |
+| image             | `string`                         | **Optional** | Display an image instead of an icon. e.g. `/local/custom.png`.                                                           |
 | align_icon        | `string`                         | **Optional** | Override the default alignment for icon, must be one of [`top`, `left`, `right`, `bottom`].                              |
 | tooltip           | `string`                         | **Optional** | Override the default tooltip. Use `false` to hide tooltip.                                                               |
 |                   |                                  |              |                                                                                                                          |
