@@ -119,13 +119,6 @@ class PaperButtonsRow extends LitElement {
     this._hass = hass();
     this._entities = [];
 
-    // notify deprecated options
-    if (this._config.base_style || this._config.base_state_styles) {
-      console.warn(
-        "The base_style and base_state_styles options are deprecated and will be removed in 0.4.0, use base_config instead."
-      );
-    }
-
     // fix config.
     this._config.buttons = this._config.buttons.map((row) => {
       return row.map((config) => {
@@ -158,10 +151,6 @@ class PaperButtonsRow extends LitElement {
           <div class="flex-box">
             ${row.map((config) => {
               const stateObj = this._hass.states[config.entity] || {};
-              const baseStateStyle =
-                (this._config.base_state_styles &&
-                  this._config.base_state_styles[stateObj.state]) ||
-                {};
               const stateStyle =
                 (config.state_styles && config.state_styles[stateObj.state]) ||
                 {};
@@ -179,7 +168,6 @@ class PaperButtonsRow extends LitElement {
                   .config=${config}
                   style="${this._getStyle(
                     config,
-                    baseStateStyle,
                     stateStyle,
                     "button"
                   )}${this._getFlexDirection(config)}"
@@ -193,7 +181,6 @@ class PaperButtonsRow extends LitElement {
                           class="image"
                           style="${this._getStyle(
                             config,
-                            baseStateStyle,
                             stateStyle,
                             "icon"
                           )}"
@@ -204,7 +191,6 @@ class PaperButtonsRow extends LitElement {
                         <ha-icon
                           style="${this._getStyle(
                             config,
-                            baseStateStyle,
                             stateStyle,
                             "icon"
                           )}"
@@ -217,7 +203,6 @@ class PaperButtonsRow extends LitElement {
                         <span
                           style="${this._getStyle(
                             config,
-                            baseStateStyle,
                             stateStyle,
                             "text"
                           )}"
@@ -233,7 +218,6 @@ class PaperButtonsRow extends LitElement {
                     center
                     style="${this._getStyle(
                       config,
-                      baseStateStyle,
                       stateStyle,
                       "ripple"
                     )}"
@@ -279,13 +263,9 @@ class PaperButtonsRow extends LitElement {
     return "";
   }
 
-  _getStyle(config, baseStateStyle, stateStyle, attribute) {
+  _getStyle(config, stateStyle, attribute) {
     return mapStyle({
-      ...coerceObject(
-        (this._config.base_style && this._config.base_style[attribute]) || {}
-      ),
       ...coerceObject((config.style && config.style[attribute]) || {}),
-      ...coerceObject((baseStateStyle && baseStateStyle[attribute]) || {}),
       ...coerceObject(stateStyle[attribute] || {}),
     });
   }
