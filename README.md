@@ -66,7 +66,8 @@ Each button supports the same actions as seen in Home Assistant's [button card](
 | ------ | -------- | ------------ | ------------------------------------------------------ |
 | button | `object` | **Optional** | CSS styles to apply to the button.                     |
 | icon   | `object` | **Optional** | CSS styles to apply to specifically the icon.          |
-| text   | `object` | **Optional** | CSS styles to apply to specifically the button text.   |
+| name   | `object` | **Optional** | CSS styles to apply to specifically the name field.    |
+| state  | `object` | **Optional** | CSS styles to apply to specifically the state field.   |
 | ripple | `object` | **Optional** | CSS styles to apply to specifically the ripple effect. |
 
 Each key can be templated e.g.
@@ -319,7 +320,7 @@ entities:
           "off": # define a state then provide a style object.
             button:
               background-color: var(--table-row-alternative-background-color)
-            text:
+            name:
               color: orange
           "on":
             button:
