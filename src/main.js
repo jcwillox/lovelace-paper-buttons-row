@@ -2,7 +2,12 @@ import { css, html, LitElement } from "card-tools/src/lit-element";
 import { handleAction, hasAction, hasRepeat } from "./action";
 import { hass } from "card-tools/src/hass";
 import { logVersion } from "./logging";
-import { DOMAINS_TOGGLE, STATE_UNAVAILABLE, STATES_ON } from "./const";
+import {
+  DOMAINS_TOGGLE,
+  STATE_UNAVAILABLE,
+  STATES_ON,
+  TEMPLATE_OPTIONS,
+} from "./const";
 import {
   computeDomain,
   computeDomainIcon,
@@ -15,6 +20,7 @@ import { coerceObject, mapStyle } from "./styles";
 import deepmerge from "deepmerge";
 import { actionHandlerBind } from "./action-handler";
 import "./generic-entity-row";
+import { renderTemplateObjects, subscribeTemplate } from "./template";
 
 logVersion(name, version, "#039be5");
 
@@ -127,6 +133,7 @@ class PaperButtonsRow extends LitElement {
 
     this._hass = hass();
     this._entities = [];
+    this._templates = [];
 
     // fix config.
     this._config.buttons = this._config.buttons.map((row) => {
@@ -156,12 +163,27 @@ class PaperButtonsRow extends LitElement {
           this._entities.push(config.entity);
         }
 
+        // subscribe template options
+        TEMPLATE_OPTIONS.forEach((key) =>
+          subscribeTemplate.call(this, config, config, key)
+        );
+
+        // subscribe template styles
+        if (typeof config.style === "object")
+          Object.values(config.style).forEach((styles) => {
+            if (typeof styles === "object")
+              Object.keys(styles).forEach((key) =>
+                subscribeTemplate.call(this, config, styles, key)
+              );
+          });
+
         return config;
       });
     });
   }
 
   render() {
+    renderTemplateObjects(this._templates, this._hass);
     return html`
       ${this._config.buttons.map((row) => {
         return html`
@@ -169,7 +191,8 @@ class PaperButtonsRow extends LitElement {
             ${row.map((config) => {
               const stateObj = this._hass.states[config.entity] || {};
               const stateStyle =
-                (config.state_styles && config.state_styles[stateObj.state]) ||
+                (config.state_styles &&
+                  config.state_styles[config.state.toLowerCase()]) ||
                 {};
               let buttonStyle = this._getStyle(config, stateStyle, "button");
 
