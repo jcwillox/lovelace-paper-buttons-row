@@ -157,6 +157,8 @@ entities:
           case: first
 ```
 
+The `state_text` and `state_styles` options will use the lowercase result of the template for the state field.
+
 ```yaml
 type: entities
 entities:
