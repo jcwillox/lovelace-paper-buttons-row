@@ -16,9 +16,10 @@ More example images than you could poke a stick at, I know...
 ## Features
 * Create icon, text, or icon-text buttons.
 * Add css styling to each button per state!
-* Style the icon, text, and ripple effect separately.
-* Change the icon alignment.
+* Style the icon, name, state, and ripple effect separately.
+* Change the icon alignment and layout of the icon, name and state.
 * Add actions for `tap_action`, `double_tap_action` and `hold_action`.
 * Create multiple rows of buttons.
 * Embed buttons in other entity rows.
-* Tooltips.
+* Tooltip support, configure custom tooltips.
+* Templating support.
