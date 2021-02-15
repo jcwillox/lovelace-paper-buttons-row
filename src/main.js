@@ -22,20 +22,23 @@ const computeIcon = (state, config) => {
   return config.state_icons && config.state_icons[state];
 };
 
-const computeText = (state, config) => {
-  return config.state_text && config.state_text[state];
+const computeStateText = (config) => {
+  return (
+    (config.state_text && config.state_text[config.state.toLowerCase()]) ||
+    config.state
+  );
 };
 
-const computeFlexDirection = (alignment) => {
+const migrateIconAlignment = (alignment) => {
   switch (alignment) {
     case "top":
-      return "column";
+      return [["icon", "name"]];
     case "bottom":
-      return "column-reverse";
+      return [["name", "icon"]];
     case "right":
-      return "row-reverse";
+      return ["name", "icon"];
     default:
-      return "row";
+      return ["icon", "name"];
   }
 };
 
@@ -53,6 +56,12 @@ class PaperButtonsRow extends LitElement {
       .flex-box {
         display: flex;
         justify-content: space-evenly;
+        align-items: center;
+      }
+
+      .flex-column {
+        display: inline-flex;
+        flex-direction: column;
         align-items: center;
       }
 
@@ -131,6 +140,14 @@ class PaperButtonsRow extends LitElement {
 
         config = deepmerge(this._config.base_config || {}, config);
 
+        if (typeof config.layout === "string") {
+          config.layout = config.layout
+            .split("|")
+            .map((column) =>
+              column.includes("_") ? column.split("_") : column
+            );
+        }
+
         // apply default services.
         config = this._defaultConfig(config);
 
@@ -154,77 +171,42 @@ class PaperButtonsRow extends LitElement {
               const stateStyle =
                 (config.state_styles && config.state_styles[stateObj.state]) ||
                 {};
-              const icon =
-                config.icon !== false && (config.icon || config.entity)
-                  ? computeIcon(stateObj.state, config) ||
-                    config.icon ||
-                    computeStateIcon(stateObj) ||
-                    computeDomainIcon(config.entity)
-                  : false;
+              let buttonStyle = this._getStyle(config, stateStyle, "button");
 
               return html`
                 <paper-button
                   @action=${(ev) => this._handleAction(ev, config)}
                   .config=${config}
-                  style="${this._getStyle(
-                    config,
-                    stateStyle,
-                    "button"
-                  )}${this._getFlexDirection(config)}"
+                  style="${buttonStyle}"
                   class="${this._getClass(stateObj.state)}"
                   title=${computeTooltip(this._hass, config)}
                 >
-                  ${config.image
-                    ? html`
-                        <img
-                          src="${config.image}"
-                          class="image"
-                          style="${this._getStyle(
-                            config,
-                            stateStyle,
-                            "icon"
-                          )}"
-                        />
-                      `
-                    : icon
-                    ? html`
-                        <ha-icon
-                          style="${this._getStyle(
-                            config,
-                            stateStyle,
-                            "icon"
-                          )}"
-                          .icon=${icon}
-                        ></ha-icon>
-                      `
-                    : ""}
-                  ${config.name !== false && (config.name || config.entity)
-                    ? html`
-                        <span
-                          style="${this._getStyle(
-                            config,
-                            stateStyle,
-                            "text"
-                          )}"
-                        >
-                          ${computeText(stateObj.state, config) ||
-                          config.name ||
-                          computeStateName(stateObj)}
-                        </span>
-                      `
-                    : ""}
+                  ${config.layout.map((column) => {
+                    if (Array.isArray(column))
+                      return html`
+                        <div class="flex-column">
+                          ${column.map((row) =>
+                            this.renderElement(
+                              row,
+                              config,
+                              stateObj,
+                              stateStyle
+                            )
+                          )}
+                        </div>
+                      `;
+                    return this.renderElement(
+                      column,
+                      config,
+                      stateObj,
+                      stateStyle
+                    );
+                  })}
 
                   <paper-ripple
                     center
-                    style="${this._getStyle(
-                      config,
-                      stateStyle,
-                      "ripple"
-                    )}"
-                    class=${config.name === false ||
-                    (!config.name && !config.entity)
-                      ? "circle"
-                      : ""}
+                    style="${this._getStyle(config, stateStyle, "ripple")}"
+                    class=${this._getRippleClass(config)}
                   ></paper-ripple>
                 </paper-button>
               `;
@@ -233,6 +215,50 @@ class PaperButtonsRow extends LitElement {
         `;
       })}
     `;
+  }
+
+  renderElement(item, config, stateObj, stateStyle) {
+    let style = this._getStyle(config, stateStyle, item);
+    switch (item) {
+      case "icon":
+        return this.renderIcon(config, style, stateObj);
+      case "name":
+        return this.renderName(config, style, stateObj);
+      case "state":
+        return this.renderState(config, style, stateObj);
+    }
+  }
+
+  renderIcon(config, style, stateObj) {
+    const icon =
+      config.icon !== false && (config.icon || config.entity)
+        ? computeIcon(stateObj.state, config) ||
+          config.icon ||
+          computeStateIcon(stateObj) ||
+          computeDomainIcon(config.entity)
+        : false;
+
+    return config.image
+      ? html`<img src="${config.image}" class="image" style="${style}" />`
+      : icon
+      ? html`<ha-icon style="${style}" .icon=${icon} />`
+      : "";
+  }
+
+  renderName(config, style, stateObj) {
+    return config.name !== false && (config.name || config.entity)
+      ? html`
+          <span style="${style}">
+            ${config.name || computeStateName(stateObj)}
+          </span>
+        `
+      : "";
+  }
+
+  renderState(config, style, stateObj) {
+    return config.state !== false
+      ? html` <span style="${style}"> ${computeStateText(config)} </span> `
+      : "";
   }
 
   firstUpdated() {
@@ -255,12 +281,18 @@ class PaperButtonsRow extends LitElement {
     return "";
   }
 
-  _getFlexDirection(config) {
-    if (config.align_icon || this._config.align_icons)
-      return `flex-direction: ${computeFlexDirection(
-        config.align_icon || this._config.align_icons
-      )};`;
-    return "";
+  _getRippleClass(config) {
+    if (config.layout.length === 1 && config.layout[0] === "icon") {
+      return "circle";
+    }
+    if (
+      config.name ||
+      (config.name !== false && config.entity) ||
+      config.layout.includes("state")
+    ) {
+      return "";
+    }
+    return "circle";
   }
 
   _getStyle(config, stateStyle, attribute) {
@@ -271,6 +303,17 @@ class PaperButtonsRow extends LitElement {
   }
 
   _defaultConfig(config) {
+    if (!config.layout) {
+      // migrate align_icon to layout
+      let alignment = config.align_icon || this._config.align_icons;
+      if (alignment) config.layout = migrateIconAlignment(alignment);
+      else config.layout = ["icon", "name"];
+    }
+
+    if (!config.state && config.entity) {
+      config.state = { case: "upper" };
+    }
+
     if (config.entity) {
       let domain = computeDomain(config.entity);
 
