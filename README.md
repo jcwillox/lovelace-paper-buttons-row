@@ -8,34 +8,36 @@ This is a complete rewrite of the original [`button-entity-row`](https://github.
 
 ## Options
 
-| Name        | Type                                                  | Requirement  | Description                                                                                                     |
-| ----------- | ----------------------------------------------------- | ------------ | --------------------------------------------------------------------------------------------------------------- |
-| type        | `string`                                              | **Required** | `custom:paper-buttons-row`                                                                                      |
-| buttons     | List [`string` or [`button object`](#button-options)] | **Required** | List of buttons to display. [See button options](#button-options)                                               |
-| align_icons | `string`                                              | **Optional** | Specify the default alignment for icons, must be one of [`top`, `left`, `right`, `bottom`], defaults to `left`. |
-| base_config | [`button object`](#button-options)                    | **Optional** | Specify a base config that will be deep-merged with each buttons config. Buttons can override the base config   |
+| Name        | Type                                                  | Requirement  | Description                                                                                                                     |
+| ----------- | ----------------------------------------------------- | ------------ | ------------------------------------------------------------------------------------------------------------------------------- |
+| type        | `string`                                              | **Required** | `custom:paper-buttons-row`                                                                                                      |
+| buttons     | List [`string` or [`button object`](#button-options)] | **Required** | List of buttons to display. [See button options](#button-options)                                                               |
+| align_icons | `string`                                              | **Optional** | **Deprecated:** Specify the default alignment for icons, must be one of [`top`, `left`, `right`, `bottom`], defaults to `left`. |
+| base_config | [`button object`](#button-options)                    | **Optional** | Specify a base config that will be deep-merged with each buttons config. Buttons can override the base config                   |
 
 ### Button Options
 
 When only an `entity` is provided the button will attempt to toggle it by default.
 
-| Name              | Type                             | Requirement  | Description                                                                                                              |
-| ----------------- | -------------------------------- | ------------ | ------------------------------------------------------------------------------------------------------------------------ |
-| entity            | `string`                         | **Optional** | The entity_id of the entity you want to show.                                                                            |
-| name              | `string`                         | **Optional** | Name to use for entity. Use `false` to hide name.                                                                        |
-| icon              | `string`                         | **Optional** | The icon to display. Use `false` to hide icon.                                                                           |
-| image             | `string`                         | **Optional** | Display an image instead of an icon. e.g. `/local/custom.png`.                                                           |
-| align_icon        | `string`                         | **Optional** | Override the default alignment for icon, must be one of [`top`, `left`, `right`, `bottom`].                              |
-| tooltip           | `string`                         | **Optional** | Override the default tooltip. Use `false` to hide tooltip.                                                               |
-|                   |                                  |              |                                                                                                                          |
-| tap_action        | `map`                            | **Optional** | Tap action map [See action options](#action-options)                                                                     |
-| hold_action       | `map`                            | **Optional** | Hold action map [See action options](#action-options)                                                                    |
-| double_tap_action | `map`                            | **Optional** | Double Tap action map [See action options](#action-options)                                                              |
-|                   |                                  |              |                                                                                                                          |
-| style             | [`style object`](#style-options) | **Optional** | Map of CSS styles to apply to the button, icon, text or ripple. [See style options](#style-options)                      |
-| state_styles      | `map[state: style object]`       | **Optional** | Map of states to a [`style object`](#style-options), [See example](#using-style-and-state_styles).                       |
-| state_icons       | `map[state: icon]`               | **Optional** | Material icon for each state of the entity. Map state to icon, [See example](#using-state-icons-state-text-and-actions). |
-| state_text        | `map[state: text]`               | **Optional** | Button text for each state of the entity, Map state to text, [See example](#using-state-icons-state-text-and-actions).   |
+| Name              | Type                                           | Requirement  | Description                                                                                                              |
+| ----------------- | ---------------------------------------------- | ------------ | ------------------------------------------------------------------------------------------------------------------------ |
+| entity            | `string`                                       | **Optional** | The entity_id of the entity you want to show.                                                                            |
+| name              | `string`\|[`template`](#templating)            | **Optional** | Name to use for entity. Use `false` to hide name.                                                                        |
+| state             | `string`\|[`template`](#templating)            | **Optional** | State to display for entity. Use `true` to show the entity state.                                                        |
+| icon              | `string`\|[`template`](#templating)            | **Optional** | The icon to display. Use `false` to hide icon.                                                                           |
+| image             | `string`\|[`template`](#templating)            | **Optional** | Display an image instead of an icon. e.g. `/local/custom.png`.                                                           |
+| layout            | `string`\|`object`                             | **Optional** | Change the layout of the icon, name and state fields. [See layout options](#layout)                                      |
+| align_icon        | `string`                                       | **Optional** | **Deprecated:** Override the default alignment for icon, must be one of [`top`, `left`, `right`, `bottom`].              |
+| tooltip           | `string`                                       | **Optional** | Override the default tooltip. Use `false` to hide tooltip.                                                               |
+|                   |                                                |              |                                                                                                                          |
+| tap_action        | `map`                                          | **Optional** | Tap action map [See action options](#action-options)                                                                     |
+| hold_action       | `map`                                          | **Optional** | Hold action map [See action options](#action-options)                                                                    |
+| double_tap_action | `map`                                          | **Optional** | Double Tap action map [See action options](#action-options)                                                              |
+|                   |                                                |              |                                                                                                                          |
+| style             | [`style object`](#style-options) (templatable) | **Optional** | Map of CSS styles to apply to the button, icon, text or ripple. [See style options](#style-options)                      |
+| state_styles      | `map[state: style object]`                     | **Optional** | Map of states to a [`style object`](#style-options), [See example](#using-style-and-state_styles).                       |
+| state_icons       | `map[state: icon]`                             | **Optional** | Material icon for each state of the entity. Map state to icon, [See example](#using-state-icons-state-text-and-actions). |
+| state_text        | `map[state: text]`                             | **Optional** | Button text for each state of the entity, Map state to text, [See example](#using-state-icons-state-text-and-actions).   |
 
 ### Action Options
 
@@ -67,6 +69,142 @@ Each button supports the same actions as seen in Home Assistant's [button card](
 | text   | `object` | **Optional** | CSS styles to apply to specifically the button text.   |
 | ripple | `object` | **Optional** | CSS styles to apply to specifically the ripple effect. |
 
+Each key can be templated e.g.
+
+```yaml
+style:
+  button:
+    color: >-
+      {% if is_state('light.bedroom', 'on') %}
+        red
+      {% else%}
+        cyan
+      {% endif %}
+```
+
+### Layout
+
+The pipe or bar `|` symbol is used to put elements next to each other, and an underscore `_` is used to place items below each other.
+You can also define layouts using a list (row) and nested lists (columns).
+
+These are some examples of simple layouts:
+
+![example-layout](examples/example-layout.png)
+
+```yaml
+type: entities
+entities:
+  - type: custom:paper-buttons-row
+    buttons:
+      - entity: light.bedroom_light
+        layout: icon|name
+        # layout: [icon, name]
+
+      - entity: light.bedroom_light
+        layout: icon_name
+        # layout: [[icon, name]]
+
+      - entity: light.bedroom_light
+        layout: name|icon
+        # layout: [name, icon]
+
+      - entity: light.bedroom_light
+        layout: name_icon
+        # layout: [[name, icon]]
+```
+
+Advanced example
+
+![example-layout-advanced](examples/example-layout-advanced.png)
+
+```yaml
+type: entities
+entities:
+  - type: custom:paper-buttons-row
+    buttons:
+      - entity: light.bedroom_light
+        layout: icon_name|state
+        # layout: [[icon, name], [state]]
+```
+
+### Templating
+
+#### Secondary Info Object
+
+| Name        | Type     | Description                                                                       |
+| ----------- | -------- | --------------------------------------------------------------------------------- |
+| `entity`    | `string` | Optional: entity to extract data from, defaults to the rows configured entity.    |
+| `attribute` | `object` | Optional: extract an attribute from the entity, otherwise the state will be used. |
+| `prefix`    | `string` | Optional: string to append **before** the attribute/state.                        |
+| `postfix`   | `string` | Optional: string to append **after** the attribute/state.                         |
+| `case`      | `string` | Optional: change case of result must be one of `upper`, `lower`, `first`          |
+
+**Examples**
+
+![example-templating](examples/example-templating.png)
+
+```yaml
+type: entities
+entities:
+  - type: custom:paper-buttons-row
+    buttons:
+      - entity: light.bedroom_light
+        layout: icon|name|state
+        name:
+          attribute: friendly_name
+          postfix: ": "
+        state:
+          case: first
+```
+
+```yaml
+type: entities
+entities:
+  - type: "custom:paper-buttons-row"
+    buttons:
+      - entity: fan.bedroom
+        layout: icon|state
+        state:
+          attribute: speed
+        state_styles:
+          high:
+            color: red
+          medium:
+            color: yellow
+          low:
+            color: green
+        state_text:
+          high: III
+          medium: II
+          low: I
+        # ...
+```
+
+#### Jinja Templates
+
+_Note: that Jinja2 templates are slightly slower to load initially due to latency, as they are rendered in the backend, whereas the other are rendered in the frontend._
+
+Jinja templates have access to a few special variables. Those are:
+
+- `config` - an object containing the entity row configuration.
+- `entity` - the entity_id from the current entity row configuration. This **must** be used instead of `config.entity` for the template to automatically update.
+- `user` - the username of the currently logged in user.
+- `browser` - the deviceID of the current browser (see [browser_mod](https://github.com/thomasloven/hass-browser_mod)).
+- `hash` - the hash part of the current URL.
+
+**Example**
+
+```yaml
+type: entities
+entities:
+  - type: custom:paper-buttons-row
+    buttons:
+      - entity: light.bedroom_light
+        layout: icon|name|state
+        name: "{{ state_attr(config.entity, 'friendly_name') }}: "
+        state: "{{ states(config.entity) | title }}"
+```
+
 ## Embedding in other entity rows
 
 ![example-minimal-setup](examples/example-embedded.png)
@@ -84,7 +222,7 @@ entities:
 ```
 
 <details>
-<summary>Example for the image above</summary>
+<summary>Full example for the image above</summary>
 
 ```yaml
 type: entities
@@ -190,8 +328,9 @@ entities:
               color: orange # colour the ripple effect.
 
       - entity: light.monitor_leds
-        align_icon: top # change the icon alignment to be above the text.
         icon: "mdi:lightbulb"
+        layout: icon_name
+        # layout: [[icon, name]]
         style:
           button:
             background-color: var(--table-row-alternative-background-color)
@@ -222,6 +361,7 @@ entities:
   - type: "custom:paper-buttons-row"
     buttons:
       - entity: lock.front_door
+        layout: icon|state  # show the state field
         state_icons:
           "unlocked": "mdi:lock-open"
           "locked": "mdi:lock"
