@@ -52,20 +52,28 @@ export function handleAction(node, hass, config, action) {
       }
       break;
     case "navigate":
-      if (actionConfig.navigation_path) {
-        navigate(actionConfig.navigation_path);
+      if (!actionConfig.navigation_path) {
+        forwardHaptic("failure");
+        return;
       }
+      navigate(actionConfig.navigation_path);
+      forwardHaptic("light");
       break;
     case "url":
-      if (actionConfig.url_path) {
-        window.open(actionConfig.url_path);
+      if (!actionConfig.url_path) {
+        forwardHaptic("failure");
+        return;
       }
+      window.open(actionConfig.url_path);
+      forwardHaptic("light");
       break;
     case "toggle":
-      if (config.entity) {
-        toggleEntity(hass, config.entity);
-        forwardHaptic("light");
+      if (!config.entity) {
+        forwardHaptic("failure");
+        return;
       }
+      toggleEntity(hass, config.entity);
+      forwardHaptic("light");
       break;
     case "call-service":
       if (!actionConfig.service) {
@@ -86,9 +94,11 @@ export function handleAction(node, hass, config, action) {
         `events/${actionConfig.event_type}`,
         actionConfig.event_data
       );
+      forwardHaptic("light");
       break;
     case "fire-dom-event":
       fireEvent("ll-custom", actionConfig, node);
+      forwardHaptic("light");
   }
 }
 
