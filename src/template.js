@@ -9,6 +9,8 @@ export function renderTemplateObjects(templates, hass) {
 export function renderTemplateObject(template, hass) {
   let state = hass.states[template.entity];
 
+  if (!state) return;
+
   if (template.attribute) {
     state = state.attributes[template.attribute];
   } else {
@@ -45,7 +47,7 @@ export function subscribeTemplate(config, object, key) {
 
     this._templates.push({
       template: option,
-      callback: (res) => (object[key] = res),
+      callback: (res) => (res && (object[key] = res)),
     });
   } else if (hasTemplate(option)) {
     subscribeRenderTemplate(
