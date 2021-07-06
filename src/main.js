@@ -264,7 +264,7 @@ class PaperButtonsRow extends LitElement {
     return config.image
       ? html`<img src="${config.image}" class="image" style="${style}" />`
       : icon
-      ? html`<ha-icon style="${style}" .icon=${icon} />`
+      ? html` <ha-icon style="${style}" .icon=${icon} />`
       : "";
   }
 
@@ -284,13 +284,16 @@ class PaperButtonsRow extends LitElement {
       : "";
   }
 
-  firstUpdated() {
+  updated(changedProperties) {
     this.shadowRoot.querySelectorAll("paper-button").forEach((button) => {
-      actionHandlerBind(button, {
-        hasHold: hasAction(button.config.hold_action),
-        hasDoubleClick: hasAction(button.config.double_tap_action),
-        repeat: hasRepeat(button.config.hold_action),
-      });
+      // rebind buttons on updated to fix issue with lit 3.0
+      if (button.actionHandler !== true) {
+        actionHandlerBind(button, {
+          hasHold: hasAction(button.config.hold_action),
+          hasDoubleClick: hasAction(button.config.double_tap_action),
+          repeat: hasRepeat(button.config.hold_action),
+        });
+      }
     });
   }
 
