@@ -1,23 +1,23 @@
 {
   "name": "paper-buttons-row",
-  "private": true,
   "version": "0.6.0",
-  "description": "",
-  "keywords": [],
+  "author": "Joshua Cowie-Willox",
+  "license": "MIT",
   "scripts": {
-    "build": "webpack",
     "watch": "webpack --watch --mode=development",
-    "update-card-tools": "npm uninstall card-tools && npm install thomasloven/lovelace-card-tools"
-  },
-  "devDependencies": {
-    "webpack": "^4.41.2",
-    "webpack-cli": "^3.3.10",
-    "prettier": "^1.19.1"
+    "build": "webpack",
   },
   "dependencies": {
-    "card-tools": "github:thomasloven/lovelace-card-tools",
+    "card-tools": "github:thomasloven/lovelace-card-tools#477f3d4",
     "deepmerge": "^4.2.2"
   },
-  "author": "Joshua Cowie-Willox",
-  "license": "MIT"
+  "devDependencies": {
+    "prettier": "^2.4.1",
+    "webpack": "^4.41.2",
+    "webpack-cli": "^3.3.10"
+  },
+  "engines": {
+    "node": ">=14.x",
+    "npm": ">=7.x"
+  }
 }
