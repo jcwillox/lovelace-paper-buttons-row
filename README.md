@@ -130,7 +130,7 @@ entities:
 
 ### Templating
 
-#### Secondary Info Object
+#### Template Object
 
 | Name        | Type     | Description                                                                       |
 | ----------- | -------- | --------------------------------------------------------------------------------- |
