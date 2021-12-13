@@ -8,7 +8,7 @@ customElements.whenDefined(ELEMENT).then(() => {
   const Element = customElements.get(ELEMENT);
   const oFirstUpdated = Element.prototype.firstUpdated;
 
-  Element.prototype.firstUpdated = function(changedProperties) {
+  Element.prototype.firstUpdated = function (changedProperties) {
     oFirstUpdated.call(this, changedProperties);
 
     if (this.config.extend_paper_buttons_row) {
@@ -20,9 +20,12 @@ customElements.whenDefined(ELEMENT).then(() => {
       provideHass(paperButtons);
 
       if (this.config.extend_paper_buttons_row.position === "right") {
-        this.appendChild(paperButtons);
+        this.shadowRoot.appendChild(paperButtons);
       } else {
-        this.insertBefore(paperButtons, this.firstElementChild);
+        this.shadowRoot.insertBefore(
+          paperButtons,
+          this.shadowRoot.lastElementChild
+        );
       }
     }
   };
