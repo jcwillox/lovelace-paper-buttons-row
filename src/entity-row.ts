@@ -52,6 +52,19 @@ createModule("hui-generic-entity-row", function () {
       }
     }
 
+    if (pbConfig.hide_state) {
+      (el as HTMLElement).style.display = "none";
+    }
+
+    if (pbConfig.hide_badge) {
+      const el: HTMLElement | null =
+        this.shadowRoot.querySelector("state-badge");
+      if (el) {
+        el.style.visibility = "hidden";
+        el.style.marginLeft = "-48px";
+      }
+    }
+
     if (pbConfig.position === "right") {
       insertAfter(paperButtons, el);
     } else {

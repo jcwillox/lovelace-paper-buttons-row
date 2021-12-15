@@ -47,6 +47,8 @@ export interface PaperButtonRowConfig {
   align_icons?: "top" | "left" | "right" | "bottom";
   base_config?: ButtonConfig;
   position?: "center" | "right";
+  hide_badge?: boolean;
+  hide_state?: boolean;
 }
 
 export type ExternalButtonConfig =
