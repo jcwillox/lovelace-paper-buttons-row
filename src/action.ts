@@ -71,7 +71,7 @@ export function handleActionConfig(
         return;
       }
       navigate(node, actionConfig.navigation_path);
-      forwardHaptic("success");
+      forwardHaptic("light");
       break;
     case "url":
       if (!actionConfig.url_path) {
@@ -79,7 +79,7 @@ export function handleActionConfig(
         return;
       }
       window.open(actionConfig.url_path);
-      forwardHaptic("success");
+      forwardHaptic("light");
       break;
     case "toggle":
       if (!config.entity) {
@@ -87,7 +87,7 @@ export function handleActionConfig(
         return;
       }
       toggleEntity(hass, config.entity);
-      forwardHaptic("success");
+      forwardHaptic("light");
       break;
     case "call-service": {
       if (!actionConfig.service) {
@@ -96,7 +96,7 @@ export function handleActionConfig(
       }
       const [domain, service] = actionConfig.service.split(".", 2);
       hass.callService(domain, service, actionConfig.service_data);
-      forwardHaptic("success");
+      forwardHaptic("light");
       break;
     }
     case "fire-event": {
@@ -109,12 +109,12 @@ export function handleActionConfig(
         `events/${actionConfig.event_type}`,
         actionConfig.event_data || {}
       );
-      forwardHaptic("success");
+      forwardHaptic("light");
       break;
     }
     case "fire-dom-event": {
       fireEvent(node, "ll-custom", actionConfig);
-      forwardHaptic("success");
+      forwardHaptic("light");
     }
   }
 }
