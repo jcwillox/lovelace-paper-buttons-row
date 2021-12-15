@@ -1,0 +1,17 @@
+name: "Extract engines"
+description: "Extract engines from package.json"
+outputs:
+  node:
+    description: "node version"
+    value: ${{ steps.information.engines.name }}
+  pnpm:
+    description: "pnpm version"
+    value: ${{ steps.information.engines.description }}
+runs:
+  using: "composite"
+  steps:
+    - id: engines
+      shell: bash
+      run: |
+        echo ::set-output name=node::$(jq --raw-output .engines.node ./package.json)
+        echo ::set-output name=pnpm::$(jq --raw-output .engines.pnpm ./package.json)
