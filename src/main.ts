@@ -1,6 +1,6 @@
 import { html, LitElement, PropertyValues } from "lit";
 import { customElement, property } from "lit/decorators.js";
-import { handleAction, hasAction, hasRepeat } from "./action";
+import { handleAction, hasAction } from "./action";
 import { hass } from "card-tools/src/hass";
 import {
   DOMAINS_TOGGLE,

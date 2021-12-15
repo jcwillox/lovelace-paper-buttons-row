@@ -122,7 +122,3 @@ export function handleActionConfig(
 export function hasAction(config?: ButtonActionConfig): boolean {
   return config !== undefined && config.action !== "none";
 }
-
-export function hasRepeat(config?: ButtonActionConfig) {
-  return config !== undefined && config.repeat;
-}
