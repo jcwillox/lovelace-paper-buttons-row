@@ -1,0 +1,51 @@
+.flex-box {
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+}
+
+.flex-column {
+  display: inline-flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+paper-button {
+  color: var(--paper-item-icon-color);
+  padding: 6px;
+  cursor: pointer;
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  user-select: none;
+}
+
+span {
+  padding: 2px;
+  text-align: center;
+}
+
+ha-icon {
+  padding: 2px;
+}
+
+.button-active {
+  color: var(--paper-item-icon-active-color);
+}
+
+.button-unavailable {
+  color: var(--state-icon-unavailable-color);
+}
+
+.image {
+  position: relative;
+  display: inline-block;
+  width: 28px;
+  border-radius: 50%;
+  height: 28px;
+  text-align: center;
+  background-size: cover;
+  line-height: 28px;
+  vertical-align: middle;
+  box-sizing: border-box;
+}

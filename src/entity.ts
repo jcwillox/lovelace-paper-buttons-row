@@ -1,35 +1,13 @@
-import { STATES_ON } from "./const";
+import { computeEntity, HomeAssistant } from "custom-card-helpers";
+import { ButtonConfig } from "./types";
 
-export const computeDomain = (entityId) => {
-  return entityId.substr(0, entityId.indexOf("."));
-};
-
-export const computeObjectId = (entityId) => {
-  return entityId.substr(entityId.indexOf(".") + 1);
-};
-
-export const computeStateName = (stateObj) => {
+export const computeStateName = stateObj => {
   if (stateObj.attributes && stateObj.attributes.friendly_name) {
     return stateObj.attributes.friendly_name;
   }
   return stateObj.entity_id
-    ? computeObjectId(stateObj.entity_id).replace(/_/g, " ")
+    ? computeEntity(stateObj.entity_id).replace(/_/g, " ")
     : "Unknown";
-};
-
-export const computeStateIcon = (stateObj) => {
-  return stateObj.attributes && stateObj.attributes.icon;
-};
-
-export const computeDomainIcon = (entityId) => {
-  switch (computeDomain(entityId)) {
-    case "light":
-      return "mdi:lightbulb";
-    case "lock":
-      return "mdi:lock";
-    case "switch":
-      return "mdi:flash";
-  }
 };
 
 function computeActionTooltip(hass, state, config, isHold) {
@@ -79,7 +57,8 @@ function computeActionTooltip(hass, state, config, isHold) {
   }
   return tooltip;
 }
-export const computeTooltip = (hass, config) => {
+
+export const computeTooltip = (hass: HomeAssistant, config: ButtonConfig) => {
   if (config.tooltip === false) {
     return "";
   }
@@ -106,28 +85,4 @@ export const computeTooltip = (hass, config) => {
   const newline = tapTooltip && holdTooltip ? "\n" : "";
   tooltip = tapTooltip + newline + holdTooltip;
   return tooltip;
-};
-
-export const toggleLock = (hass, entity) => {
-  let state = (hass.states[entity] || {}).state;
-
-  if (STATES_ON.has(state))
-    return hass.callService("lock", "lock", {
-      entity_id: entity,
-    });
-
-  return hass.callService("lock", "unlock", {
-    entity_id: entity,
-  });
-};
-
-export const toggleEntity = (hass, entity) => {
-  let domain = computeDomain(entity);
-  if (domain === "lock") {
-    toggleLock(hass, entity);
-  } else {
-    hass.callService("homeassistant", "toggle", {
-      entity_id: entity,
-    });
-  }
 };

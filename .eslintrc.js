@@ -1,6 +1,11 @@
 module.exports = {
   root: true,
   parser: "@typescript-eslint/parser",
+  parserOptions: {
+    ecmaVersion: 2017, // Allows for the parsing of modern ECMAScript features
+    sourceType: "module", // Allows for the use of imports
+    experimentalDecorators: true
+  },
   plugins: ["@typescript-eslint", "import", "only-warn"],
   extends: ["eslint:recommended", "plugin:@typescript-eslint/recommended"],
   rules: {
@@ -45,6 +50,9 @@ module.exports = {
       }
     ],
     "no-useless-constructor": "off",
-    "@typescript-eslint/no-useless-constructor": "warn"
+    "@typescript-eslint/no-useless-constructor": "warn",
+    "@typescript-eslint/no-non-null-assertion": "off",
+    "@typescript-eslint/explicit-module-boundary-types": "off",
+    "@typescript-eslint/ban-ts-comment": "off"
   }
 };

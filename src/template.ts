@@ -1,7 +1,8 @@
 import { hasTemplate, subscribeRenderTemplate } from "card-tools/src/templates";
+import { PaperButtonsRow } from "./main";
 
 export function renderTemplateObjects(templates, hass) {
-  templates.forEach((item) => {
+  templates.forEach(item => {
     item.callback(renderTemplateObject(item.template, hass));
   });
 }
@@ -37,28 +38,28 @@ function handleCase(text, text_case) {
   }
 }
 
-export function subscribeTemplate(config, object, key) {
-  let option = object[key];
+export function subscribeTemplate(this: PaperButtonsRow, config, object, key) {
+  const option = object[key];
 
   if (typeof option === "object") {
     if (!option.entity) option.entity = config.entity;
 
-    if (option.entity !== config.entity) this._entities.push(option.entity);
+    if (option.entity !== config.entity) this._entities!.push(option.entity);
 
-    this._templates.push({
+    this._templates!.push({
       template: option,
-      callback: (res) => (res && (object[key] = res)),
+      callback: res => res && (object[key] = res)
     });
   } else if (hasTemplate(option)) {
     subscribeRenderTemplate(
       null,
-      (res) => {
+      res => {
         object[key] = res;
         this.requestUpdate();
       },
       {
         template: option,
-        variables: { config: config },
+        variables: { config: config }
       }
     );
     object[key] = "";

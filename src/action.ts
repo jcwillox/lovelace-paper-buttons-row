@@ -1,10 +1,19 @@
-import { forwardHaptic } from "./haptic";
-import { fireEvent } from "card-tools/src/event";
-import { navigate } from "./navigate";
-import { toggleEntity } from "./entity";
+import {
+  fireEvent,
+  forwardHaptic,
+  HomeAssistant,
+  navigate,
+  toggleEntity
+} from "custom-card-helpers";
+import { ButtonActionConfig, ButtonConfig } from "./types";
 
-export function handleAction(node, hass, config, action) {
-  let actionConfig = undefined;
+export const handleAction = (
+  node: HTMLElement,
+  hass: HomeAssistant,
+  config: ButtonConfig,
+  action: string
+): void => {
+  let actionConfig: ButtonActionConfig | undefined;
 
   if (action === "double_tap" && config.double_tap_action) {
     actionConfig = config.double_tap_action;
@@ -14,9 +23,18 @@ export function handleAction(node, hass, config, action) {
     actionConfig = config.tap_action;
   }
 
+  handleActionConfig(node, hass, config, actionConfig);
+};
+
+export function handleActionConfig(
+  node: HTMLElement,
+  hass: HomeAssistant,
+  config: ButtonConfig,
+  actionConfig: ButtonActionConfig | undefined
+) {
   if (!actionConfig) {
     actionConfig = {
-      action: "more-info",
+      action: "more-info"
     };
   }
 
@@ -24,7 +42,7 @@ export function handleAction(node, hass, config, action) {
     actionConfig.confirmation &&
     (!actionConfig.confirmation.exemptions ||
       !actionConfig.confirmation.exemptions.some(
-        (e) => e.user === hass.user.id
+        e => e.user === hass!.user!.id
       ))
   ) {
     forwardHaptic("warning");
@@ -40,24 +58,20 @@ export function handleAction(node, hass, config, action) {
   }
 
   switch (actionConfig.action) {
-    case "more-info":
-      if (actionConfig.entity || config.entity) {
-        fireEvent(
-          "hass-more-info",
-          {
-            entityId: actionConfig.entity || config.entity,
-          },
-          node
-        );
+    case "more-info": {
+      const entityId = actionConfig.entity || config.entity;
+      if (entityId) {
+        fireEvent(node, "hass-more-info", { entityId });
       }
       break;
+    }
     case "navigate":
       if (!actionConfig.navigation_path) {
         forwardHaptic("failure");
         return;
       }
-      navigate(actionConfig.navigation_path);
-      forwardHaptic("light");
+      navigate(node, actionConfig.navigation_path);
+      forwardHaptic("success");
       break;
     case "url":
       if (!actionConfig.url_path) {
@@ -65,7 +79,7 @@ export function handleAction(node, hass, config, action) {
         return;
       }
       window.open(actionConfig.url_path);
-      forwardHaptic("light");
+      forwardHaptic("success");
       break;
     case "toggle":
       if (!config.entity) {
@@ -73,18 +87,19 @@ export function handleAction(node, hass, config, action) {
         return;
       }
       toggleEntity(hass, config.entity);
-      forwardHaptic("light");
+      forwardHaptic("success");
       break;
-    case "call-service":
+    case "call-service": {
       if (!actionConfig.service) {
         forwardHaptic("failure");
         return;
       }
       const [domain, service] = actionConfig.service.split(".", 2);
       hass.callService(domain, service, actionConfig.service_data);
-      forwardHaptic("light");
+      forwardHaptic("success");
       break;
-    case "fire-event":
+    }
+    case "fire-event": {
       if (!actionConfig.event_type) {
         forwardHaptic("failure");
         return;
@@ -92,20 +107,22 @@ export function handleAction(node, hass, config, action) {
       hass.callApi(
         "POST",
         `events/${actionConfig.event_type}`,
-        actionConfig.event_data
+        actionConfig.event_data || {}
       );
-      forwardHaptic("light");
+      forwardHaptic("success");
       break;
-    case "fire-dom-event":
-      fireEvent("ll-custom", actionConfig, node);
-      forwardHaptic("light");
+    }
+    case "fire-dom-event": {
+      fireEvent(node, "ll-custom", actionConfig);
+      forwardHaptic("success");
+    }
   }
 }
 
-export function hasAction(config) {
+export function hasAction(config?: ButtonActionConfig): boolean {
   return config !== undefined && config.action !== "none";
 }
 
-export function hasRepeat(config) {
+export function hasRepeat(config?: ButtonActionConfig) {
   return config !== undefined && config.repeat;
 }
