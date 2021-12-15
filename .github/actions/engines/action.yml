@@ -3,10 +3,10 @@ description: "Extract engines from package.json"
 outputs:
   node:
     description: "node version"
-    value: ${{ steps.information.engines.name }}
+    value: ${{ steps.engines.outputs.node }}
   pnpm:
     description: "pnpm version"
-    value: ${{ steps.information.engines.description }}
+    value: ${{ steps.engines.outputs.pnpm }}
 runs:
   using: "composite"
   steps:
