@@ -336,6 +336,9 @@ export class PaperButtonsRow extends LitElement {
 
     if (config.entity) {
       const domain = computeDomain(config.entity);
+      if (!config.hold_action) {
+        config.hold_action = { action: "more-info" };
+      }
       if (DOMAINS_TOGGLE.has(domain)) {
         return {
           tap_action: {
