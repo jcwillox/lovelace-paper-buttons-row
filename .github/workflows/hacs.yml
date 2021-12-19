@@ -1,4 +1,4 @@
-name: Validate HACS
+name: HACS
 
 on:
   push:
@@ -7,8 +7,8 @@ on:
     - cron: "0 0 * * *"
 
 jobs:
-  hacs:
-    name: Validate HACS
+  validate:
+    name: Validate
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
