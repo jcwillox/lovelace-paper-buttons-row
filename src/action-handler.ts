@@ -180,13 +180,10 @@ class ActionHandler extends HTMLElement implements IActionHandler {
           this.startAnimation(x, y);
           this.held = true;
           if (options.repeat && !this.isRepeating) {
-            console.log("repeating", options);
             this.isRepeating = true;
             this.repeatTimeout = setInterval(() => {
               fireEvent(element, "action", { action: "hold" });
             }, options.repeat);
-          } else {
-            console.log("init not repeating", options);
           }
         }, this.holdTime);
       }
@@ -217,7 +214,6 @@ class ActionHandler extends HTMLElement implements IActionHandler {
       }
       if (options.hasHold && this.held) {
         if (!options.repeat) {
-          console.log("not repeating", options);
           fireEvent(target, "action", { action: "hold" });
         }
       } else if (options.hasDoubleClick) {
