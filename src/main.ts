@@ -339,25 +339,20 @@ export class PaperButtonsRow extends LitElement {
       if (!config.hold_action) {
         config.hold_action = { action: "more-info" };
       }
-      if (DOMAINS_TOGGLE.has(domain)) {
-        return {
-          tap_action: {
-            action: "toggle"
-          },
-          ...config
-        };
-      }
-      if (domain === "scene") {
-        return {
-          tap_action: {
+      if (!config.tap_action) {
+        if (DOMAINS_TOGGLE.has(domain)) {
+          config.tap_action = { action: "toggle" };
+        } else if (domain === "scene") {
+          config.tap_action = {
             action: "call-service",
             service: "scene.turn_on",
             service_data: {
               entity_id: config.entity
             }
-          },
-          ...config
-        };
+          };
+        } else {
+          config.tap_action = { action: "more-info" };
+        }
       }
     }
     return config;
