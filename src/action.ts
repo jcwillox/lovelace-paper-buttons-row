@@ -6,6 +6,7 @@ import {
   toggleEntity
 } from "custom-card-helpers";
 import { ButtonActionConfig, ButtonConfig } from "./types";
+import { showToast } from "./utils";
 
 export const handleAction = (
   node: HTMLElement,
@@ -62,11 +63,23 @@ export function handleActionConfig(
       const entityId = actionConfig.entity || config.entity;
       if (entityId) {
         fireEvent(node, "hass-more-info", { entityId });
+      } else {
+        showToast(node, {
+          message: hass.localize(
+            "ui.panel.lovelace.cards.actions.no_entity_more_info"
+          )
+        });
+        forwardHaptic("failure");
       }
       break;
     }
     case "navigate":
       if (!actionConfig.navigation_path) {
+        showToast(node, {
+          message: hass.localize(
+            "ui.panel.lovelace.cards.actions.no_navigation_path"
+          )
+        });
         forwardHaptic("failure");
         return;
       }
@@ -75,6 +88,9 @@ export function handleActionConfig(
       break;
     case "url":
       if (!actionConfig.url_path) {
+        showToast(node, {
+          message: hass.localize("ui.panel.lovelace.cards.actions.no_url")
+        });
         forwardHaptic("failure");
         return;
       }
@@ -83,6 +99,11 @@ export function handleActionConfig(
       break;
     case "toggle":
       if (!config.entity) {
+        showToast(node, {
+          message: hass.localize(
+            "ui.panel.lovelace.cards.actions.no_entity_toggle"
+          )
+        });
         forwardHaptic("failure");
         return;
       }
@@ -91,6 +112,9 @@ export function handleActionConfig(
       break;
     case "call-service": {
       if (!actionConfig.service) {
+        showToast(node, {
+          message: hass.localize("ui.panel.lovelace.cards.actions.no_service")
+        });
         forwardHaptic("failure");
         return;
       }
@@ -101,6 +125,9 @@ export function handleActionConfig(
     }
     case "fire-event": {
       if (!actionConfig.event_type) {
+        showToast(node, {
+          message: "No event to call specified"
+        });
         forwardHaptic("failure");
         return;
       }
