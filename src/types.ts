@@ -71,6 +71,7 @@ export interface FireEventActionConfig extends BaseActionConfig {
   haptic?: HapticType;
 }
 
+// TODO: Current types for custom-card-helpers are missing this, remove when not needed
 declare module "custom-card-helpers" {
   interface CallServiceActionConfig {
     target?: HassServiceTarget;
