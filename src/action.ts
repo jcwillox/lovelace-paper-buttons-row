@@ -6,6 +6,7 @@ import {
   toggleEntity
 } from "custom-card-helpers";
 import { ButtonActionConfig, ButtonConfig } from "./types";
+import { callService } from "home-assistant-js-websocket";
 
 export const handleAction = (
   node: HTMLElement,
@@ -95,7 +96,13 @@ export function handleActionConfig(
         return;
       }
       const [domain, service] = actionConfig.service.split(".", 2);
-      hass.callService(domain, service, actionConfig.service_data);
+      callService(
+        hass.connection,
+        domain,
+        service,
+        actionConfig.service_data,
+        actionConfig.target
+      );
       forwardHaptic("light");
       break;
     }
