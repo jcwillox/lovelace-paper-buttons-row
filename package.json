@@ -13,7 +13,7 @@
   },
   "dependencies": {
     "card-tools": "github:thomasloven/lovelace-card-tools#477f3d4",
-    "custom-card-helpers": "^1.8.0",
+    "custom-card-helpers": "github:custom-cards/custom-card-helpers#ae86495",
     "deepmerge": "^4.2.2",
     "home-assistant-js-websocket": "^5.11.3",
     "lit": "^2.0.2"

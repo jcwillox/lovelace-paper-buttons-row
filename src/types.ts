@@ -1,7 +1,6 @@
 import { ActionConfig, LovelaceCard } from "custom-card-helpers";
 import { HapticType } from "custom-card-helpers/src/haptic";
 import { BaseActionConfig } from "custom-card-helpers/src/types";
-import { HassServiceTarget } from "home-assistant-js-websocket";
 
 declare global {
   interface HTMLElementTagNameMap {
@@ -69,13 +68,6 @@ export interface FireEventActionConfig extends BaseActionConfig {
   event_data?: Record<string, unknown>;
   repeat?: number;
   haptic?: HapticType;
-}
-
-// TODO: Current types for custom-card-helpers are missing this, remove when not needed
-declare module "custom-card-helpers" {
-  interface CallServiceActionConfig {
-    target?: HassServiceTarget;
-  }
 }
 
 export type ButtonActionConfig = ActionConfig | FireEventActionConfig;
