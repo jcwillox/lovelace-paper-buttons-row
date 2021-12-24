@@ -8,7 +8,7 @@ specifiers:
   '@typescript-eslint/eslint-plugin': ^5.7.0
   '@typescript-eslint/parser': ^5.7.0
   card-tools: github:thomasloven/lovelace-card-tools#477f3d4
-  custom-card-helpers: ^1.8.0
+  custom-card-helpers: github:custom-cards/custom-card-helpers#ae86495
   deepmerge: ^4.2.2
   eslint: ^8.4.1
   eslint-plugin-import: ^2.25.3
@@ -26,7 +26,7 @@ specifiers:
 
 dependencies:
   card-tools: github.com/thomasloven/lovelace-card-tools/477f3d4
-  custom-card-helpers: 1.8.0
+  custom-card-helpers: github.com/custom-cards/custom-card-helpers/ae86495
   deepmerge: 4.2.2
   home-assistant-js-websocket: 5.11.3
   lit: 2.0.2
@@ -89,17 +89,44 @@ packages:
       - supports-color
     dev: true
 
-  /@formatjs/ecma402-abstract/1.4.0:
-    resolution: {integrity: sha512-Mv027hcLFjE45K8UJ8PjRpdDGfR0aManEFj1KzoN8zXNveHGEygpZGfFf/FTTMl+QEVSrPAUlyxaCApvmv47AQ==}
+  /@formatjs/ecma402-abstract/1.11.0:
+    resolution: {integrity: sha512-TOp5La9wmSh9G5bqFGN/ApmOXtJDzBGkYW+OTRd3ukY7J32RVGZPpN4O9BD651JUy66nj3g9CIENTNCgm4IRXQ==}
+    dependencies:
+      '@formatjs/intl-localematcher': 0.2.21
+      tslib: 2.3.1
+    dev: false
+
+  /@formatjs/fast-memoize/1.2.1:
+    resolution: {integrity: sha512-Rg0e76nomkz3vF9IPlKeV+Qynok0r7YZjL6syLz4/urSg0IbjPZCB/iYUMNsYA643gh4mgrX3T7KEIFIxJBQeg==}
     dependencies:
       tslib: 2.3.1
     dev: false
 
-  /@formatjs/intl-numberformat/5.7.6:
-    resolution: {integrity: sha512-ZlZfYtvbVHYZY5OG3RXizoCwxKxEKOrzEe2YOw9wbzoxF3PmFn0SAgojCFGLyNXkkR6xVxlylhbuOPf1dkIVNg==}
+  /@formatjs/icu-messageformat-parser/2.0.15:
+    resolution: {integrity: sha512-nnRbkK+nz4ZL1l1lUbztL8qrEUGQKF/NU38itLnzLm8QLEacFS5qGOxxp/0DSIehhX99tNroNtudtjdOvzruAQ==}
     dependencies:
-      '@formatjs/ecma402-abstract': 1.4.0
+      '@formatjs/ecma402-abstract': 1.11.0
+      '@formatjs/icu-skeleton-parser': 1.3.2
       tslib: 2.3.1
+    dev: false
+
+  /@formatjs/icu-skeleton-parser/1.3.2:
+    resolution: {integrity: sha512-ChKmnVCE/LbJzedRgA/EeL5+tfjx/6ZWunqNiEC5BtqHnnwmLN/oPuCPb8b3NhuGiwTqp+LkaS70tga5kXRHxg==}
+    dependencies:
+      '@formatjs/ecma402-abstract': 1.11.0
+      tslib: 2.3.1
+    dev: false
+
+  /@formatjs/intl-localematcher/0.2.21:
+    resolution: {integrity: sha512-JTJeLiNwexN4Gy0cMxoUPvJbKhXdnSuo5jPrDafEZpnDWlJ5VDYta8zUVVozO/pwzEmFVHEUpgiEDj+39L4oMg==}
+    dependencies:
+      tslib: 2.3.1
+    dev: false
+
+  /@formatjs/intl-utils/3.8.4:
+    resolution: {integrity: sha512-j5C6NyfKevIxsfLK8KwO1C0vvP7k1+h4A9cFpc+cr6mEwCc1sPkr17dzh0Ke6k9U5pQccAQoXdcNBl3IYa4+ZQ==}
+    dependencies:
+      emojis-list: 3.0.0
     dev: false
 
   /@humanwhocodes/config-array/0.9.2:
@@ -543,18 +570,6 @@ packages:
       which: 2.0.2
     dev: true
 
-  /custom-card-helpers/1.8.0:
-    resolution: {integrity: sha512-IgxhHw5jAaiDJ4sFG8JY1+/BY/6Va9wXLG5CV2eE/mEngpMff/lHcmaFDgFsQAlGjfV1p/4IiumXmraxxa726A==}
-    dependencies:
-      fecha: 4.2.1
-      home-assistant-js-websocket: 5.11.3
-      intl-messageformat: 8.4.1
-      lit: 2.0.2
-      rollup: 2.61.1
-      superstruct: 0.8.4
-      typescript: 3.9.10
-    dev: false
-
   /debug/2.6.9:
     resolution: {integrity: sha512-bC7ElrdJaJnPbAP+1EotYvqZsb3ecl5wi6Bfi6BJTUcNowp6cvspg0jXznRTKDjm/E7AdgFBVeAPVMNcKGsHMA==}
     dependencies:
@@ -618,6 +633,11 @@ packages:
   /duplexer/0.1.2:
     resolution: {integrity: sha512-jtD6YG370ZCIi/9GTaJKQxWTZD045+4R4hTk/x1UyoqadyJ9x9CgSi1RlVDQF8U2sxLLSnFkCaMihqljHIWgMg==}
     dev: true
+
+  /emojis-list/3.0.0:
+    resolution: {integrity: sha512-/kyM18EfinwXZbno9FyUGeFh87KC8HRQBQGildHZbEuRyWFOmv1U10o9BBp8XVZDVNNuQKyIGIu5ZYAAXJ0V2Q==}
+    engines: {node: '>= 4'}
+    dev: false
 
   /enquirer/2.3.6:
     resolution: {integrity: sha512-yjNnPr315/FjS4zIsUxYguYUPP2e1NK4d7E7ZOLiyYCcbFBiTMyID+2wvm2w6+pZ/odMA7cRkjhsPbltwBOrLg==}
@@ -876,10 +896,6 @@ packages:
       reusify: 1.0.4
     dev: true
 
-  /fecha/4.2.1:
-    resolution: {integrity: sha512-MMMQ0ludy/nBs1/o0zVOiKTpG7qMbonKUzjJgQFEuvq6INZ1OraKPRAWkBq5vlKLOUMpmNYG1JoN3oDPUQ9m3Q==}
-    dev: false
-
   /figures/1.7.0:
     resolution: {integrity: sha1-y+Hjr/zxzUS4DK3+0o3Hk6lwHS4=}
     engines: {node: '>=0.10.0'}
@@ -1099,22 +1115,13 @@ packages:
       side-channel: 1.0.4
     dev: true
 
-  /intl-format-cache/4.3.1:
-    resolution: {integrity: sha512-OEUYNA7D06agqPOYhbTkl0T8HA3QKSuwWh1HiClEnpd9vw7N+3XsQt5iZ0GUEchp5CW1fQk/tary+NsbF3yQ1Q==}
-    dev: false
-
-  /intl-messageformat-parser/5.5.1:
-    resolution: {integrity: sha512-TvB3LqF2VtP6yI6HXlRT5TxX98HKha6hCcrg9dwlPwNaedVNuQA9KgBdtWKgiyakyCTYHQ+KJeFEstNKfZr64w==}
-    deprecated: We've written a new parser that's 6x faster and is backwards compatible. Please use @formatjs/icu-messageformat-parser
+  /intl-messageformat/9.11.0:
+    resolution: {integrity: sha512-LqV23YGQ5FvKiHmqDtVbx88jNZbJ25d/LE4jRX92TTshBDAofKwBjCi3WVb5pdWbLjDj+upeU+zbUJLlHfj/Wg==}
     dependencies:
-      '@formatjs/intl-numberformat': 5.7.6
-    dev: false
-
-  /intl-messageformat/8.4.1:
-    resolution: {integrity: sha512-N4jLt0KebfqXZZZQRwBwZMrqwccHzZnN6KSeUsfidIoHMPIlLIgq08KcYsn7bZS6adh1KKH4/99VODWDDDu85Q==}
-    dependencies:
-      intl-format-cache: 4.3.1
-      intl-messageformat-parser: 5.5.1
+      '@formatjs/ecma402-abstract': 1.11.0
+      '@formatjs/fast-memoize': 1.2.1
+      '@formatjs/icu-messageformat-parser': 2.0.15
+      tslib: 2.3.1
     dev: false
 
   /is-bigint/1.0.4:
@@ -1264,11 +1271,6 @@ packages:
     dependencies:
       minimist: 1.2.5
     dev: true
-
-  /kind-of/6.0.3:
-    resolution: {integrity: sha512-dcS1ul+9tmeD95T+x28/ehLgd9mENa3LsvDTtzm3vyBEO7RPptvAD+t44WVXaUjTBRcrpFeFlC8WCruUR456hw==}
-    engines: {node: '>=0.10.0'}
-    dev: false
 
   /levn/0.4.1:
     resolution: {integrity: sha512-+bT2uH4E5LGE7h/n3evcS/sQlJXCpIp6ym8OWJ5eV6+67Dsql/LaaT7qJBAt2rzfoa/5QBGBhxDix1dMt2kQKQ==}
@@ -1728,11 +1730,8 @@ packages:
     engines: {node: '>=8'}
     dev: true
 
-  /superstruct/0.8.4:
-    resolution: {integrity: sha512-48Ors8IVWZm/tMr8r0Si6+mJiB7mkD7jqvIzktjJ4+EnP5tBp0qOpiM1J8sCUorKx+TXWrfb3i1UcjdD1YK/wA==}
-    dependencies:
-      kind-of: 6.0.3
-      tiny-invariant: 1.2.0
+  /superstruct/0.15.3:
+    resolution: {integrity: sha512-wilec1Rg3FtKuRjRyCt70g5W29YUEuaLnybdVQUI+VQ7m0bw8k7TzrRv5iYmo6IpjLVrwxP5t3RgjAVqhYh4Fg==}
     dev: false
 
   /supports-color/2.0.0:
@@ -1767,10 +1766,6 @@ packages:
   /text-table/0.2.0:
     resolution: {integrity: sha1-f17oI66AUgfACvLfSoTsP8+lcLQ=}
     dev: true
-
-  /tiny-invariant/1.2.0:
-    resolution: {integrity: sha512-1Uhn/aqw5C6RI4KejVeTg6mIS7IqxnLJ8Mv2tV5rTc0qWobay7pDUz6Wi392Cnc8ak1H0F2cjoRzb2/AW4+Fvg==}
-    dev: false
 
   /to-regex-range/5.0.1:
     resolution: {integrity: sha512-65P7iz6X5yEr1cwcgvQxbbIw7Uk3gOy5dIdtZ4rDveLqhrdJP+Li/Hx6tyK0NEb+2GCyneCMJiGqrADCSNk8sQ==}
@@ -1817,17 +1812,10 @@ packages:
     engines: {node: '>=10'}
     dev: true
 
-  /typescript/3.9.10:
-    resolution: {integrity: sha512-w6fIxVE/H1PkLKcCPsFqKE7Kv7QUwhU8qQY2MueZXWx5cPZdwFupLgKK3vntcK98BtNHZtAF4LA/yl2a7k8R6Q==}
-    engines: {node: '>=4.2.0'}
-    hasBin: true
-    dev: false
-
   /typescript/4.5.4:
     resolution: {integrity: sha512-VgYs2A2QIRuGphtzFV7aQJduJ2gyfTljngLzjpfW9FoYZF6xuw1W0vW9ghCKLfcWrCFxK81CSGRAvS1pn4fIUg==}
     engines: {node: '>=4.2.0'}
     hasBin: true
-    dev: true
 
   /uglifycss/0.0.29:
     resolution: {integrity: sha512-J2SQ2QLjiknNGbNdScaNZsXgmMGI0kYNrXaDlr4obnPW9ni1jljb1NeEVWAiTgZ8z+EBWP2ozfT9vpy03rjlMQ==}
@@ -1884,6 +1872,20 @@ packages:
   /yallist/4.0.0:
     resolution: {integrity: sha512-3wdGidZyq5PB084XLES5TpOSRA3wjXAlIWMhum2kRcv/41Sn2emQ0dycQW4uZXLejwKvg6EsvbdlVL+FYEct7A==}
     dev: true
+
+  github.com/custom-cards/custom-card-helpers/ae86495:
+    resolution: {tarball: https://codeload.github.com/custom-cards/custom-card-helpers/tar.gz/ae86495}
+    name: custom-card-helpers
+    version: 1.8.0
+    dependencies:
+      '@formatjs/intl-utils': 3.8.4
+      home-assistant-js-websocket: 5.11.3
+      intl-messageformat: 9.11.0
+      lit: 2.0.2
+      rollup: 2.61.1
+      superstruct: 0.15.3
+      typescript: 4.5.4
+    dev: false
 
   github.com/thomasloven/lovelace-card-tools/477f3d4:
     resolution: {tarball: https://codeload.github.com/thomasloven/lovelace-card-tools/tar.gz/477f3d4}
