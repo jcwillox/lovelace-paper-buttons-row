@@ -1,5 +1,6 @@
 import { html, LitElement, PropertyValues } from "lit";
 import { customElement, property } from "lit/decorators.js";
+import { styleMap, StyleInfo } from "lit/directives/style-map.js";
 import { handleAction, hasAction } from "./action";
 import { hass } from "card-tools/src/hass";
 import {
@@ -10,7 +11,6 @@ import {
 } from "./const";
 import { computeStateName, computeTooltip } from "./entity";
 import { name, version } from "../package.json";
-import { coerceObject, mapStyle } from "./styles";
 import deepmerge from "deepmerge";
 import { actionHandler } from "./action-handler";
 import "./entity-row";
@@ -24,12 +24,14 @@ import {
 import {
   ButtonConfig,
   ExternalButtonConfig,
+  ExternalButtonType,
   ExternalPaperButtonRowConfig,
   PaperButtonRowConfig,
   StyleConfig
 } from "./types";
 import { HassEntity } from "home-assistant-js-websocket";
 import styles from "./styles.css";
+import { arrayToObject } from "./utils";
 
 console.info(
   `%c ${name.toUpperCase()} %c ${version} `,
@@ -88,12 +90,12 @@ export class PaperButtonsRow extends LitElement {
 
     // ensure we always have 1 row
     if (config.buttons.every(item => !Array.isArray(item))) {
-      config.buttons = [config.buttons as Array<ExternalButtonConfig>];
+      config.buttons = [config.buttons as Array<ExternalButtonType>];
     } else if (!config.buttons.every(item => Array.isArray(item))) {
       throw new Error("Cannot mix rows and buttons");
     }
 
-    config.buttons = (config.buttons as Array<Array<ExternalButtonConfig>>).map(
+    config.buttons = (config.buttons as Array<Array<ExternalButtonType>>).map(
       row => {
         return row.map(bConfig => {
           // handle when config is not defined as a dictionary.
@@ -112,8 +114,28 @@ export class PaperButtonsRow extends LitElement {
               );
           }
 
+          if (bConfig.style === undefined) {
+            // ensure style is not undefined
+            bConfig.style = {} as StyleConfig;
+          } else {
+            // ensure styles are an object
+            for (const key in bConfig.style) {
+              bConfig.style[key] = arrayToObject(bConfig.style[key]);
+            }
+          }
+          if (bConfig.state_styles) {
+            // ensure styles are an object
+            for (const stateKey in bConfig.state_styles) {
+              for (const key in bConfig.state_styles[stateKey]) {
+                bConfig.state_styles[stateKey][key] = arrayToObject(
+                  bConfig.state_styles[stateKey][key]
+                );
+              }
+            }
+          }
+
           // apply default services.
-          bConfig = this._defaultConfig(bConfig) as ExternalButtonConfig;
+          bConfig = this._defaultConfig(bConfig);
 
           return bConfig;
         });
@@ -145,13 +167,12 @@ export class PaperButtonsRow extends LitElement {
         );
 
         // subscribe template styles
-        if (typeof config.style === "object")
-          Object.values(config.style).forEach(styles => {
-            if (typeof styles === "object")
-              Object.keys(styles).forEach(key =>
-                subscribeTemplate.call(this, config, styles, key)
-              );
-          });
+        Object.values(config.style).forEach(styles => {
+          if (typeof styles === "object")
+            Object.keys(styles).forEach(key =>
+              subscribeTemplate.call(this, config, styles, key)
+            );
+        });
 
         return config;
       });
@@ -174,8 +195,7 @@ export class PaperButtonsRow extends LitElement {
                 (config.entity != undefined &&
                   this.hass!.states[config.entity]) ||
                 undefined;
-              const stateStyle = this._getStateStyle(config);
-              const buttonStyle = this._getStyle(config, stateStyle, "button");
+              const styles = this._getStyles(config);
 
               return html`
                 <paper-button
@@ -185,8 +205,7 @@ export class PaperButtonsRow extends LitElement {
                     hasDoubleClick: hasAction(config.double_tap_action),
                     repeat: config.hold_action?.repeat
                   })}"
-                  .config="${config}"
-                  style="${buttonStyle}"
+                  style="${styleMap((styles.button || {}) as StyleInfo)}"
                   class="${this._getClass(stateObj?.state)}"
                   title="${computeTooltip(this.hass!, config)}"
                 >
@@ -195,26 +214,16 @@ export class PaperButtonsRow extends LitElement {
                       return html`
                         <div class="flex-column">
                           ${column.map(row =>
-                            this.renderElement(
-                              row,
-                              config,
-                              stateStyle,
-                              stateObj
-                            )
+                            this.renderElement(row, config, styles, stateObj)
                           )}
                         </div>
                       `;
-                    return this.renderElement(
-                      column,
-                      config,
-                      stateStyle,
-                      stateObj
-                    );
+                    return this.renderElement(column, config, styles, stateObj);
                   })}
 
                   <paper-ripple
                     center
-                    style="${this._getStyle(config, stateStyle, "ripple")}"
+                    style="${styleMap((styles.ripple || {}) as StyleInfo)}"
                     class="${this._getRippleClass(config)}"
                   ></paper-ripple>
                 </paper-button>
@@ -229,15 +238,15 @@ export class PaperButtonsRow extends LitElement {
   renderElement(
     item,
     config: ButtonConfig,
-    stateStyle: StyleConfig,
-    stateObj?: HassEntity
+    styles?: StyleConfig,
+    entity?: HassEntity
   ) {
-    const style = this._getStyle(config, stateStyle, item);
+    const style = (styles || {})[item] || {};
     switch (item) {
       case "icon":
-        return this.renderIcon(config, style, stateObj);
+        return this.renderIcon(config, style, entity);
       case "name":
-        return this.renderName(config, style, stateObj);
+        return this.renderName(config, style, entity);
       case "state":
         return this.renderState(config, style);
     }
@@ -252,16 +261,20 @@ export class PaperButtonsRow extends LitElement {
         : false;
 
     return config.image
-      ? html`<img src="${config.image}" class="image" style="${style}" />`
+      ? html`<img
+          src="${config.image}"
+          class="image"
+          style="${styleMap(style)}"
+        />`
       : icon
-      ? html` <ha-icon style="${style}" .icon="${icon}" />`
+      ? html` <ha-icon style="${styleMap(style)}" .icon="${icon}" />`
       : "";
   }
 
   renderName(config: ButtonConfig, style, stateObj?: HassEntity) {
     return config.name !== false && (config.name || config.entity)
       ? html`
-          <span style="${style}">
+          <span style="${styleMap(style)}">
             ${config.name || computeStateName(stateObj)}
           </span>
         `
@@ -270,7 +283,9 @@ export class PaperButtonsRow extends LitElement {
 
   renderState(config: ButtonConfig, style) {
     return config.state !== false
-      ? html` <span style="${style}"> ${computeStateText(config)} </span> `
+      ? html`
+          <span style="${styleMap(style)}"> ${computeStateText(config)} </span>
+        `
       : "";
   }
 
@@ -304,25 +319,19 @@ export class PaperButtonsRow extends LitElement {
     return "circle";
   }
 
-  _getStateStyle(config: ButtonConfig): StyleConfig {
-    if (config.state && config.state_styles) {
-      if (typeof config.state !== "string") {
-        console.error("wrong state type", typeof config.state, config.state);
-        return {} as StyleConfig;
-      }
-      return config.state_styles[(config.state as string).toLowerCase()] || {};
+  _getStyles(config: ButtonConfig): StyleConfig {
+    if (!config.state || !config.state_styles) {
+      return config.style;
     }
-    return {} as StyleConfig;
+    const stateStyle =
+      config.state_styles[(config.state as string).toLowerCase()];
+    if (!stateStyle) {
+      return config.style;
+    }
+    return deepmerge(config.style, stateStyle);
   }
 
-  _getStyle(config: ButtonConfig, stateStyle, attribute) {
-    return mapStyle({
-      ...coerceObject((config.style && config.style[attribute]) || {}),
-      ...coerceObject(stateStyle[attribute] || {})
-    });
-  }
-
-  _defaultConfig(config: ButtonConfig) {
+  _defaultConfig(config: ExternalButtonConfig) {
     if (!config.layout) {
       // migrate align_icon to layout
       const alignment = config.align_icon || this._config?.align_icons;

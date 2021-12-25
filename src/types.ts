@@ -35,7 +35,7 @@ export interface ButtonConfig {
   tap_action?: ButtonActionConfig;
   hold_action?: ButtonActionConfig;
   double_tap_action?: ButtonActionConfig;
-  style?: StyleConfig;
+  style: StyleConfig;
   state_styles?: Record<string, StyleConfig>;
   state_icons?: Record<string, string>;
   state_text?: Record<string, string>;
@@ -51,15 +51,17 @@ export interface PaperButtonRowConfig {
   hide_state?: boolean;
 }
 
-export type ExternalButtonConfig =
-  | string
-  | (ButtonConfig & {
-      layout?: string | Array<string | Array<string>>;
-    });
+export interface ExternalButtonConfig
+  extends Omit<ButtonConfig, "layout" | "style"> {
+  layout?: string | Array<string | Array<string>>;
+  style?: StyleConfig;
+}
+
+export type ExternalButtonType = string | ExternalButtonConfig;
 
 export interface ExternalPaperButtonRowConfig
   extends Omit<PaperButtonRowConfig, "buttons"> {
-  buttons: Array<ExternalButtonConfig | Array<ExternalButtonConfig>>;
+  buttons: Array<ExternalButtonType | Array<ExternalButtonType>>;
 }
 
 export interface FireEventActionConfig extends BaseActionConfig {
