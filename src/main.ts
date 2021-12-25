@@ -305,14 +305,14 @@ export class PaperButtonsRow extends LitElement {
     return "";
   }
 
-  _getRippleClass(config) {
-    if (config.layout.length === 1 && config.layout[0] === "icon") {
+  _getRippleClass(config: ButtonConfig) {
+    if (config.layout?.length === 1 && config.layout[0] === "icon") {
       return "circle";
     }
     if (
       config.name ||
       (config.name !== false && config.entity) ||
-      config.layout.includes("state")
+      config.layout?.includes("state")
     ) {
       return "";
     }

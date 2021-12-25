@@ -25,7 +25,7 @@ export type StyleConfig = Record<
 
 export interface ButtonConfig {
   entity?: string;
-  name?: string | Template;
+  name?: string | false | Template;
   state?: string | Template;
   icon?: string | Template;
   image?: string | Template;
