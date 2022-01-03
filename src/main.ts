@@ -51,6 +51,10 @@ const computeStateText = config => {
 };
 
 const migrateIconAlignment = alignment => {
+  console.warn(
+    name,
+    "'align_icon' and 'align_icons' is deprecated and will be removed in a future version"
+  );
   switch (alignment) {
     case "top":
       return [["icon", "name"]];
@@ -135,7 +139,7 @@ export class PaperButtonsRow extends LitElement {
           }
 
           // apply default services.
-          bConfig = this._defaultConfig(bConfig);
+          bConfig = this._defaultConfig(config, bConfig);
 
           return bConfig;
         });
@@ -331,40 +335,43 @@ export class PaperButtonsRow extends LitElement {
     return deepmerge(config.style, stateStyle);
   }
 
-  _defaultConfig(config: ExternalButtonConfig) {
-    if (!config.layout) {
+  _defaultConfig(
+    config: ExternalPaperButtonRowConfig,
+    bConfig: ExternalButtonConfig
+  ) {
+    if (!bConfig.layout) {
       // migrate align_icon to layout
-      const alignment = config.align_icon || this._config?.align_icons;
-      if (alignment) config.layout = migrateIconAlignment(alignment);
-      else config.layout = ["icon", "name"];
+      const alignment = bConfig.align_icon || config.align_icons;
+      if (alignment) bConfig.layout = migrateIconAlignment(alignment);
+      else bConfig.layout = ["icon", "name"];
     }
 
-    if (!config.state && config.entity) {
-      config.state = { case: "upper" };
+    if (!bConfig.state && bConfig.entity) {
+      bConfig.state = { case: "upper" };
     }
 
-    if (config.entity) {
-      const domain = computeDomain(config.entity);
-      if (!config.hold_action) {
-        config.hold_action = { action: "more-info" };
+    if (bConfig.entity) {
+      const domain = computeDomain(bConfig.entity);
+      if (!bConfig.hold_action) {
+        bConfig.hold_action = { action: "more-info" };
       }
-      if (!config.tap_action) {
+      if (!bConfig.tap_action) {
         if (DOMAINS_TOGGLE.has(domain)) {
-          config.tap_action = { action: "toggle" };
+          bConfig.tap_action = { action: "toggle" };
         } else if (domain === "scene") {
-          config.tap_action = {
+          bConfig.tap_action = {
             action: "call-service",
             service: "scene.turn_on",
             service_data: {
-              entity_id: config.entity
+              entity_id: bConfig.entity
             }
           };
         } else {
-          config.tap_action = { action: "more-info" };
+          bConfig.tap_action = { action: "more-info" };
         }
       }
     }
-    return config;
+    return bConfig;
   }
 
   shouldUpdate(changedProps: PropertyValues) {
