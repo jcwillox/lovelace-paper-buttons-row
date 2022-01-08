@@ -128,13 +128,17 @@ export class PaperButtonsRow extends LitElement {
               );
           }
 
-          if (bConfig.style === undefined) {
-            // ensure style is not undefined
-            bConfig.style = {} as StyleConfig;
+          // migrate `style` to `styles`
+          if (bConfig.styles == undefined) {
+            bConfig.styles = bConfig.style;
+          }
+          if (bConfig.styles === undefined) {
+            // ensure styles is not undefined
+            bConfig.styles = {} as StyleConfig;
           } else {
             // ensure styles are an object
-            for (const key in bConfig.style) {
-              bConfig.style[key] = arrayToObject(bConfig.style[key]);
+            for (const key in bConfig.styles) {
+              bConfig.styles[key] = arrayToObject(bConfig.styles[key]);
             }
           }
           if (bConfig.state_styles) {
@@ -181,7 +185,7 @@ export class PaperButtonsRow extends LitElement {
         );
 
         // subscribe template styles
-        Object.values(config.style).forEach(styles => {
+        Object.values(config.styles).forEach(styles => {
           if (typeof styles === "object")
             Object.keys(styles).forEach(key =>
               subscribeTemplate.call(this, config, styles, key)
@@ -345,14 +349,14 @@ export class PaperButtonsRow extends LitElement {
 
   _getStyles(config: ButtonConfig): StyleConfig {
     if (!config.state || !config.state_styles) {
-      return config.style;
+      return config.styles;
     }
     const stateStyle =
       config.state_styles[(config.state as string).toLowerCase()];
     if (!stateStyle) {
-      return config.style;
+      return config.styles;
     }
-    return deepmerge(config.style, stateStyle);
+    return deepmerge(config.styles, stateStyle);
   }
 
   _defaultConfig(
