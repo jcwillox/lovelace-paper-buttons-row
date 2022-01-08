@@ -39,8 +39,8 @@ console.info(
   `color: #039be5; background: white; font-weight: 700;`
 );
 
-const computeIcon = (state, config) => {
-  return config.state_icons && config.state_icons[state];
+const computeStateIcon = config => {
+  return config.state_icons && config.state_icons[config.state.toLowerCase()];
 };
 
 const computeStateText = config => {
@@ -283,7 +283,7 @@ export class PaperButtonsRow extends LitElement {
   renderIcon(config: ButtonConfig, style, entity?: HassEntity) {
     const icon =
       config.icon !== false && (config.icon || config.entity)
-        ? computeIcon(entity?.state, config) ||
+        ? computeStateIcon(config) ||
           config.icon ||
           (entity && stateIcon(entity))
         : false;
