@@ -2,12 +2,7 @@
 
 [![hacs_badge](https://img.shields.io/badge/HACS-Default-orange.svg?style=for-the-badge)](https://github.com/custom-components/hacs)
 
-This is a complete rewrite of the original [`button-entity-row`](https://github.com/custom-cards/button-entity-row)
-plugin, that is more consistent with Home Assistant's [button card](https://www.home-assistant.io/lovelace/button/), it
-uses **actions** including `tap_action`, `double_tap_action` and `hold_action` allowing for greater customisation of the
-buttons behaviour. It also retains the ability to style the button based on state, but adds the ability to style the
-icon, text, and ripple effect separately. There is a new option for **icon alignment** and the buttons have haptic
-feedback.
+This is a complete rewrite of the original [`button-entity-row`](https://github.com/custom-cards/button-entity-row) plugin, that is more consistent with Home Assistant's [button card](https://www.home-assistant.io/lovelace/button/), it uses **actions** including `tap_action`, `double_tap_action` and `hold_action` allowing for greater customisation of the buttons behaviour. It also retains the ability to style the button based on state, but adds the ability to style the icon, text, and ripple effect separately. There is a new option for **icon alignment** and the buttons have haptic feedback.
 
 ![example-main](examples/example-5.gif)
 
@@ -15,18 +10,11 @@ feedback.
 
 | Name         | Type                                                  | Requirement  | Description                                                                                                                     |
 | ------------ | ----------------------------------------------------- | ------------ | ------------------------------------------------------------------------------------------------------------------------------- |
-| type         | `string`                                              | **
-Required** | `custom:paper-buttons-row`                                                                                                      |
-| buttons      | List [`string` or [`button object`](#button-options)] | **
-Required** | List of buttons to display. [See button options](#button-options)                                                               |
-| align_icons  | `string`                                              | **Optional** | **
-Deprecated:** Specify the default alignment for icons, must be one of [`top`, `left`, `right`, `bottom`], defaults to `left`. |
-| base_config  | [`button object`](#button-options)                    | **
-Optional** | Specify a base config that will be deep-merged with each buttons config. Buttons can override the base config                   |
-| styles       | `object`                                              | **
-Optional** | CSS styles to apply to the entire button group. e.g. to change the flex-box alignment.                                          |
-| extra_styles | `string`                                              | **
-Optional** | Inject CSS directly into the paper-buttons-row container, useful for animations.                                                |
+| type         | `string`                                              | **Required** | `custom:paper-buttons-row`                                                                                                      |
+| buttons      | List [`string` or [`button object`](#button-options)] | **Required** | List of buttons to display. [See button options](#button-options)                                                               |
+| base_config  | [`button object`](#button-options)                    | **Optional** | Specify a base config that will be deep-merged with each buttons config. Buttons can override the base config                   |
+| styles       | `object`                                              | **Optional** | CSS styles to apply to the entire button group. e.g. to change the flex-box alignment.                                          |
+| extra_styles | `string`                                              | **Optional** | Inject CSS directly into the paper-buttons-row container, useful for animations.                                                |
 
 ### Button Options
 
@@ -34,49 +22,31 @@ When only an `entity` is provided the button will attempt to toggle it by defaul
 
 | Name              | Type                                           | Requirement  | Description                                                                                                              |
 | ----------------- | ---------------------------------------------- | ------------ | ------------------------------------------------------------------------------------------------------------------------ |
-| entity            | `string`                                       | **
-Optional** | The entity_id of the entity you want to show.                                                                            |
-| name              | `string`\|[`template`](#templating)            | **
-Optional** | Name to use for entity. Use `false` to hide name.                                                                        |
-| state             | `string`\|[`template`](#templating)            | **
-Optional** | State to display for entity. Use `true` to show the entity state.                                                        |
-| icon              | `string`\|[`template`](#templating)            | **
-Optional** | The icon to display. Use `false` to hide icon.                                                                           |
-| image             | `string`\|[`template`](#templating)            | **
-Optional** | Display an image instead of an icon. e.g. `/local/custom.png`.                                                           |
-| layout            | `string`\|`object`                             | **
-Optional** | Change the layout of the icon, name and state fields. [See layout options](#layout)                                      |
-| align_icon        | `string`                                       | **Optional** | **
-Deprecated:** Override the default alignment for icon, must be one of [`top`, `left`, `right`, `bottom`].              |
-| tooltip           | `string`                                       | **
-Optional** | Override the default tooltip. Use `false` to hide tooltip.                                                               |
+| entity            | `string`                                       | **Optional** | The entity_id of the entity you want to show.                                                                            |
+| name              | `string`\|[`template`](#templating)            | **Optional** | Name to use for entity. Use `false` to hide name.                                                                        |
+| state             | `string`\|[`template`](#templating)            | **Optional** | State to display for entity. Use `true` to show the entity state.                                                        |
+| icon              | `string`\|[`template`](#templating)            | **Optional** | The icon to display. Use `false` to hide icon.                                                                           |
+| image             | `string`\|[`template`](#templating)            | **Optional** | Display an image instead of an icon. e.g. `/local/custom.png`.                                                           |
+| layout            | `string`\|`object`                             | **Optional** | Change the layout of the icon, name and state fields. [See layout options](#layout)                                      |
+| tooltip           | `string`                                       | **Optional** | Override the default tooltip. Use `false` to hide tooltip.                                                               |
 |                   |                                                |              |                                                                                                                          |
-| tap_action        | `map`                                          | **
-Optional** | Tap action map [See action options](#action-options)                                                                     |
-| hold_action       | `map`                                          | **
-Optional** | Hold action map [See action options](#action-options)                                                                    |
-| double_tap_action | `map`                                          | **
-Optional** | Double Tap action map [See action options](#action-options)                                                              |
+| tap_action        | `map`                                          | **Optional** | Tap action map [See action options](#action-options)                                                                     |
+| hold_action       | `map`                                          | **Optional** | Hold action map [See action options](#action-options)                                                                    |
+| double_tap_action | `map`                                          | **Optional** | Double Tap action map [See action options](#action-options)                                                              |
 |                   |                                                |              |                                                                                                                          |
-| styles             | [`style object`](#style-options) (templatable) | **
-Optional** | Map of CSS styles to apply to the button, icon, text or ripple. [See style options](#style-options)                      |
-| state_styles      | `map[state: style object]`                     | **
-Optional** | Map of states to a [`style object`](#style-options), [See example](#using-style-and-state_styles).                       |
-| state_icons       | `map[state: icon]`                             | **
-Optional** | Material icon for each state of the entity. Map state to icon, [See example](#using-state-icons-state-text-and-actions). |
-| state_text        | `map[state: text]`                             | **
-Optional** | Button text for each state of the entity, Map state to text, [See example](#using-state-icons-state-text-and-actions).   |
+| styles             | [`style object`](#style-options) (templatable) | **Optional** | Map of CSS styles to apply to the button, icon, text or ripple. [See style options](#style-options)                      |
+| state_styles      | `map[state: style object]`                     | **Optional** | Map of states to a [`style object`](#style-options), [See example](#using-style-and-state_styles).                       |
+| state_icons       | `map[state: icon]`                             | **Optional** | Material icon for each state of the entity. Map state to icon, [See example](#using-state-icons-state-text-and-actions). |
+| state_text        | `map[state: text]`                             | **Optional** | Button text for each state of the entity, Map state to text, [See example](#using-state-icons-state-text-and-actions).   |
 
 ### Action Options
 
-Each button supports the same actions as seen in Home
-Assistant's [button card](https://www.home-assistant.io/lovelace/button).
+Each button supports the same actions as seen in Home Assistant's [button card](https://www.home-assistant.io/lovelace/button).
 
 | Name              | Type           | Default  | Supported options                                                                                   | Description                                                                                                         |
 | ----------------- | -------------- | -------- | --------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------- |
 | `action`          | `string`       | `toggle` | `more-info`, `toggle`, `call-service`, `fire-event`, `none`, `navigate`, `url`                      | Action to perform                                                                                                   |
-| `entity`          | `string`       | none     | Any entity id                                                                                       | **
-Only valid for `action: more-info`** to override the entity on which you want to call `more-info`                 |
+| `entity`          | `string`       | none     | Any entity id                                                                                       | **Only valid for `action: more-info`** to override the entity on which you want to call `more-info`                 |
 | `navigation_path` | `string`       | none     | Eg: `/lovelace/0/`                                                                                  | Path to navigate to (e.g. `/lovelace/0/`) when action defined as navigate                                           |
 | `url_path`        | `string`       | none     | Eg: `https://www.google.com`                                                                        | URL to open on click when action is `url`.                                                                          |
 |                   |                |          |                                                                                                     |                                                                                                                     |
@@ -87,8 +57,7 @@ Only valid for `action: more-info`** to override the entity on which you want to
 | `event_type`      | `string`       | none     | Any event                                                                                           | Event to call (e.g. `custom_event`) when `action` defined as `fire-event`                                           |
 | `event_data`      | `map`          | none     | Any event data                                                                                      | Event data to include when `action` defined as `fire-event`.                                                        |
 |                   |                |          |                                                                                                     |                                                                                                                     |
-| `repeat`          | `number`       | none     | Eg: `500`                                                                                           | **
-Only valid for `hold_action`** optionally set the action to repeat every N milliseconds while the button is held. |
+| `repeat`          | `number`       | none     | Eg: `500`                                                                                           | **Only valid for `hold_action`** optionally set the action to repeat every N milliseconds while the button is held. |
 |                   |                |          |                                                                                                     |                                                                                                                     |
 | `confirmation`    | `boolean\|map` | false    | [See confirmation object](https://www.home-assistant.io/lovelace/actions/#options-for-confirmation) | Present a confirmation dialog to confirm the action.                                                                |
 
@@ -117,8 +86,8 @@ styles:
 
 ### Layout
 
-The pipe or bar `|` symbol is used to put elements next to each other, and an underscore `_` is used to place items
-below each other. You can also define layouts using a list (row) and nested lists (columns).
+The pipe or bar `|` symbol is used to put elements next to each other, and an underscore `_` is used to place items below each other.
+You can also define layouts using a list (row) and nested lists (columns).
 
 These are some examples of simple layouts:
 
@@ -217,14 +186,12 @@ entities:
 
 #### Jinja Templates
 
-_Note: that Jinja2 templates are slightly slower to load initially due to latency, as they are rendered in the backend,
-whereas the other are rendered in the frontend._
+_Note: that Jinja2 templates are slightly slower to load initially due to latency, as they are rendered in the backend, whereas the other are rendered in the frontend._
 
 Jinja templates have access to a few special variables. Those are:
 
 - `config` - an object containing the entity row configuration.
-- `entity` - the entity_id from the current entity row configuration. This **must** be used instead of `config.entity`
-  for the template to automatically update.
+- `entity` - the entity_id from the current entity row configuration. This **must** be used instead of `config.entity` for the template to automatically update.
 - `user` - the username of the currently logged in user.
 - `browser` - the deviceID of the current browser (see [browser_mod](https://github.com/thomasloven/hass-browser_mod)).
 - `hash` - the hash part of the current URL.
@@ -246,8 +213,7 @@ entities:
 
 ![example-minimal-setup](examples/example-embedded.png)
 
-Paper Buttons Row can be embedded within most entity rows. As shown in the image above it inserts a `paper-buttons-row`
-row inline, this can be either before or after the final element.
+Paper Buttons Row can be embedded within most entity rows. As shown in the image above it inserts a `paper-buttons-row` row inline, this can be either before or after the final element.
 
 ```yaml
 type: entities
