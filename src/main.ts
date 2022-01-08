@@ -99,6 +99,16 @@ export class PaperButtonsRow extends LitElement {
       throw new Error("Cannot mix rows and buttons");
     }
 
+    if (config.styles === undefined) {
+      // ensure styles is not undefined
+      config.styles = {} as StyleConfig;
+    } else {
+      // ensure styles are an object
+      for (const key in config.styles) {
+        config.styles[key] = arrayToObject(config.styles[key]);
+      }
+    }
+
     config.buttons = (config.buttons as Array<Array<ExternalButtonType>>).map(
       row => {
         return row.map(bConfig => {
@@ -191,9 +201,19 @@ export class PaperButtonsRow extends LitElement {
     renderTemplateObjects(this._templates, this.hass);
 
     return html`
+      ${this._config!.extra_styles
+        ? html`
+            <style>
+              ${this._config!.extra_styles}
+            </style>
+          `
+        : ""}
       ${this._config.buttons.map(row => {
         return html`
-          <div class="flex-box">
+          <div
+            class="flex-box"
+            style="${styleMap(this._config!.styles as StyleInfo)}"
+          >
             ${row.map(config => {
               const stateObj =
                 (config.entity != undefined &&

@@ -8,12 +8,14 @@ This is a complete rewrite of the original [`button-entity-row`](https://github.
 
 ## Options
 
-| Name        | Type                                                  | Requirement  | Description                                                                                                                     |
-| ----------- | ----------------------------------------------------- | ------------ | ------------------------------------------------------------------------------------------------------------------------------- |
-| type        | `string`                                              | **Required** | `custom:paper-buttons-row`                                                                                                      |
-| buttons     | List [`string` or [`button object`](#button-options)] | **Required** | List of buttons to display. [See button options](#button-options)                                                               |
-| align_icons | `string`                                              | **Optional** | **Deprecated:** Specify the default alignment for icons, must be one of [`top`, `left`, `right`, `bottom`], defaults to `left`. |
-| base_config | [`button object`](#button-options)                    | **Optional** | Specify a base config that will be deep-merged with each buttons config. Buttons can override the base config                   |
+| Name         | Type                                                  | Requirement  | Description                                                                                                                     |
+| ------------ | ----------------------------------------------------- | ------------ | ------------------------------------------------------------------------------------------------------------------------------- |
+| type         | `string`                                              | **Required** | `custom:paper-buttons-row`                                                                                                      |
+| buttons      | List [`string` or [`button object`](#button-options)] | **Required** | List of buttons to display. [See button options](#button-options)                                                               |
+| align_icons  | `string`                                              | **Optional** | **Deprecated:** Specify the default alignment for icons, must be one of [`top`, `left`, `right`, `bottom`], defaults to `left`. |
+| base_config  | [`button object`](#button-options)                    | **Optional** | Specify a base config that will be deep-merged with each buttons config. Buttons can override the base config                   |
+| styles       | `object`                                              | **Optional** | CSS styles to apply to the entire button group. e.g. to change the flex-box alignment.                                          |
+| extra_styles | `string`                                              | **Optional** | Inject CSS directly into the paper-buttons-row container, useful for animations.                                                |
 
 ### Button Options
 
@@ -365,7 +367,7 @@ entities:
   - type: "custom:paper-buttons-row"
     buttons:
       - entity: lock.front_door
-        layout: icon|state  # show the state field
+        layout: icon|state # show the state field
         state_icons:
           "unlocked": "mdi:lock-open"
           "locked": "mdi:lock"

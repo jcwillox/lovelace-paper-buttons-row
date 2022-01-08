@@ -46,6 +46,8 @@ export interface PaperButtonRowConfig {
   buttons: ButtonConfig[][];
   align_icons?: "top" | "left" | "right" | "bottom";
   base_config?: ButtonConfig;
+  styles: Record<string, string | Template>;
+  extra_styles?: string;
   position?: "center" | "right";
   hide_badge?: boolean;
   hide_state?: boolean;
@@ -60,8 +62,9 @@ export interface ExternalButtonConfig
 export type ExternalButtonType = string | ExternalButtonConfig;
 
 export interface ExternalPaperButtonRowConfig
-  extends Omit<PaperButtonRowConfig, "buttons"> {
+  extends Omit<PaperButtonRowConfig, "buttons" | "styles"> {
   buttons: Array<ExternalButtonType | Array<ExternalButtonType>>;
+  styles?: Record<string, string | Template>;
 }
 
 export interface FireEventActionConfig extends BaseActionConfig {
