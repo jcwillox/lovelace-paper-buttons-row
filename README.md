@@ -8,13 +8,17 @@ This is a complete rewrite of the original [`button-entity-row`](https://github.
 
 ## Options
 
-| Name         | Type                                                  | Requirement  | Description                                                                                                                     |
-| ------------ | ----------------------------------------------------- | ------------ | ------------------------------------------------------------------------------------------------------------------------------- |
-| type         | `string`                                              | **Required** | `custom:paper-buttons-row`                                                                                                      |
-| buttons      | List [`string` or [`button object`](#button-options)] | **Required** | List of buttons to display. [See button options](#button-options)                                                               |
-| base_config  | [`button object`](#button-options)                    | **Optional** | Specify a base config that will be deep-merged with each buttons config. Buttons can override the base config                   |
-| styles       | `object`                                              | **Optional** | CSS styles to apply to the entire button group. e.g. to change the flex-box alignment.                                          |
-| extra_styles | `string`                                              | **Optional** | Inject CSS directly into the paper-buttons-row container, useful for animations.                                                |
+| Name         | Type                                                  | Requirement  | Description                                                                                                                                           |
+| ------------ | ----------------------------------------------------- | ------------ | ----------------------------------------------------------------------------------------------------------------------------------------------------- |
+| type         | `string`                                              | **Required** | `custom:paper-buttons-row`                                                                                                                            |
+| buttons      | List [`string` or [`button object`](#button-options)] | **Required** | List of buttons to display. [See button options](#button-options)                                                                                     |
+| base_config  | [`button object`](#button-options)                    | **Optional** | Specify a base config that will be deep-merged with each buttons config. Buttons can override the base config                                         |
+| styles       | `object`                                              | **Optional** | CSS styles to apply to the entire button group. e.g. to change the flex-box alignment.                                                                |
+| extra_styles | `string`                                              | **Optional** | Inject CSS directly into the paper-buttons-row container, useful for animations.                                                                      |
+|              |                                                       |              |                                                                                                                                                       |
+| position     | `"center"` \| `"right"`                               | **Optional** | Position embedded buttons in the middle or end of the entity-row (default: `center`). [See embedding in entity rows](#embedding-in-other-entity-rows) |
+| hide_badge   | `boolean`                                             | **Optional** | Hide state badge when embedding in an entity-row                                                                                                      |
+| hide_state   | `boolean`                                             | **Optional** | Hide state text or toggle when embedding in an entity-row                                                                                             |
 
 ### Button Options
 
@@ -34,7 +38,7 @@ When only an `entity` is provided the button will attempt to toggle it by defaul
 | hold_action       | `map`                                          | **Optional** | Hold action map [See action options](#action-options)                                                                    |
 | double_tap_action | `map`                                          | **Optional** | Double Tap action map [See action options](#action-options)                                                              |
 |                   |                                                |              |                                                                                                                          |
-| styles             | [`style object`](#style-options) (templatable) | **Optional** | Map of CSS styles to apply to the button, icon, text or ripple. [See style options](#style-options)                      |
+| styles            | [`style object`](#style-options) (templatable) | **Optional** | Map of CSS styles to apply to the button, icon, text or ripple. [See style options](#style-options)                      |
 | state_styles      | `map[state: style object]`                     | **Optional** | Map of states to a [`style object`](#style-options), [See example](#using-style-and-state_styles).                       |
 | state_icons       | `map[state: icon]`                             | **Optional** | Material icon for each state of the entity. Map state to icon, [See example](#using-state-icons-state-text-and-actions). |
 | state_text        | `map[state: text]`                             | **Optional** | Button text for each state of the entity, Map state to text, [See example](#using-state-icons-state-text-and-actions).   |
