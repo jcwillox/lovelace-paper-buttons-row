@@ -2,6 +2,11 @@ name: HACS
 
 on:
   push:
+    branches:
+      - "main"
+      - "feat**"
+    tags-ignore:
+      - "**"
   pull_request:
   schedule:
     - cron: "0 0 * * *"

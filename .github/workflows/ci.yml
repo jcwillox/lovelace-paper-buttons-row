@@ -1,6 +1,13 @@
 name: 'CI'
 
-on: [ push, pull_request ]
+on:
+  push:
+    branches:
+      - "main"
+      - "feat**"
+    tags-ignore:
+      - "**"
+  pull_request:
 
 jobs:
   lint:
