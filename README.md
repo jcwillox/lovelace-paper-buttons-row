@@ -14,7 +14,7 @@ This is a complete rewrite of the original [`button-entity-row`](https://github.
 | buttons      | List [`string` or [`button object`](#button-options)] | **Required** | List of buttons to display. [See button options](#button-options)                                                                                     |
 | base_config  | [`button object`](#button-options)                    | **Optional** | Specify a base config that will be deep-merged with each buttons config. Buttons can override the base config                                         |
 | styles       | `object`                                              | **Optional** | CSS styles to apply to the entire button group. e.g. to change the flex-box alignment.                                                                |
-| extra_styles | `string`                                              | **Optional** | Inject CSS directly into the paper-buttons-row container, useful for animations.                                                                      |
+| extra_styles | `string`                                              | **Optional** | Inject CSS directly into the paper-buttons-row container, useful for animations. [See extra styles](#extra-styles)                                    |
 |              |                                                       |              |                                                                                                                                                       |
 | position     | `"center"` \| `"right"`                               | **Optional** | Position embedded buttons in the middle or end of the entity-row (default: `center`). [See embedding in entity rows](#embedding-in-other-entity-rows) |
 | hide_badge   | `boolean`                                             | **Optional** | Hide state badge when embedding in an entity-row                                                                                                      |
@@ -86,6 +86,106 @@ styles:
       {% else%}
         cyan
       {% endif %}
+```
+
+### Extra Styles
+
+The `extra_styles` option allow you to embed extra CSS into paper-buttons-row this allows you to specify custom animations and style the hover and active states among other things.
+
+**Animations & Hover/Active Effects**
+
+![example-embedded-hide](examples/example-animation-hover-active.gif)
+
+There are two built-in animations `blink` and `rotating`.
+
+```yaml
+- type: custom:paper-buttons-row
+  extra_styles: |
+    /* define custom animation */
+    @keyframes bgswap1 {
+      0% {
+        background-image: url("/local/christmas-lights-ro.png");
+      }
+      25% {
+        background-image: url("/local/christmas-lights-ro.png");
+      }
+      50% {
+        background-image: url("/local/christmas-lights-gb.png");
+      }
+      75% {
+        background-image: url("/local/christmas-lights-gb.png");
+      }
+      100% {
+        background-image: url("/local/christmas-lights-ro.png");
+      }
+    }
+    /* set hover and active effects for buttons */
+    paper-button:hover {
+      background-color: red;
+    }
+    paper-button:active {
+      background-color: yellow;
+    }
+    /* styles for the third button only */
+    paper-button:nth-child(3):hover {
+      background-color: green;
+    }
+    paper-button:nth-child(3):active {
+      background-color: purple;
+    }
+  buttons:
+    - icon: mdi:power
+      styles:
+        button:
+          animation: blink 2s ease infinite
+    - styles:
+        button:
+          width: 64px
+          height: 64px
+          background-size: cover
+          # use custom animation defined earlier
+          animation: bgswap1 2s ease infinite
+    - icon: mdi:power
+      styles:
+        button:
+          - animation: rotating 2s ease infinite
+```
+
+### Global styles & base config
+
+You can specify `styles` that apply to the actual flex-box used to contain each row of buttons. You can also specify a default `base_config` that is deep-merged with the config for each button, this helps reduce repetition in your configs.
+
+```yaml
+type: custom:paper-buttons-row
+# styles applied to the row container
+styles:
+  # override off/on colors
+  --paper-item-icon-color: red
+  --paper-item-icon-active-color: green
+  # align all buttons to the left
+  justify-content: flex-start
+buttons:
+  - entity: light.bedroom_light
+```
+
+```yaml
+type: custom:paper-buttons-row
+base_config:
+  # will be applied to all configured buttons
+  state_styles:
+    "on":
+      # override color for the entire button
+      button:
+        color: yellow
+      # or override for the name only
+      name:
+        color: var(--primary-text-color)
+    "off":
+      button:
+        color: red
+buttons:
+  - entity: light.bedroom_light
+  - entity: light.kitchen_light
 ```
 
 ### Layout
@@ -227,6 +327,30 @@ entities:
     extend_paper_buttons_row:
       position: # can be either `center` or `right`, defaults to `center`.
       # ... normal paper-buttons-row config goes here.
+```
+
+When extending entity rows there are options to control the position of the inserted buttons, as well as to hide the badge or state elements.
+
+![example-embedded-hide](examples/example-embedded-hide.png)
+
+```yaml
+type: entities
+entities:
+  - entity: input_boolean.test
+  - entity: input_boolean.test
+    name: Hide State
+    extend_paper_buttons_row:
+      hide_state: true
+      buttons:
+        - icon: mdi:power
+  - entity: input_select.test
+  - entity: input_select.test
+    name: Hide Badge
+    extend_paper_buttons_row:
+      hide_badge: true
+      position: right
+      buttons:
+        - icon: mdi:close
 ```
 
 <details>
