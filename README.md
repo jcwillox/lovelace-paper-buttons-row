@@ -1,6 +1,10 @@
 # Paper Buttons Row
 
-[![hacs_badge](https://img.shields.io/badge/HACS-Default-orange.svg?style=for-the-badge)](https://github.com/custom-components/hacs)
+
+[![HACS Badge](https://img.shields.io/badge/HACS-Default-41BDF5.svg?style=for-the-badge)](https://github.com/hacs/integration)
+[![License](https://img.shields.io/github/license/jcwillox/lovelace-paper-buttons-row?style=for-the-badge)](https://github.com/jcwillox/lovelace-paper-buttons-row/blob/main/LICENSE)
+[![Latest Release](https://img.shields.io/github/v/release/jcwillox/lovelace-paper-buttons-row?style=for-the-badge)](https://github.com/jcwillox/lovelace-paper-buttons-row/releases)
+[![GZIP Size](https://img.badgesize.io/https:/github.com/jcwillox/lovelace-paper-buttons-row/releases/latest/download/paper-buttons-row.js?style=for-the-badge&compression=gzip)](https://github.com/jcwillox/lovelace-paper-buttons-row/releases)
 
 This is a complete rewrite of the original [`button-entity-row`](https://github.com/custom-cards/button-entity-row) plugin, that is more consistent with Home Assistant's [button card](https://www.home-assistant.io/lovelace/button/), it uses **actions** including `tap_action`, `double_tap_action` and `hold_action` allowing for greater customisation of the buttons behaviour. It also retains the ability to style the button based on state, but adds the ability to style the icon, text, and ripple effect separately. There is a new option for **icon alignment** and the buttons have haptic feedback.
 
