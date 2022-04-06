@@ -1,4 +1,4 @@
-name: HACS
+name: "HACS"
 
 on:
   push:
@@ -13,10 +13,13 @@ on:
 
 jobs:
   validate:
-    name: Validate
+    name: "Validate"
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
-      - uses: hacs/action@main
+      - name: "Checkout the repository"
+        uses: actions/checkout@v2
+
+      - name: "Validate HACS"
+        uses: hacs/action@main
         with:
           category: "plugin"

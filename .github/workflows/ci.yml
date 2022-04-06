@@ -1,4 +1,4 @@
-name: 'CI'
+name: "CI"
 
 on:
   push:
@@ -11,7 +11,7 @@ on:
 
 jobs:
   lint:
-    name: Lint
+    name: "Lint"
     runs-on: ubuntu-latest
     steps:
       - name: "Checkout the repository"
@@ -19,12 +19,10 @@ jobs:
 
       - name: "Extract engines"
         id: engines
-        uses: ./.github/actions/engines
+        run: echo ::set-output name=node::$(jq --raw-output .engines.node ./package.json)
 
       - name: "Setup pnpm"
         uses: pnpm/action-setup@v2
-        with:
-          version: ${{ steps.engines.outputs.pnpm }}
 
       - name: "Setup node"
         uses: actions/setup-node@v2
@@ -42,7 +40,7 @@ jobs:
         run: pnpm run format:check
 
   build:
-    name: Build & Test
+    name: "Build & Test"
     runs-on: ubuntu-latest
     steps:
       - name: "Checkout the repository"
@@ -50,12 +48,10 @@ jobs:
 
       - name: "Extract engines"
         id: engines
-        uses: ./.github/actions/engines
+        run: echo ::set-output name=node::$(jq --raw-output .engines.node ./package.json)
 
       - name: "Setup pnpm"
         uses: pnpm/action-setup@v2
-        with:
-          version: ${{ steps.engines.outputs.pnpm }}
 
       - name: "Setup node"
         uses: actions/setup-node@v2

@@ -1,4 +1,4 @@
-name: 'Publish'
+name: "Publish"
 
 on:
   release:
@@ -6,7 +6,7 @@ on:
 
 jobs:
   publish:
-    name: Publish
+    name: "Publish"
     runs-on: ubuntu-latest
     steps:
       - name: "Checkout the repository"
@@ -14,17 +14,14 @@ jobs:
 
       - name: "Update version"
         run: |
-          current="$(jq --raw-output .version package.json | sed 's/\./\\./g')"
-          sed -i s/$current/${{ github.event.release.tag_name }}/ package.json
+          echo $(jq '.version="${{ github.event.release.tag_name }}"' package.json) > package.json
 
       - name: "Extract engines"
         id: engines
-        uses: ./.github/actions/engines
+        run: echo ::set-output name=node::$(jq --raw-output .engines.node ./package.json)
 
       - name: "Setup pnpm"
         uses: pnpm/action-setup@v2
-        with:
-          version: ${{ steps.engines.outputs.pnpm }}
 
       - name: "Setup node"
         uses: actions/setup-node@v2
