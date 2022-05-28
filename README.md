@@ -1,6 +1,5 @@
 # Paper Buttons Row
 
-
 [![HACS Badge](https://img.shields.io/badge/HACS-Default-41BDF5.svg?style=for-the-badge)](https://github.com/hacs/integration)
 [![License](https://img.shields.io/github/license/jcwillox/lovelace-paper-buttons-row?style=for-the-badge)](https://github.com/jcwillox/lovelace-paper-buttons-row/blob/main/LICENSE)
 [![Latest Release](https://img.shields.io/github/v/release/jcwillox/lovelace-paper-buttons-row?style=for-the-badge)](https://github.com/jcwillox/lovelace-paper-buttons-row/releases)
