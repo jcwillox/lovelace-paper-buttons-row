@@ -41,11 +41,20 @@ createModule("hui-generic-entity-row", function () {
 
     provideHass(paperButtons);
 
-    let el: Element | null | undefined = this.shadowRoot.querySelector("slot");
+    let el = this.shadowRoot.querySelector<HTMLElement>("slot");
     if (!el) return;
 
     if (el.parentElement) {
-      if (el.parentElement.classList.contains("text-content")) {
+      if (el.parentElement.parentElement) {
+        if (
+          el.parentElement.classList.contains("state") &&
+          el.parentElement.parentElement.classList.contains("text-content")
+        ) {
+          el = el.parentElement.parentElement;
+        } else {
+          console.error("unexpected parent node found");
+        }
+      } else if (el.parentElement.classList.contains("text-content")) {
         el = el.parentElement;
       } else {
         console.error("unexpected parent node found");
@@ -53,12 +62,11 @@ createModule("hui-generic-entity-row", function () {
     }
 
     if (pbConfig.hide_state) {
-      (el as HTMLElement).style.display = "none";
+      el.style.display = "none";
     }
 
     if (pbConfig.hide_badge) {
-      const el: HTMLElement | null =
-        this.shadowRoot.querySelector("state-badge");
+      const el = this.shadowRoot.querySelector<HTMLElement>("state-badge");
       if (el) {
         el.style.visibility = "hidden";
         el.style.marginLeft = "-48px";
