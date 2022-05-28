@@ -34,7 +34,7 @@ jobs:
         run: pnpm install
 
       - name: "Run Lint"
-        run: pnpm run lint -s
+        run: pnpm run lint
 
       - name: "Check format"
         run: pnpm run format:check
