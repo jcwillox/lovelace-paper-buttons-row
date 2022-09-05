@@ -1,0 +1,72 @@
+name: Report an issue with the Paper Buttons Row plugin
+description: Report an issue with the Paper Buttons Row plugin.
+body:
+  - type: markdown
+    attributes:
+      value: |
+        This issue form is for reporting bugs, you should search through
+        the existing issues to see if others have had the same problem.
+
+        Try fill as many fields as you can, to make it easier to address the issue.
+  - type: textarea
+    attributes:
+      label: The problem
+      description: >-
+        Describe the issue you are experiencing here, to communicate to the
+        maintainers. Tell us what you were trying to do and what happened.
+
+        Provide a clear and concise description of what the problem is.
+  - type: markdown
+    attributes:
+      value: |
+        ## Environment
+  - type: input
+    id: version
+    attributes:
+      label: What version of Paper Buttons Row has the issue?
+      description: >
+        Can be found in: [HACS -> Frontend -> Paper Buttons Row](https://my.home-assistant.io/redirect/hacs_repository/?owner=jcwillox&repository=lovelace-paper-buttons-row&category=plugin). The version will be displayed in first chip at the top.
+
+        [![Open your Home Assistant instance and open a repository inside the Home Assistant Community Store.](https://my.home-assistant.io/badges/hacs_repository.svg)](https://my.home-assistant.io/redirect/hacs_repository/?owner=jcwillox&repository=lovelace-paper-buttons-row&category=plugin)
+  - type: input
+    id: ha_version
+    attributes:
+      label: What version of Home Assistant are you running?
+      placeholder: Home Assistant YYYY.MM.XX
+      description: >
+        Can be found in: [Settings -> About](https://my.home-assistant.io/redirect/info/).
+
+        [![Open your Home Assistant instance and show your Home Assistant version information.](https://my.home-assistant.io/badges/info.svg)](https://my.home-assistant.io/redirect/info/)
+  - type: input
+    id: frontend_version
+    attributes:
+      label: What version of the Frontend are you running?
+      placeholder: Frontend YYYYMMDD.X
+      description: >
+        Can be found in: [Settings -> About](https://my.home-assistant.io/redirect/info/).
+
+        [![Open your Home Assistant instance and show your Home Assistant version information.](https://my.home-assistant.io/badges/info.svg)](https://my.home-assistant.io/redirect/info/)
+  - type: markdown
+    attributes:
+      value: |
+        # Details
+  - type: textarea
+    attributes:
+      label: Example YAML snippet
+      description: |
+        If applicable, please provide an example piece of YAML that can help reproduce this problem.
+        This can be from an automation, script, service or configuration.
+      render: yml
+  - type: textarea
+    attributes:
+      label: Anything in the logs that might be useful for us?
+      description: |
+        For example, error message, or stack traces.
+
+        To view the browsers logs, press F12 and go to the "Console" tab, or use the "Inspect" option in the browsers right-click menu.
+      render: python3
+  - type: textarea
+    attributes:
+      label: Additional information
+      description: >
+        If you have any additional information for us, use the field below.
