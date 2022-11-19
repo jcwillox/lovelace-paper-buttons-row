@@ -1,13 +1,14 @@
 module.exports = {
   root: true,
+  ignorePatterns: ["dist/"],
   parser: "@typescript-eslint/parser",
   parserOptions: {
     ecmaVersion: 2017, // Allows for the parsing of modern ECMAScript features
     sourceType: "module", // Allows for the use of imports
     experimentalDecorators: true
   },
-  plugins: ["@typescript-eslint", "import", "only-warn"],
   extends: ["eslint:recommended", "plugin:@typescript-eslint/recommended"],
+  plugins: ["only-warn"],
   rules: {
     // TypeScript's `noFallthroughCasesInSwitch` option is more robust (#6906)
     "default-case": "off",
