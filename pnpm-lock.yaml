@@ -4,6 +4,7 @@ specifiers:
   '@rollup/plugin-commonjs': ^22.0.0
   '@rollup/plugin-json': ^4.1.0
   '@rollup/plugin-node-resolve': ^13.3.0
+  '@rollup/plugin-replace': ^4.0.0
   '@rollup/plugin-typescript': ^8.3.2
   '@types/node': ^16.11.36
   '@typescript-eslint/eslint-plugin': ^5.43.0
@@ -35,6 +36,7 @@ devDependencies:
   '@rollup/plugin-commonjs': 22.0.0_rollup@2.75.0
   '@rollup/plugin-json': 4.1.0_rollup@2.75.0
   '@rollup/plugin-node-resolve': 13.3.0_rollup@2.75.0
+  '@rollup/plugin-replace': 4.0.0_rollup@2.75.0
   '@rollup/plugin-typescript': 8.3.2_yg7irwiyxk6au4j7oxiyr7fshi
   '@types/node': 16.11.36
   '@typescript-eslint/eslint-plugin': 5.43.0_xk6ghhnvmtzaociw4gtdmlcvia
@@ -219,6 +221,16 @@ packages:
       is-builtin-module: 3.1.0
       is-module: 1.0.0
       resolve: 1.20.0
+      rollup: 2.75.0
+    dev: true
+
+  /@rollup/plugin-replace/4.0.0_rollup@2.75.0:
+    resolution: {integrity: sha512-+rumQFiaNac9y64OHtkHGmdjm7us9bo1PlbgQfdihQtuNxzjpaB064HbRnewUOggLQxVCCyINfStkgmBeQpv1g==}
+    peerDependencies:
+      rollup: ^1.20.0 || ^2.0.0
+    dependencies:
+      '@rollup/pluginutils': 3.1.0_rollup@2.75.0
+      magic-string: 0.25.7
       rollup: 2.75.0
     dev: true
 

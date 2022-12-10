@@ -6,6 +6,13 @@ declare global {
   interface HTMLElementTagNameMap {
     "hui-error-card": LovelaceCard;
   }
+
+  const __NAME__: string;
+  const __BRANCH__: string;
+  const __COMMIT__: string;
+  const __VERSION__: string;
+  const __REPO_URL__: string;
+  const __BUILD_TIME__: string;
 }
 
 export interface TemplateConfig {
@@ -18,9 +25,11 @@ export interface TemplateConfig {
 
 export type Template = string | TemplateConfig;
 
-export type StyleConfig = Record<
-  "button" | "icon" | "name" | "state" | "ripple",
-  Record<string, string | Template>
+export type StyleConfig = Partial<
+  Record<
+    "button" | "icon" | "name" | "state" | "ripple",
+    Record<string, string | Template>
+  >
 >;
 
 export interface ButtonConfig {

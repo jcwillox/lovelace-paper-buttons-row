@@ -1,6 +1,6 @@
 import { html, LitElement, PropertyValues } from "lit";
 import { customElement, property } from "lit/decorators.js";
-import { styleMap, StyleInfo } from "lit/directives/style-map.js";
+import { StyleInfo, styleMap } from "lit/directives/style-map.js";
 import { handleAction, hasAction } from "./action";
 import { hass } from "card-tools/src/hass";
 import {
@@ -10,7 +10,6 @@ import {
   TEMPLATE_OPTIONS
 } from "./const";
 import { computeStateName, computeTooltip } from "./entity";
-import { name, version } from "../package.json";
 import deepmerge from "deepmerge";
 import { actionHandler } from "./action-handler";
 import "./entity-row";
@@ -33,11 +32,16 @@ import { HassEntity } from "home-assistant-js-websocket";
 import styles from "./styles.css";
 import { arrayToObject } from "./utils";
 
-console.info(
-  `%c ${name.toUpperCase()} %c ${version} `,
+console.groupCollapsed(
+  `%c ${__NAME__} %c ${__VERSION__} `,
   `color: white; background: #039be5; font-weight: 700;`,
   `color: #039be5; background: white; font-weight: 700;`
 );
+console.info(`branch   : ${__BRANCH__}`);
+console.info(`commit   : ${__COMMIT__}`);
+console.info(`built at : ${__BUILD_TIME__}`);
+console.info(__REPO_URL__);
+console.groupEnd();
 
 const computeStateIcon = config => {
   return config.state_icons && config.state_icons[config.state.toLowerCase()];
@@ -52,7 +56,7 @@ const computeStateText = config => {
 
 const migrateIconAlignment = alignment => {
   console.warn(
-    name,
+    __NAME__,
     "'align_icon' and 'align_icons' is deprecated and will be removed in a future version"
   );
   switch (alignment) {

@@ -9,6 +9,19 @@ import typescript from "@rollup/plugin-typescript";
 import { name } from "./package.json";
 import { terser } from "rollup-plugin-terser";
 import { defineConfig } from "rollup";
+import { execSync } from "child_process";
+import replace from "@rollup/plugin-replace";
+
+const quoteCommand = command => {
+  return JSON.stringify(execSync(command).toString().trim());
+};
+
+const quoteCommandOrEnv = (command, env) => {
+  if (process.env[env]) {
+    return JSON.stringify(process.env[env]);
+  }
+  return quoteCommand(command);
+};
 
 export default defineConfig({
   input: "src/main.ts",
@@ -29,6 +42,19 @@ export default defineConfig({
       return "window";
   },
   plugins: [
+    replace({
+      values: {
+        __NAME__: JSON.stringify(name.toUpperCase()),
+        __BRANCH__: quoteCommand("git rev-parse --abbrev-ref HEAD"),
+        __COMMIT__: quoteCommandOrEnv("git rev-parse HEAD", "GITHUB_SHA"),
+        __VERSION__: quoteCommand("git describe --tags --dirty --always"),
+        __REPO_URL__: quoteCommand("git remote get-url origin").replace(
+          ".git",
+          ""
+        ),
+        __BUILD_TIME__: JSON.stringify(new Date().toISOString())
+      }
+    }),
     nodeResolve(),
     commonjs(),
     typescript({ include: "src/*.ts" }),
