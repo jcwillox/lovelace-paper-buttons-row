@@ -11,7 +11,19 @@
 }
 
 paper-button {
-  color: var(--paper-item-icon-color);
+  color: var(
+    --pbs-button-color,
+    rgb(
+      var(
+        --pbs-button-rgb-color,
+        var(--pbs-button-rgb-state-color, var(--rgb-state-default-color))
+      )
+    )
+  );
+  background-color: var(
+    --pbs-button-bg-color,
+    rgba(var(--pbs-button-rgb-bg-color), var(--pbs-button-rgb-bg-opacity, 1))
+  );
   padding: 6px;
   cursor: pointer;
   position: relative;
@@ -31,11 +43,35 @@ ha-icon {
 }
 
 .button-active {
-  color: var(--paper-item-icon-active-color);
+  color: var(
+    --paper-item-icon-active-color,
+    var(
+      --pbs-button-active-color,
+      rgb(
+        var(
+          --pbs-button-rgb-active-color,
+          var(--pbs-button-rgb-state-color, var(--rgb-state-default-color))
+        )
+      )
+    )
+  );
+  background-color: var(
+    --pbs-button-bg-active-color,
+    rgba(
+      var(--pbs-button-rgb-bg-active-color, var(--pbs-button-rgb-bg-color)),
+      var(
+        --pbs-button-rgb-bg-active-opacity,
+        var(--pbs-button-rgb-bg-opacity, 1)
+      )
+    )
+  );
 }
 
 .button-unavailable {
-  color: var(--state-icon-unavailable-color);
+  color: var(
+    --pbs-button-unavailable-color,
+    rgb(var(--pbs-button-rgb-unavailable-color, var(--rgb-disabled-color)))
+  );
 }
 
 .image {

@@ -5,6 +5,8 @@ import { handleAction, hasAction } from "./action";
 import { hass } from "card-tools/src/hass";
 import {
   DOMAINS_TOGGLE,
+  STATE_OFF,
+  STATE_ON,
   STATE_UNAVAILABLE,
   STATES_ON,
   TEMPLATE_OPTIONS
@@ -227,7 +229,12 @@ export class PaperButtonsRow extends LitElement {
                 (config.entity != undefined &&
                   this.hass!.states[config.entity]) ||
                 undefined;
+              const domain = config.entity && computeDomain(config.entity);
               const styles = this._getStyles(config);
+              const buttonStyles = {
+                ...this._getStateStyles(domain, stateObj?.state),
+                ...(styles.button || {})
+              } as StyleInfo;
 
               return html`
                 <paper-button
@@ -237,7 +244,7 @@ export class PaperButtonsRow extends LitElement {
                     hasDoubleClick: hasAction(config.double_tap_action),
                     repeat: config.hold_action?.repeat
                   })}"
-                  style="${styleMap((styles.button || {}) as StyleInfo)}"
+                  style="${styleMap(buttonStyles)}"
                   class="${this._getClass(stateObj?.state)}"
                   title="${computeTooltip(this.hass!, config)}"
                 >
@@ -335,6 +342,21 @@ export class PaperButtonsRow extends LitElement {
       return "button-unavailable";
     }
     return "";
+  }
+
+  _getStateStyles(domain?: string, state?: string): StyleInfo {
+    if (!domain || !state || state == STATE_OFF || state == STATE_UNAVAILABLE)
+      return {};
+
+    domain = domain.replace(/_/g, "-");
+    state = state.replace(/_/g, "-");
+
+    return {
+      "--pbs-button-rgb-state-color":
+        state == STATE_ON
+          ? `var(--rgb-state-${domain}-color)`
+          : `var(--rgb-state-${domain}-${state}-color)`
+    };
   }
 
   _getRippleClass(config: ButtonConfig) {
