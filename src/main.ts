@@ -1,6 +1,7 @@
 import { html, LitElement, PropertyValues } from "lit";
 import { customElement, property } from "lit/decorators.js";
 import { StyleInfo, styleMap } from "lit/directives/style-map.js";
+import { ifDefined } from "lit/directives/if-defined.js";
 import { handleAction, hasAction } from "./action";
 import { hass } from "card-tools/src/hass";
 import {
@@ -250,6 +251,12 @@ export class PaperButtonsRow extends LitElement {
                   style="${styleMap(buttonStyles)}"
                   class="${this._getClass(stateObj?.state)}"
                   title="${computeTooltip(this.hass!, config)}"
+                  data-domain="${ifDefined(domain)}"
+                  data-entity-state="${ifDefined(stateObj?.state)}"
+                  data-state="${ifDefined(
+                    typeof config.state === "string" &&
+                      config.state.toLowerCase()
+                  )}"
                 >
                   ${config.layout!.map(column => {
                     if (Array.isArray(column))
