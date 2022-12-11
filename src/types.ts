@@ -38,6 +38,7 @@ export interface ButtonConfig {
   state?: string | Template;
   icon?: string | Template;
   image?: string | Template;
+  ripple?: "fill" | "none" | "circle";
   layout?: Array<string | Array<string>>;
   align_icon?: "top" | "left" | "right" | "bottom"; // deprecated
   tooltip?: string | false;

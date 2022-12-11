@@ -10,6 +10,10 @@
   align-items: center;
 }
 
+.hidden {
+  display: none;
+}
+
 paper-button {
   color: var(
     --pbs-button-color,

@@ -360,6 +360,14 @@ export class PaperButtonsRow extends LitElement {
   }
 
   _getRippleClass(config: ButtonConfig) {
+    switch (config.ripple) {
+      case "none":
+        return "hidden";
+      case "circle":
+        return "circle";
+      case "fill":
+        return "";
+    }
     if (config.layout?.length === 1 && config.layout[0] === "icon") {
       return "circle";
     }
