@@ -38,6 +38,7 @@ export interface ButtonConfig {
   state?: string | Template;
   icon?: string | Template;
   image?: string | Template;
+  preset?: string;
   ripple?: "fill" | "none" | "circle";
   layout?: Array<string | Array<string>>;
   align_icon?: "top" | "left" | "right" | "bottom"; // deprecated
@@ -53,6 +54,7 @@ export interface ButtonConfig {
 
 export interface PaperButtonRowConfig {
   type?: string;
+  preset?: string;
   buttons: ButtonConfig[][];
   align_icons?: "top" | "left" | "right" | "bottom";
   base_config?: ButtonConfig;

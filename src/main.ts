@@ -33,6 +33,7 @@ import {
 import { HassEntity } from "home-assistant-js-websocket";
 import styles from "./styles.css";
 import { arrayToObject } from "./utils";
+import { handleButtonPreset } from "./presets";
 
 console.groupCollapsed(
   `%c ${__NAME__} %c ${__VERSION__} `,
@@ -178,8 +179,10 @@ export class PaperButtonsRow extends LitElement {
     this._templates = [];
 
     // fix config.
-    this._config.buttons.map(row => {
+    this._config.buttons = this._config.buttons.map(row => {
       return row.map(config => {
+        config = handleButtonPreset(config, this._config);
+
         // create list of entities to monitor for changes.
         if (config.entity) {
           this._entities?.push(config.entity);
@@ -404,15 +407,18 @@ export class PaperButtonsRow extends LitElement {
       else bConfig.layout = ["icon", "name"];
     }
 
+    // default state template
     if (!bConfig.state && bConfig.entity) {
       bConfig.state = { case: "upper" };
     }
 
     if (bConfig.entity) {
       const domain = computeDomain(bConfig.entity);
+      // default hold action
       if (!bConfig.hold_action) {
         bConfig.hold_action = { action: "more-info" };
       }
+      // default tap action
       if (!bConfig.tap_action) {
         if (DOMAINS_TOGGLE.has(domain)) {
           bConfig.tap_action = { action: "toggle" };
