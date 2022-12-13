@@ -1,16 +1,23 @@
 import { ButtonConfig, PaperButtonRowConfig } from "./types";
 import deepmerge from "deepmerge";
+import { getLovelace } from "custom-card-helpers";
+
+let lovelace = getLovelace();
 
 export function handleButtonPreset(
   bConfig: ButtonConfig,
   config?: PaperButtonRowConfig
 ): ButtonConfig {
+  if (!lovelace) lovelace = getLovelace();
+  const userPresets = lovelace?.config?.paper_buttons_row?.presets || {};
   const preset = bConfig.preset || config?.preset;
   return preset
     ? deepmerge(
         {
           mushroom: presetMushroom
-        }[preset] || {},
+        }[preset] ||
+          userPresets[preset] ||
+          {},
         bConfig
       )
     : bConfig;
