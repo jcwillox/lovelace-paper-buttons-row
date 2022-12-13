@@ -39,6 +39,7 @@ export interface ButtonConfig {
   icon?: string | Template;
   image?: string | Template;
   preset?: string;
+  active?: string[];
   ripple?: "fill" | "none" | "circle";
   layout?: Array<string | Array<string>>;
   align_icon?: "top" | "left" | "right" | "bottom"; // deprecated
@@ -66,8 +67,9 @@ export interface PaperButtonRowConfig {
 }
 
 export interface ExternalButtonConfig
-  extends Omit<ButtonConfig, "layout" | "style" | "styles"> {
+  extends Omit<ButtonConfig, "layout" | "active" | "style" | "styles"> {
   layout?: string | Array<string | Array<string>>;
+  active?: string | string[];
   style?: StyleConfig;
   styles?: StyleConfig;
 }

@@ -29,7 +29,8 @@ import {
   ExternalButtonType,
   ExternalPaperButtonRowConfig,
   PaperButtonRowConfig,
-  StyleConfig
+  StyleConfig,
+  Template
 } from "./types";
 import { HassEntity } from "home-assistant-js-websocket";
 import styles from "./styles.css";
@@ -136,6 +137,11 @@ export class PaperButtonsRow extends LitElement {
               );
           }
 
+          // ensure active is a list
+          if (typeof bConfig.active === "string") {
+            bConfig.active = [bConfig.active];
+          }
+
           // migrate `style` to `styles`
           if (bConfig.styles == undefined) {
             bConfig.styles = bConfig.style;
@@ -240,6 +246,10 @@ export class PaperButtonsRow extends LitElement {
                 ...(styles.button || {})
               } as StyleInfo;
 
+              const activeStates = config.active
+                ? new Set(config.active)
+                : STATES_ON;
+
               return html`
                 <paper-button
                   @action="${ev => this._handleAction(ev, config)}"
@@ -249,7 +259,11 @@ export class PaperButtonsRow extends LitElement {
                     repeat: config.hold_action?.repeat
                   })}"
                   style="${styleMap(buttonStyles)}"
-                  class="${this._getClass(stateObj?.state)}"
+                  class="${this._getClass(
+                    activeStates,
+                    config.state,
+                    stateObj?.state
+                  )}"
                   title="${computeTooltip(this.hass!, config)}"
                   data-domain="${ifDefined(domain)}"
                   data-entity-state="${ifDefined(stateObj?.state)}"
@@ -344,11 +358,14 @@ export class PaperButtonsRow extends LitElement {
     }
   }
 
-  _getClass(state?: string) {
-    if (!state) return "";
-    if (STATES_ON.has(state)) {
+  _getClass(
+    activeStates: Set<string>,
+    state?: string | Template,
+    entityState?: string
+  ) {
+    if (typeof state == "string" && activeStates.has(state.toLowerCase())) {
       return "button-active";
-    } else if (STATE_UNAVAILABLE === state) {
+    } else if (STATE_UNAVAILABLE === entityState) {
       return "button-unavailable";
     }
     return "";
