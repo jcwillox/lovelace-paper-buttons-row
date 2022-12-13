@@ -242,7 +242,7 @@ export class PaperButtonsRow extends LitElement {
               const domain = config.entity && computeDomain(config.entity);
               const styles = this._getStyles(config);
               const buttonStyles = {
-                ...this._getStateStyles(domain, stateObj?.state),
+                ...this._getStateStyles(domain, stateObj),
                 ...(styles.button || {})
               } as StyleInfo;
 
@@ -371,19 +371,29 @@ export class PaperButtonsRow extends LitElement {
     return "";
   }
 
-  _getStateStyles(domain?: string, state?: string): StyleInfo {
-    if (!domain || !state || state == STATE_OFF || state == STATE_UNAVAILABLE)
+  _getStateStyles(domain?: string, stateObj?: HassEntity): StyleInfo {
+    if (
+      !domain ||
+      !stateObj ||
+      !stateObj.state ||
+      stateObj.state == STATE_OFF ||
+      stateObj.state == STATE_UNAVAILABLE
+    )
       return {};
 
     domain = domain.replace(/_/g, "-");
-    state = state.replace(/_/g, "-");
+    const state = stateObj.state.replace(/_/g, "-");
 
-    return {
-      "--pbs-button-rgb-state-color":
-        state == STATE_ON
-          ? `var(--rgb-state-${domain}-color)`
-          : `var(--rgb-state-${domain}-${state}-color)`
-    };
+    return stateObj?.attributes.rgb_color
+      ? {
+          "--pbs-button-rgb-state-color": stateObj.attributes.rgb_color
+        }
+      : {
+          "--pbs-button-rgb-state-color":
+            state == STATE_ON
+              ? `var(--rgb-state-${domain}-color)`
+              : `var(--rgb-state-${domain}-${state}-color)`
+        };
   }
 
   _getRippleClass(config: ButtonConfig) {
