@@ -33,6 +33,7 @@ const presetMushroom: ButtonConfig = {
       "box-sizing": "border-box",
       transition: "background-color 280ms ease-in-out 0s",
       "--pbs-button-rgb-color": "var(--rgb-primary-text-color)",
+      "--pbs-button-rgb-default-color": "var(--rgb-primary-text-color)",
       "--pbs-button-rgb-active-color": "var(--pbs-button-rgb-state-color)",
       "--pbs-button-rgb-bg-color": "var(--pbs-button-rgb-color)",
       "--pbs-button-rgb-bg-active-color": "var(--pbs-button-rgb-active-color)",

@@ -20,7 +20,10 @@ paper-button {
     rgb(
       var(
         --pbs-button-rgb-color,
-        var(--pbs-button-rgb-state-color, var(--rgb-state-default-color))
+        var(
+          --pbs-button-rgb-state-color,
+          var(--pbs-button-rgb-default-color, var(--rgb-state-default-color))
+        )
       )
     )
   );
@@ -54,7 +57,10 @@ ha-icon {
       rgb(
         var(
           --pbs-button-rgb-active-color,
-          var(--pbs-button-rgb-state-color, var(--rgb-state-default-color))
+          var(
+            --pbs-button-rgb-state-color,
+            var(--pbs-button-rgb-default-color, var(--rgb-state-default-color))
+          )
         )
       )
     )
