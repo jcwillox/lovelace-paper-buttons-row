@@ -14,6 +14,7 @@ This is a complete rewrite of the original [`button-entity-row`](https://github.
 | Name         | Type                                                  | Requirement  | Description                                                                                                                                           |
 | ------------ | ----------------------------------------------------- | ------------ | ----------------------------------------------------------------------------------------------------------------------------------------------------- |
 | type         | `string`                                              | **Required** | `custom:paper-buttons-row`                                                                                                                            |
+| preset       | `string`                                              | **Optional** | The preset configuration to use e.g. `mushroom`. [See presets](#presets)                                                                              |
 | buttons      | List [`string` or [`button object`](#button-options)] | **Required** | List of buttons to display. [See button options](#button-options)                                                                                     |
 | base_config  | [`button object`](#button-options)                    | **Optional** | Specify a base config that will be deep-merged with each buttons config. Buttons can override the base config                                         |
 | styles       | `object`                                              | **Optional** | CSS styles to apply to the entire button group. e.g. to change the flex-box alignment.                                                                |
@@ -27,24 +28,27 @@ This is a complete rewrite of the original [`button-entity-row`](https://github.
 
 When only an `entity` is provided the button will attempt to toggle it by default.
 
-| Name              | Type                                           | Requirement  | Description                                                                                                              |
-| ----------------- | ---------------------------------------------- | ------------ | ------------------------------------------------------------------------------------------------------------------------ |
-| entity            | `string`                                       | **Optional** | The entity_id of the entity you want to show.                                                                            |
-| name              | `string`\|[`template`](#templating)            | **Optional** | Name to use for entity. Use `false` to hide name.                                                                        |
-| state             | `string`\|[`template`](#templating)            | **Optional** | State to display for entity. Use `true` to show the entity state.                                                        |
-| icon              | `string`\|[`template`](#templating)            | **Optional** | The icon to display. Use `false` to hide icon.                                                                           |
-| image             | `string`\|[`template`](#templating)            | **Optional** | Display an image instead of an icon. e.g. `/local/custom.png`.                                                           |
-| layout            | `string`\|`object`                             | **Optional** | Change the layout of the icon, name and state fields. [See layout options](#layout)                                      |
-| tooltip           | `string`                                       | **Optional** | Override the default tooltip. Use `false` to hide tooltip.                                                               |
-|                   |                                                |              |                                                                                                                          |
-| tap_action        | `map`                                          | **Optional** | Tap action map [See action options](#action-options)                                                                     |
-| hold_action       | `map`                                          | **Optional** | Hold action map [See action options](#action-options)                                                                    |
-| double_tap_action | `map`                                          | **Optional** | Double Tap action map [See action options](#action-options)                                                              |
-|                   |                                                |              |                                                                                                                          |
-| styles            | [`style object`](#style-options) (templatable) | **Optional** | Map of CSS styles to apply to the button, icon, text or ripple. [See style options](#style-options)                      |
-| state_styles      | `map[state: style object]`                     | **Optional** | Map of states to a [`style object`](#style-options), [See example](#using-style-and-state_styles).                       |
-| state_icons       | `map[state: icon]`                             | **Optional** | Material icon for each state of the entity. Map state to icon, [See example](#using-state-icons-state-text-and-actions). |
-| state_text        | `map[state: text]`                             | **Optional** | Button text for each state of the entity, Map state to text, [See example](#using-state-icons-state-text-and-actions).   |
+| Name              | Type                                           | Requirement  | Description                                                                                                                                      |
+| ----------------- | ---------------------------------------------- | ------------ | ------------------------------------------------------------------------------------------------------------------------------------------------ |
+| entity            | `string`                                       | **Optional** | The entity_id of the entity you want to show.                                                                                                    |
+| name              | `string` \| [`template`](#templating)          | **Optional** | Name to use for entity. Use `false` to hide name.                                                                                                |
+| state             | `string` \| [`template`](#templating)          | **Optional** | State to display for entity. Use `true` to show the entity state.                                                                                |
+| icon              | `string` \| [`template`](#templating)          | **Optional** | The icon to display. Use `false` to hide icon.                                                                                                   |
+| image             | `string` \| [`template`](#templating)          | **Optional** | Display an image instead of an icon. e.g. `/local/custom.png`.                                                                                   |
+| preset            | `string`                                       | **Optional** | The preset configuration to use e.g. `mushroom`. [See presets](#presets)                                                                         |
+| active            | `string` \| `list[string]`                     | **Optional** | Configure the states which the button considers itself to be active, defaults to [`on`, `open`, `unlocked`]. [See CSS variables](#css-variables) |
+| ripple            | `"fill"` \| `"none"` \| `"circle"`             | **Optional** | Override the default shape of the ripple.                                                                                                        |
+| layout            | `string` \| `object`                           | **Optional** | Change the layout of the icon, name and state fields. [See layout options](#layout)                                                              |
+| tooltip           | `string`                                       | **Optional** | Override the default tooltip. Use `false` to hide tooltip.                                                                                       |
+|                   |                                                |              |                                                                                                                                                  |
+| tap_action        | `map`                                          | **Optional** | Tap action map [See action options](#action-options)                                                                                             |
+| hold_action       | `map`                                          | **Optional** | Hold action map [See action options](#action-options)                                                                                            |
+| double_tap_action | `map`                                          | **Optional** | Double Tap action map [See action options](#action-options)                                                                                      |
+|                   |                                                |              |                                                                                                                                                  |
+| styles            | [`style object`](#style-options) (templatable) | **Optional** | Map of CSS styles to apply to the button, icon, text or ripple. [See style options](#style-options)                                              |
+| state_styles      | `map[state: style object]`                     | **Optional** | Map of states to a [`style object`](#style-options), [See example](#using-style-and-state_styles).                                               |
+| state_icons       | `map[state: icon]`                             | **Optional** | Material icon for each state of the entity. Map state to icon, [See example](#using-state-icons-state-text-and-actions).                         |
+| state_text        | `map[state: text]`                             | **Optional** | Button text for each state of the entity, Map state to text, [See example](#using-state-icons-state-text-and-actions).                           |
 
 ### Action Options
 
@@ -68,6 +72,60 @@ Each button supports the same actions as seen in Home Assistant's [button card](
 |                   |                |          |                                                                                                     |                                                                                                                     |
 | `confirmation`    | `boolean\|map` | false    | [See confirmation object](https://www.home-assistant.io/lovelace/actions/#options-for-confirmation) | Present a confirmation dialog to confirm the action.                                                                |
 
+### Presets
+
+A preset is just a predefined [button config](#button-options) object that will be deep-merged with the config, just like the `base_config` option.
+
+**Built-in Presets**
+
+Presets are now supported by default only the `mushroom` preset is included.
+
+![example-mushroom-light](examples/mushroom-light.png)
+
+![example-mushroom-dark](examples/mushroom-dark.png)
+
+```yaml
+type: entities
+entities:
+  - type: custom:paper-buttons-row
+    # apply to all buttons
+    preset: mushroom
+    base_config:
+      # the same as above applies to all buttons
+      preset: mushroom
+    buttons:
+      - entity: light.bedroom_light
+        # or override on a button level
+        preset: mushroom
+
+      - entity: lock.front_door
+        # set what state is considered active
+        active: unlocked
+        styles:
+          # override the inactive color
+          --pbs-button-rgb-color: red
+          # override the active color
+          --pbs-button-rgb-active-color: green
+
+      - icon: mdi:power
+```
+
+**User-defined Presets**
+
+Presets can be defined in the top level of your dashboard, using the "Raw configuration editor" mode.
+
+```yaml
+paper_buttons_row:
+  presets:
+    my_custom_preset:
+      ripple: fill
+      styles:
+        button:
+          color: red
+
+views: ...
+```
+
 ### Style Options
 
 | Name   | Type     | Requirement  | Description                                            |
@@ -90,6 +148,45 @@ styles:
         cyan
       {% endif %}
 ```
+
+### CSS Variables
+
+**Base State**
+
+- `--pbs-button-color` – used to override the color of the button.
+- `--pbs-button-rgb-color` – same as above but expects a list of rgb values, e.g. `123, 123, 0`.
+- `--pbs-button-rgb-state-color` – this is set automatically to reference an `--rgb-state-*-color` variable.
+- `--pbs-button-rgb-default-color` - this is used to set the default color of the paper-buttons, it is not set by default.
+- `--rgb-state-default-color` – this is the default color provided by Home Assistant.
+
+**Base State (Background)**
+
+- `--pbs-button-bg-color` – used to override the background of the button default is not set.
+- `--pbs-button-rgb-bg-color` – same as above but expects a list of rgb values, e.g. `123, 123, 0`.
+- `--pbs-button-rgb-bg-opacity` – defaults to 1.
+
+**Active State**
+
+- `--paper-item-icon-active-color` – (deprecated) unset in 2022.12 was originally set to `#fdd835`.
+- `--pbs-button-active-color`
+- `--pbs-button-rgb-active-color`
+- `--pbs-button-rgb-state-color`
+- `--pbs-button-rgb-default-color`
+- `--rgb-state-default-color`
+
+**Active State (Background)**
+
+- `--pbs-button-bg-active-color`
+- `--pbs-button-rgb-bg-active-color`
+- `--pbs-button-rgb-bg-active-opacity`
+- `--pbs-button-rgb-bg-color`
+- `--pbs-button-rgb-bg-opacity`
+
+**Unavailable State**
+
+- `--pbs-button-unavailable-color`
+- `--pbs-button-rgb-unavailable-color`
+- `--rgb-disabled-color`
 
 ### Extra Styles
 
@@ -154,6 +251,20 @@ There are two built-in animations `blink` and `rotating`.
           - animation: rotating 2s ease infinite
 ```
 
+#### Data Attributes
+
+If you use the [`extra_styles`](#extra-styles) option you can use data attributes to style the button based on the domain or state of the configured entity.
+
+- `data-domain` – The domain of the entity
+- `data-state` – The current templated state, which defaults to the entity state but could refer to an attribute if you configure the `state` option
+- `data-entity-state` – The state of the current entity.
+
+```css
+paper-button[data-state="on"] {
+  color: red;
+}
+```
+
 ### Global styles & base config
 
 You can specify `styles` that apply to the actual flex-box used to contain each row of buttons. You can also specify a default `base_config` that is deep-merged with the config for each button, this helps reduce repetition in your configs.
@@ -163,8 +274,8 @@ type: custom:paper-buttons-row
 # styles applied to the row container
 styles:
   # override off/on colors
-  --paper-item-icon-color: red
-  --paper-item-icon-active-color: green
+  --pbs-button-bg-color: red
+  --pbs-button-bg-active-color: green
   # align all buttons to the left
   justify-content: flex-start
 buttons:
@@ -458,7 +569,7 @@ entities:
             button:
               background-color: var(--primary-color)
             icon:
-              color: var(--paper-item-icon-active-color) # this will change the icon colour when the entities state is on.
+              color: "#fdd835" # this will change the icon colour when the entities state is on.
             ripple:
               color: orange # colour the ripple effect.
 
@@ -479,7 +590,7 @@ entities:
             button:
               background-color: var(--primary-color)
             icon:
-              color: var(--paper-item-icon-active-color)
+              color: "#fdd835"
             ripple:
               color: orange
 ```
