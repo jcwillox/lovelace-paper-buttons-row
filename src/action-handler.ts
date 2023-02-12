@@ -1,16 +1,16 @@
-import { noChange } from "lit";
-import { deepEqual } from "./deep-equal";
-import {
-  AttributePart,
-  Directive,
-  directive,
-  DirectiveParameters
-} from "lit/directive.js";
 import {
   ActionHandlerDetail,
   ActionHandlerOptions,
-  fireEvent
+  fireEvent,
 } from "custom-card-helpers";
+import { noChange } from "lit";
+import {
+  AttributePart,
+  Directive,
+  DirectiveParameters,
+  directive,
+} from "lit/directive.js";
+import { deepEqual } from "./deep-equal";
 
 const isTouch =
   "ontouchstart" in window ||
@@ -86,7 +86,7 @@ class ActionHandler extends HTMLElement implements IActionHandler {
       height: isTouch ? "100px" : "50px",
       transform: "translate(-50%, -50%)",
       pointerEvents: "none",
-      zIndex: "999"
+      zIndex: "999",
     });
 
     this.appendChild(this.ripple);
@@ -99,7 +99,7 @@ class ActionHandler extends HTMLElement implements IActionHandler {
       "touchmove",
       "mousewheel",
       "wheel",
-      "scroll"
+      "scroll",
     ].forEach(ev => {
       document.addEventListener(
         ev,
@@ -246,13 +246,13 @@ class ActionHandler extends HTMLElement implements IActionHandler {
     };
 
     element.addEventListener("touchstart", element.actionHandler.start, {
-      passive: true
+      passive: true,
     });
     element.addEventListener("touchend", element.actionHandler.end);
     element.addEventListener("touchcancel", element.actionHandler.end);
 
     element.addEventListener("mousedown", element.actionHandler.start, {
-      passive: true
+      passive: true,
     });
     element.addEventListener("click", element.actionHandler.end);
 
@@ -263,7 +263,7 @@ class ActionHandler extends HTMLElement implements IActionHandler {
     Object.assign(this.style, {
       left: `${x}px`,
       top: `${y}px`,
-      display: null
+      display: null,
     });
     this.ripple.disabled = false;
     this.ripple.startPress();

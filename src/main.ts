@@ -1,28 +1,31 @@
-import { html, LitElement, PropertyValues, unsafeCSS } from "lit";
-import { customElement, property } from "lit/decorators.js";
-import { StyleInfo, styleMap } from "lit/directives/style-map.js";
-import { ifDefined } from "lit/directives/if-defined.js";
-import { handleAction, hasAction } from "./action";
+import "./entity-row";
 import { hass } from "card-tools/src/hass";
 import {
+  ActionHandlerEvent,
+  HomeAssistant,
+  computeDomain,
+  stateIcon,
+} from "custom-card-helpers";
+import deepmerge from "deepmerge";
+import { HassEntity } from "home-assistant-js-websocket";
+import { LitElement, PropertyValues, html, unsafeCSS } from "lit";
+import { customElement, property } from "lit/decorators.js";
+import { ifDefined } from "lit/directives/if-defined.js";
+import { StyleInfo, styleMap } from "lit/directives/style-map.js";
+import { handleAction, hasAction } from "./action";
+import { actionHandler } from "./action-handler";
+import {
   DOMAINS_TOGGLE,
+  STATES_ON,
   STATE_OFF,
   STATE_ON,
   STATE_UNAVAILABLE,
-  STATES_ON,
-  TEMPLATE_OPTIONS
+  TEMPLATE_OPTIONS,
 } from "./const";
 import { computeStateName, computeTooltip } from "./entity";
-import deepmerge from "deepmerge";
-import { actionHandler } from "./action-handler";
-import "./entity-row";
+import { handleButtonPreset } from "./presets";
+import styles from "./styles.css?inline";
 import { renderTemplateObjects, subscribeTemplate } from "./template";
-import {
-  ActionHandlerEvent,
-  computeDomain,
-  HomeAssistant,
-  stateIcon
-} from "custom-card-helpers";
 import {
   ButtonConfig,
   ExternalButtonConfig,
@@ -30,12 +33,8 @@ import {
   ExternalPaperButtonRowConfig,
   PaperButtonRowConfig,
   StyleConfig,
-  Template
 } from "./types";
-import { HassEntity } from "home-assistant-js-websocket";
-import styles from "./styles.css?inline";
 import { arrayToObject } from "./utils";
-import { handleButtonPreset } from "./presets";
 
 console.groupCollapsed(
   `%c ${__NAME__} %c ${__VERSION__} `,
@@ -244,7 +243,7 @@ export class PaperButtonsRow extends LitElement {
               const styles = this._getStyles(config);
               const buttonStyles = {
                 ...this._getStateStyles(domain, stateObj),
-                ...(styles.button || {})
+                ...(styles.button || {}),
               } as StyleInfo;
 
               const activeStates = config.active
@@ -258,7 +257,7 @@ export class PaperButtonsRow extends LitElement {
                   .actionHandler="${actionHandler({
                     hasHold: hasAction(config.hold_action),
                     hasDoubleClick: hasAction(config.double_tap_action),
-                    repeat: config.hold_action?.repeat
+                    repeat: config.hold_action?.repeat,
                   })}"
                   style="${styleMap(buttonStyles)}"
                   class="${this._getClass(
@@ -379,13 +378,13 @@ export class PaperButtonsRow extends LitElement {
 
     if (stateObj.attributes.rgb_color) {
       return {
-        "--pbs-button-rgb-state-color": stateObj.attributes.rgb_color
+        "--pbs-button-rgb-state-color": stateObj.attributes.rgb_color,
       };
     } else {
       const rgb = this._getStateColor(stateObj, domain);
       if (rgb) {
         return {
-          "--pbs-button-rgb-state-color": rgb.join(", ")
+          "--pbs-button-rgb-state-color": rgb.join(", "),
         };
       }
     }
@@ -489,8 +488,8 @@ export class PaperButtonsRow extends LitElement {
             action: "call-service",
             service: "scene.turn_on",
             service_data: {
-              entity_id: bConfig.entity
-            }
+              entity_id: bConfig.entity,
+            },
           };
         } else {
           bConfig.tap_action = { action: "more-info" };

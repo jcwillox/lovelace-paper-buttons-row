@@ -1,9 +1,9 @@
 import {
+  HomeAssistant,
   fireEvent,
   forwardHaptic,
-  HomeAssistant,
   navigate,
-  toggleEntity
+  toggleEntity,
 } from "custom-card-helpers";
 import { ButtonActionConfig, ButtonConfig } from "./types";
 import { showToast } from "./utils";
@@ -35,7 +35,7 @@ export function handleActionConfig(
 ) {
   if (!actionConfig) {
     actionConfig = {
-      action: "more-info"
+      action: "more-info",
     };
   }
 
@@ -67,7 +67,7 @@ export function handleActionConfig(
         showToast(node, {
           message: hass.localize(
             "ui.panel.lovelace.cards.actions.no_entity_more_info"
-          )
+          ),
         });
         forwardHaptic("failure");
       }
@@ -78,7 +78,7 @@ export function handleActionConfig(
         showToast(node, {
           message: hass.localize(
             "ui.panel.lovelace.cards.actions.no_navigation_path"
-          )
+          ),
         });
         forwardHaptic("failure");
         return;
@@ -89,7 +89,7 @@ export function handleActionConfig(
     case "url":
       if (!actionConfig.url_path) {
         showToast(node, {
-          message: hass.localize("ui.panel.lovelace.cards.actions.no_url")
+          message: hass.localize("ui.panel.lovelace.cards.actions.no_url"),
         });
         forwardHaptic("failure");
         return;
@@ -102,7 +102,7 @@ export function handleActionConfig(
         showToast(node, {
           message: hass.localize(
             "ui.panel.lovelace.cards.actions.no_entity_toggle"
-          )
+          ),
         });
         forwardHaptic("failure");
         return;
@@ -113,7 +113,7 @@ export function handleActionConfig(
     case "call-service": {
       if (!actionConfig.service) {
         showToast(node, {
-          message: hass.localize("ui.panel.lovelace.cards.actions.no_service")
+          message: hass.localize("ui.panel.lovelace.cards.actions.no_service"),
         });
         forwardHaptic("failure");
         return;
@@ -131,7 +131,7 @@ export function handleActionConfig(
     case "fire-event": {
       if (!actionConfig.event_type) {
         showToast(node, {
-          message: "No event to call specified"
+          message: "No event to call specified",
         });
         forwardHaptic("failure");
         return;

@@ -48,7 +48,7 @@ export function subscribeTemplate(this: PaperButtonsRow, config, object, key) {
 
     this._templates?.push({
       template: option,
-      callback: res => res && (object[key] = res)
+      callback: res => res && (object[key] = res),
     });
   } else if (hasTemplate(option)) {
     subscribeRenderTemplate(
@@ -59,7 +59,7 @@ export function subscribeTemplate(this: PaperButtonsRow, config, object, key) {
       },
       {
         template: option,
-        variables: { config: config }
+        variables: { config: config },
       }
     );
     object[key] = "";

@@ -1,6 +1,6 @@
-import { ButtonConfig, PaperButtonRowConfig } from "./types";
-import deepmerge from "deepmerge";
 import { getLovelace } from "custom-card-helpers";
+import deepmerge from "deepmerge";
+import { ButtonConfig, PaperButtonRowConfig } from "./types";
 
 let lovelace = getLovelace();
 
@@ -14,7 +14,7 @@ export function handleButtonPreset(
   return preset
     ? deepmerge(
         {
-          mushroom: presetMushroom
+          mushroom: presetMushroom,
         }[preset] ||
           userPresets[preset] ||
           {},
@@ -38,7 +38,7 @@ const presetMushroom: ButtonConfig = {
       "--pbs-button-rgb-bg-color": "var(--pbs-button-rgb-color)",
       "--pbs-button-rgb-bg-active-color": "var(--pbs-button-rgb-active-color)",
       "--pbs-button-rgb-bg-opacity": "0.05",
-      "--pbs-button-rgb-bg-active-opacity": "0.2"
-    }
-  }
+      "--pbs-button-rgb-bg-active-opacity": "0.2",
+    },
+  },
 };

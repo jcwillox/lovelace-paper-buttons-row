@@ -8,7 +8,7 @@ export const DOMAINS_TOGGLE = new Set([
   "cover",
   "script",
   "vacuum",
-  "lock"
+  "lock",
 ]);
 
 export const STATES_ON = new Set(["open", "unlocked", "on"]);

@@ -1,4 +1,4 @@
-import { computeEntity, HomeAssistant } from "custom-card-helpers";
+import { HomeAssistant, computeEntity } from "custom-card-helpers";
 import { ButtonConfig } from "./types";
 
 export const computeStateName = stateObj => {

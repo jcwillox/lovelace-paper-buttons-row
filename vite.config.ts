@@ -1,6 +1,6 @@
 // https://vitejs.dev/config/
-import { defineConfig } from "vite";
 import { execSync } from "child_process";
+import { defineConfig } from "vite";
 import pkg from "./package.json";
 
 const quoteCommand = command => {
@@ -18,11 +18,11 @@ export default defineConfig({
   build: {
     lib: {
       entry: "src/main.ts",
-      formats: ["es"]
-    }
+      formats: ["es"],
+    },
   },
   esbuild: {
-    legalComments: "none"
+    legalComments: "none",
   },
   define: {
     __NAME__: JSON.stringify(pkg.name.toUpperCase()),
@@ -30,6 +30,6 @@ export default defineConfig({
     __COMMIT__: quoteCommandOrEnv("git rev-parse HEAD", "GITHUB_SHA"),
     __VERSION__: quoteCommand("git describe --tags --dirty --always"),
     __REPO_URL__: quoteCommand("git remote get-url origin").replace(".git", ""),
-    __BUILD_TIME__: JSON.stringify(new Date().toISOString())
-  }
+    __BUILD_TIME__: JSON.stringify(new Date().toISOString()),
+  },
 });
