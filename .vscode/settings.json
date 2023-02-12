@@ -1,0 +1,16 @@
+{
+  "editor.formatOnSave": true,
+  "editor.linkedEditing": true,
+  "editor.renderWhitespace": "trailing",
+  "html.autoClosingTags": true,
+  "editor.quickSuggestions": {
+    "strings": true
+  },
+  "editor.codeActionsOnSave": {
+    "source.fixAll": true
+  },
+  "[javascript][javascriptreact][typescript][typescriptreact][json][jsonc][yaml][html][markdown][postcss][css]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "vite.autoStart": false
+}
