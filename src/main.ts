@@ -361,7 +361,7 @@ export class PaperButtonsRow extends LitElement {
 
   _getClass(
     activeStates: Set<string>,
-    state?: string | Template,
+    state?: ButtonConfig["state"],
     entityState?: string
   ) {
     if (typeof state == "string" && activeStates.has(state.toLowerCase())) {

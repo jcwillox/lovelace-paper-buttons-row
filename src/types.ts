@@ -35,8 +35,8 @@ export type StyleConfig = Partial<
 export interface ButtonConfig {
   entity?: string;
   name?: string | false | Template;
-  state?: string | Template;
-  icon?: string | Template;
+  state?: false | string | Template;
+  icon?: false | string | Template;
   image?: string | Template;
   preset?: string;
   active?: string[];
