@@ -48,18 +48,19 @@ console.info(`built at : ${__BUILD_TIME__}`);
 console.info(__REPO_URL__);
 console.groupEnd();
 
-const computeStateIcon = config => {
-  return config.state_icons && config.state_icons[config.state.toLowerCase()];
+const computeStateIcon = (config: ButtonConfig) => {
+  if (config.state_icons && typeof config.state == "string")
+    return config.state_icons[config.state.toLowerCase()];
+  return undefined;
 };
 
-const computeStateText = config => {
-  return (
-    (config.state_text && config.state_text[config.state.toLowerCase()]) ||
-    config.state
-  );
+const computeStateText = (config: ButtonConfig) => {
+  if (config.state_text && typeof config.state == "string")
+    return config.state_text[config.state.toLowerCase()] || config.state;
+  return undefined;
 };
 
-const migrateIconAlignment = alignment => {
+const migrateIconAlignment = (alignment: string) => {
   console.warn(
     __NAME__,
     "'align_icon' and 'align_icons' is deprecated and will be removed in a future version"
@@ -299,12 +300,12 @@ export class PaperButtonsRow extends LitElement {
   }
 
   renderElement(
-    item,
+    item: string,
     config: ButtonConfig,
-    styles?: StyleConfig,
+    styles: StyleConfig,
     entity?: HassEntity
   ) {
-    const style = (styles || {})[item] || {};
+    const style: StyleInfo = styles?.[item] || {};
     switch (item) {
       case "icon":
         return this.renderIcon(config, style, entity);
@@ -315,7 +316,7 @@ export class PaperButtonsRow extends LitElement {
     }
   }
 
-  renderIcon(config: ButtonConfig, style, entity?: HassEntity) {
+  renderIcon(config: ButtonConfig, style: StyleInfo, entity?: HassEntity) {
     const icon =
       config.icon !== false && (config.icon || config.entity)
         ? computeStateIcon(config) ||
@@ -334,7 +335,7 @@ export class PaperButtonsRow extends LitElement {
       : "";
   }
 
-  renderName(config: ButtonConfig, style, stateObj?: HassEntity) {
+  renderName(config: ButtonConfig, style: StyleInfo, stateObj?: HassEntity) {
     return config.name !== false && (config.name || config.entity)
       ? html`
           <span style="${styleMap(style)}">
@@ -344,7 +345,7 @@ export class PaperButtonsRow extends LitElement {
       : "";
   }
 
-  renderState(config: ButtonConfig, style) {
+  renderState(config: ButtonConfig, style: StyleInfo) {
     return config.state !== false
       ? html`
           <span style="${styleMap(style)}"> ${computeStateText(config)} </span>
