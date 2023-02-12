@@ -373,28 +373,53 @@ export class PaperButtonsRow extends LitElement {
   }
 
   _getStateStyles(domain?: string, stateObj?: HassEntity): StyleInfo {
-    if (
-      !domain ||
-      !stateObj ||
-      !stateObj.state ||
-      stateObj.state == STATE_OFF ||
-      stateObj.state == STATE_UNAVAILABLE
-    )
-      return {};
+    if (!domain || !stateObj) return {};
 
-    domain = domain.replace(/_/g, "-");
-    const state = stateObj.state.replace(/_/g, "-");
-
-    return stateObj?.attributes.rgb_color
-      ? {
-          "--pbs-button-rgb-state-color": stateObj.attributes.rgb_color
-        }
-      : {
-          "--pbs-button-rgb-state-color":
-            state == STATE_ON
-              ? `var(--rgb-state-${domain}-color)`
-              : `var(--rgb-state-${domain}-${state}-color)`
+    if (stateObj.attributes.rgb_color) {
+      return {
+        "--pbs-button-rgb-state-color": stateObj.attributes.rgb_color
+      };
+    } else {
+      const rgb = this._getStateColor(stateObj, domain);
+      if (rgb) {
+        return {
+          "--pbs-button-rgb-state-color": rgb.join(", ")
         };
+      }
+    }
+    return {};
+  }
+
+  _getStateColor = (stateObj: HassEntity, domain?: string) => {
+    const styles = getComputedStyle(this);
+
+    // from `device_class`
+    if (stateObj.attributes.device_class) {
+      const hex = styles.getPropertyValue(
+        `--state-${domain}-${stateObj.attributes.device_class}-${stateObj.state}-color`
+      );
+      if (hex) {
+        return this._hexToRgb(hex);
+      }
+    }
+
+    // from `state`
+    let hex = styles.getPropertyValue(
+      `--state-${domain}-${stateObj.state}-color`
+    );
+    if (hex) return this._hexToRgb(hex);
+
+    // from `domain`
+    if (stateObj.state === STATE_ON || stateObj.state === STATE_OFF) {
+      const active = stateObj.state === STATE_ON ? "active" : "inactive";
+
+      hex = styles.getPropertyValue(`--state-${domain}-${active}-color`);
+      if (hex) return this._hexToRgb(hex);
+    }
+  };
+
+  _hexToRgb(hex: string) {
+    return hex.match(/[A-Za-z0-9]{2}/g)?.map(v => parseInt(v, 16));
   }
 
   _getRippleClass(config: ButtonConfig) {
