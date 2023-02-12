@@ -1,0 +1,37 @@
+root: true
+extends:
+  - "eslint:recommended"
+  - "plugin:import/recommended"
+  - "plugin:import/typescript"
+  - "plugin:@typescript-eslint/recommended"
+  - "plugin:prettier/recommended"
+plugins:
+  - "only-warn"
+ignorePatterns:
+  - "dist/"
+env:
+  browser: true
+settings:
+  import/resolver:
+    typescript: {}
+rules:
+  no-var: "warn"
+  prefer-const: "warn"
+  prettier/prettier: "warn"
+  import/newline-after-import: "warn"
+  quotes:
+    - "warn"
+    - "double"
+    - avoidEscape: true
+      allowTemplateLiterals: false
+  sort-imports:
+    - "warn"
+    - ignoreDeclarationSort: true
+  import/order:
+    - "warn"
+    - groups: [builtin, external, internal, parent, sibling, index]
+      pathGroups:
+        - pattern: "@/**"
+          group: "internal"
+      alphabetize:
+        order: "asc"
