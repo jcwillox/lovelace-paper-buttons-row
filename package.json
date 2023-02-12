@@ -8,10 +8,10 @@
     "build": "vite build",
     "build:tsc": "tsc && vite build",
     "typecheck": "tsc",
-    "lint": "eslint --max-warnings=0 src/",
-    "lint:fix": "npm run lint -s -- --fix",
-    "format": "prettier src/ --write",
-    "format:check": "prettier src/ --check"
+    "lint": "eslint . --cache --max-warnings=0 --ext js,cjs,mjs,jsx,ts,tsx",
+    "lint:fix": "pnpm run lint --fix",
+    "format": "prettier --cache --write .",
+    "format:check": "prettier --cache --check ."
   },
   "dependencies": {
     "card-tools": "github:thomasloven/lovelace-card-tools#477f3d4",
