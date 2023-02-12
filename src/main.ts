@@ -39,8 +39,8 @@ import { handleButtonPreset } from "./presets";
 
 console.groupCollapsed(
   `%c ${__NAME__} %c ${__VERSION__} `,
-  `color: white; background: #039be5; font-weight: 700;`,
-  `color: #039be5; background: white; font-weight: 700;`
+  "color: white; background: #039be5; font-weight: 700;",
+  "color: #039be5; background: white; font-weight: 700;"
 );
 console.info(`branch   : ${__BRANCH__}`);
 console.info(`commit   : ${__COMMIT__}`);
@@ -222,10 +222,10 @@ export class PaperButtonsRow extends LitElement {
     renderTemplateObjects(this._templates, this.hass);
 
     return html`
-      ${this._config!.extra_styles
+      ${this._config.extra_styles
         ? html`
             <style>
-              ${this._config!.extra_styles}
+              ${this._config.extra_styles}
             </style>
           `
         : ""}
@@ -233,12 +233,12 @@ export class PaperButtonsRow extends LitElement {
         return html`
           <div
             class="flex-box"
-            style="${styleMap(this._config!.styles as StyleInfo)}"
+            style="${styleMap(this._config?.styles as StyleInfo)}"
           >
             ${row.map(config => {
               const stateObj =
                 (config.entity != undefined &&
-                  this.hass!.states[config.entity]) ||
+                  this.hass?.states[config.entity]) ||
                 undefined;
               const domain = config.entity && computeDomain(config.entity);
               const styles = this._getStyles(config);
@@ -253,7 +253,8 @@ export class PaperButtonsRow extends LitElement {
 
               return html`
                 <paper-button
-                  @action="${ev => this._handleAction(ev, config)}"
+                  @action="${(ev: ActionHandlerEvent) =>
+                    this._handleAction(ev, config)}"
                   .actionHandler="${actionHandler({
                     hasHold: hasAction(config.hold_action),
                     hasDoubleClick: hasAction(config.double_tap_action),
@@ -265,7 +266,7 @@ export class PaperButtonsRow extends LitElement {
                     config.state,
                     stateObj?.state
                   )}"
-                  title="${computeTooltip(this.hass!, config)}"
+                  title="${computeTooltip(config, this.hass)}"
                   data-domain="${ifDefined(domain)}"
                   data-entity-state="${ifDefined(stateObj?.state)}"
                   data-state="${ifDefined(
@@ -273,7 +274,7 @@ export class PaperButtonsRow extends LitElement {
                       config.state.toLowerCase()
                   )}"
                 >
-                  ${config.layout!.map(column => {
+                  ${config.layout?.map(column => {
                     if (Array.isArray(column))
                       return html`
                         <div class="flex-column">
@@ -329,6 +330,7 @@ export class PaperButtonsRow extends LitElement {
           src="${config.image}"
           class="image"
           style="${styleMap(style)}"
+          alt="icon"
         />`
       : icon
       ? html` <ha-icon style="${styleMap(style)}" .icon="${icon}" />`
@@ -509,7 +511,7 @@ export class PaperButtonsRow extends LitElement {
       }
       // only update if monitored entity changed state.
       return this._entities.some(
-        entity => oldHass.states[entity] !== this.hass!.states[entity]
+        entity => oldHass.states[entity] !== this.hass?.states[entity]
       );
     }
     return false;

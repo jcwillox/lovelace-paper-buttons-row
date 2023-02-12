@@ -44,9 +44,9 @@ export function subscribeTemplate(this: PaperButtonsRow, config, object, key) {
   if (typeof option === "object") {
     if (!option.entity) option.entity = config.entity;
 
-    if (option.entity !== config.entity) this._entities!.push(option.entity);
+    if (option.entity !== config.entity) this._entities?.push(option.entity);
 
-    this._templates!.push({
+    this._templates?.push({
       template: option,
       callback: res => res && (object[key] = res)
     });

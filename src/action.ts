@@ -43,7 +43,7 @@ export function handleActionConfig(
     actionConfig.confirmation &&
     (!actionConfig.confirmation.exemptions ||
       !actionConfig.confirmation.exemptions.some(
-        e => e.user === hass!.user!.id
+        e => e.user === hass?.user?.id
       ))
   ) {
     forwardHaptic("warning");

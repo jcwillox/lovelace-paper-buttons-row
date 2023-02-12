@@ -58,8 +58,8 @@ function computeActionTooltip(hass, state, config, isHold) {
   return tooltip;
 }
 
-export const computeTooltip = (hass: HomeAssistant, config: ButtonConfig) => {
-  if (config.tooltip === false) {
+export const computeTooltip = (config: ButtonConfig, hass?: HomeAssistant) => {
+  if (!hass || config.tooltip === false) {
     return "";
   }
   if (config.tooltip) {

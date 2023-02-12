@@ -1,5 +1,11 @@
 import { fireEvent } from "custom-card-helpers";
 
+declare global {
+  interface HASSDomEvents {
+    "hass-notification": ShowToastParams;
+  }
+}
+
 export interface ShowToastParams {
   message: string;
   action?: ToastActionParams;
@@ -13,7 +19,6 @@ export interface ToastActionParams {
 }
 
 export const showToast = (el: HTMLElement, params: ShowToastParams) => {
-  // @ts-ignore
   return fireEvent(el, "hass-notification", params);
 };
 

@@ -15,8 +15,7 @@ import {
 const isTouch =
   "ontouchstart" in window ||
   navigator.maxTouchPoints > 0 ||
-  // @ts-ignore
-  navigator.msMaxTouchPoints > 0;
+  navigator["msMaxTouchPoints"] > 0;
 
 export interface CustomActionHandlerOptions extends ActionHandlerOptions {
   disabled?: boolean;
@@ -133,14 +132,18 @@ class ActionHandler extends HTMLElement implements IActionHandler {
     }
 
     if (element.actionHandler) {
-      element.removeEventListener("touchstart", element.actionHandler.start!);
-      element.removeEventListener("touchend", element.actionHandler.end!);
-      element.removeEventListener("touchcancel", element.actionHandler.end!);
-
-      element.removeEventListener("mousedown", element.actionHandler.start!);
-      element.removeEventListener("click", element.actionHandler.end!);
-
-      element.removeEventListener("keyup", element.actionHandler.handleEnter!);
+      if (element.actionHandler.start) {
+        element.removeEventListener("touchstart", element.actionHandler.start);
+        element.removeEventListener("mousedown", element.actionHandler.start);
+      }
+      if (element.actionHandler.end) {
+        element.removeEventListener("touchend", element.actionHandler.end);
+        element.removeEventListener("touchcancel", element.actionHandler.end);
+        element.removeEventListener("click", element.actionHandler.end);
+      }
+      if (element.actionHandler.handleEnter) {
+        element.removeEventListener("keyup", element.actionHandler.handleEnter);
+      }
     } else {
       element.addEventListener("contextmenu", (ev: Event) => {
         const e = ev || window.event;
@@ -239,7 +242,7 @@ class ActionHandler extends HTMLElement implements IActionHandler {
       if (ev.keyCode !== 13) {
         return;
       }
-      (ev.currentTarget as ActionHandlerElement).actionHandler!.end!(ev);
+      (ev.currentTarget as ActionHandlerElement).actionHandler?.end?.(ev);
     };
 
     element.addEventListener("touchstart", element.actionHandler.start, {
@@ -310,7 +313,7 @@ export const actionHandler = directive(
       return noChange;
     }
 
-    // eslint-disable-next-line @typescript-eslint/no-empty-function
+    // eslint-disable-next-line @typescript-eslint/no-empty-function,@typescript-eslint/no-unused-vars
     render(_options?: CustomActionHandlerOptions) {}
   }
 );
