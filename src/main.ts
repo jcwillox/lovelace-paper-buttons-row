@@ -1,4 +1,4 @@
-import { html, LitElement, PropertyValues } from "lit";
+import { html, LitElement, PropertyValues, unsafeCSS } from "lit";
 import { customElement, property } from "lit/decorators.js";
 import { StyleInfo, styleMap } from "lit/directives/style-map.js";
 import { ifDefined } from "lit/directives/if-defined.js";
@@ -33,7 +33,7 @@ import {
   Template
 } from "./types";
 import { HassEntity } from "home-assistant-js-websocket";
-import styles from "./styles.css";
+import styles from "./styles.css?inline";
 import { arrayToObject } from "./utils";
 import { handleButtonPreset } from "./presets";
 
@@ -79,7 +79,7 @@ const migrateIconAlignment = (alignment: string) => {
 
 @customElement("paper-buttons-row")
 export class PaperButtonsRow extends LitElement {
-  static readonly styles = [styles];
+  static readonly styles = unsafeCSS(styles);
 
   @property() private hass?: HomeAssistant;
   @property() private _config?: PaperButtonRowConfig;

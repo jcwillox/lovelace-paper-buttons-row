@@ -3,8 +3,11 @@
   "version": "0-dev",
   "author": "Joshua Cowie-Willox",
   "license": "MIT",
+  "type": "module",
   "scripts": {
-    "build": "rollup -c",
+    "build": "vite build",
+    "build:tsc": "tsc && vite build",
+    "typecheck": "tsc",
     "lint": "eslint --max-warnings=0 src/",
     "lint:fix": "npm run lint -s -- --fix",
     "format": "prettier src/ --write",
@@ -15,29 +18,20 @@
     "custom-card-helpers": "^1.9.0",
     "deepmerge": "^4.2.2",
     "home-assistant-js-websocket": "^7.1.0",
-    "lit": "^2.2.5"
+    "lit": "^2.2.5",
+    "vite": "^4.1.1"
   },
   "devDependencies": {
-    "@rollup/plugin-commonjs": "^22.0.0",
-    "@rollup/plugin-json": "^4.1.0",
-    "@rollup/plugin-node-resolve": "^13.3.0",
-    "@rollup/plugin-replace": "^4.0.0",
-    "@rollup/plugin-typescript": "^8.3.2",
     "@types/node": "^16.11.36",
     "@typescript-eslint/eslint-plugin": "^5.43.0",
     "@typescript-eslint/parser": "^5.43.0",
     "eslint": "^8.28.0",
     "eslint-plugin-only-warn": "^1.0.3",
     "prettier": "^2.7.1",
-    "rollup": "^2.75.0",
-    "rollup-plugin-bundle-size": "^1.0.3",
-    "rollup-plugin-lit-css": "^4.0.0",
-    "rollup-plugin-sizes": "^1.0.4",
-    "rollup-plugin-terser": "^7.0.2",
     "tslib": "^2.4.0",
     "typescript": "^4.7.2"
   },
-  "packageManager": "pnpm@7.18.1",
+  "packageManager": "pnpm@7.27.0",
   "engines": {
     "node": ">=16.x"
   }
