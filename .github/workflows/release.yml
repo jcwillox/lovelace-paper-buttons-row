@@ -12,10 +12,6 @@ jobs:
       - name: "Checkout the repository"
         uses: actions/checkout@v3
 
-      - name: "Update version"
-        run: |
-          echo $(jq '.version="${{ github.event.release.tag_name }}"' package.json) > package.json
-
       - name: "Setup pnpm"
         uses: pnpm/action-setup@v2
 
