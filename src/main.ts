@@ -374,7 +374,12 @@ export class PaperButtonsRow extends LitElement {
   }
 
   _getStateStyles(domain?: string, stateObj?: HassEntity): StyleInfo {
-    if (!domain || !stateObj) return {};
+    const hex = getComputedStyle(this).getPropertyValue("--state-icon-color");
+    const base = {
+      "--rgb-state-default-color": this._hexToRgb(hex)?.join(", "),
+    };
+
+    if (!domain || !stateObj) return base;
 
     if (stateObj.attributes.rgb_color) {
       return {
@@ -388,7 +393,8 @@ export class PaperButtonsRow extends LitElement {
         };
       }
     }
-    return {};
+
+    return base;
   }
 
   _getStateColor = (stateObj: HassEntity, domain?: string) => {
