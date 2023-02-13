@@ -1,4 +1,3 @@
-import "./entity-row";
 import { hass } from "card-tools/src/hass";
 import {
   ActionHandlerEvent,
@@ -35,6 +34,7 @@ import {
   StyleConfig,
 } from "./types";
 import { arrayToObject } from "./utils";
+import "./entity-row";
 
 console.groupCollapsed(
   `%c ${__NAME__} %c ${__VERSION__} `,
