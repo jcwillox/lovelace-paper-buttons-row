@@ -56,7 +56,7 @@ const computeStateIcon = (config: ButtonConfig) => {
 const computeStateText = (config: ButtonConfig) => {
   if (config.state_text && typeof config.state == "string")
     return config.state_text[config.state.toLowerCase()] || config.state;
-  return undefined;
+  return config.state;
 };
 
 const migrateIconAlignment = (alignment: string) => {
