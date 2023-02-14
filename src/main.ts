@@ -425,6 +425,11 @@ export class PaperButtonsRow extends LitElement {
 
       hex = styles.getPropertyValue(`--state-${domain}-${active}-color`);
       if (hex) return this._hexToRgb(hex);
+
+      if (stateObj.state === STATE_ON) {
+        hex = styles.getPropertyValue("--state-active-color");
+        if (hex) return this._hexToRgb(hex);
+      }
     }
   };
 
