@@ -15,6 +15,8 @@
 }
 
 paper-button {
+  --pbs-button-rgb-fallback: 68, 115, 158;
+
   color: var(
     --pbs-button-color,
     rgb(
@@ -22,7 +24,10 @@ paper-button {
         --pbs-button-rgb-color,
         var(
           --pbs-button-rgb-state-color,
-          var(--pbs-button-rgb-default-color, var(--rgb-state-default-color))
+          var(
+            --pbs-button-rgb-default-color,
+            var(--rgb-state-default-color, var(--pbs-button-rgb-fallback))
+          )
         )
       )
     )
@@ -31,6 +36,7 @@ paper-button {
     --pbs-button-bg-color,
     rgba(var(--pbs-button-rgb-bg-color), var(--pbs-button-rgb-bg-opacity, 1))
   );
+
   padding: 6px;
   cursor: pointer;
   position: relative;
@@ -59,7 +65,10 @@ ha-icon {
           --pbs-button-rgb-active-color,
           var(
             --pbs-button-rgb-state-color,
-            var(--pbs-button-rgb-default-color, var(--rgb-state-default-color))
+            var(
+              --pbs-button-rgb-default-color,
+              var(--rgb-state-default-color, var(--pbs-button-rgb-fallback))
+            )
           )
         )
       )

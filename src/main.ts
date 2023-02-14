@@ -242,6 +242,7 @@ export class PaperButtonsRow extends LitElement {
               const domain = config.entity && computeDomain(config.entity);
               const styles = this._getStyles(config);
               const buttonStyles = {
+                ...this._getBaseStyles(),
                 ...this._getStateStyles(domain, stateObj),
                 ...(styles.button || {}),
               } as StyleInfo;
@@ -373,13 +374,15 @@ export class PaperButtonsRow extends LitElement {
     return "";
   }
 
-  _getStateStyles(domain?: string, stateObj?: HassEntity): StyleInfo {
+  _getBaseStyles(): StyleInfo {
     const hex = getComputedStyle(this).getPropertyValue("--state-icon-color");
-    const base = {
+    return {
       "--rgb-state-default-color": this._hexToRgb(hex)?.join(", "),
     };
+  }
 
-    if (!domain || !stateObj) return base;
+  _getStateStyles(domain?: string, stateObj?: HassEntity): StyleInfo {
+    if (!domain || !stateObj) return {};
 
     if (stateObj.attributes.rgb_color) {
       return {
@@ -394,7 +397,7 @@ export class PaperButtonsRow extends LitElement {
       }
     }
 
-    return base;
+    return {};
   }
 
   _getStateColor = (stateObj: HassEntity, domain?: string) => {
