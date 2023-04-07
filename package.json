@@ -21,27 +21,27 @@
   "dependencies": {
     "card-tools": "github:thomasloven/lovelace-card-tools#477f3d4",
     "custom-card-helpers": "1.9.0",
-    "deepmerge": "4.3.0",
+    "deepmerge": "4.3.1",
     "home-assistant-js-websocket": "8.0.1",
-    "lit": "2.6.1",
-    "vite": "4.1.4"
+    "lit": "2.7.1",
+    "vite": "4.2.1"
   },
   "devDependencies": {
-    "@types/node": "18.14.2",
-    "@typescript-eslint/eslint-plugin": "5.54.0",
-    "@typescript-eslint/parser": "5.54.0",
-    "eslint": "8.35.0",
-    "eslint-config-prettier": "8.6.0",
-    "eslint-import-resolver-typescript": "3.5.3",
+    "@types/node": "18.15.11",
+    "@typescript-eslint/eslint-plugin": "5.57.1",
+    "@typescript-eslint/parser": "5.57.1",
+    "eslint": "8.37.0",
+    "eslint-config-prettier": "8.8.0",
+    "eslint-import-resolver-typescript": "3.5.4",
     "eslint-plugin-import": "2.27.5",
     "eslint-plugin-only-warn": "1.1.0",
     "eslint-plugin-prettier": "4.2.1",
     "husky": "8.0.3",
-    "lint-staged": "13.1.2",
-    "prettier": "2.8.4",
+    "lint-staged": "13.2.0",
+    "prettier": "2.8.7",
     "typescript": "5.0.3"
   },
-  "packageManager": "pnpm@8.1.0",
+  "packageManager": "pnpm@8.1.1",
   "engines": {
     "node": ">=16.x"
   }
