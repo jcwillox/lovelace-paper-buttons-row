@@ -2,7 +2,7 @@ lockfileVersion: '6.0'
 
 patchedDependencies:
   custom-card-helpers@1.9.0:
-    hash: iso4dx7b2a6cf3ouyxrejfujxe
+    hash: 6lcy2efhtjafsy6dl4bda7qxma
     path: patches/custom-card-helpers@1.9.0.patch
 
 dependencies:
@@ -11,7 +11,7 @@ dependencies:
     version: github.com/thomasloven/lovelace-card-tools/477f3d4
   custom-card-helpers:
     specifier: 1.9.0
-    version: 1.9.0(patch_hash=iso4dx7b2a6cf3ouyxrejfujxe)
+    version: 1.9.0(patch_hash=6lcy2efhtjafsy6dl4bda7qxma)
   deepmerge:
     specifier: 4.3.1
     version: 4.3.1
@@ -777,7 +777,7 @@ packages:
       which: 2.0.2
     dev: true
 
-  /custom-card-helpers@1.9.0(patch_hash=iso4dx7b2a6cf3ouyxrejfujxe):
+  /custom-card-helpers@1.9.0(patch_hash=6lcy2efhtjafsy6dl4bda7qxma):
     resolution: {integrity: sha512-5IW4OXq3MiiCqDvqeu+MYsM1NmntKW1WfJhyJFsdP2tbzqEI4BOnqRz2qzdp08lE4QLVhYfRLwe0WAqgQVNeFg==}
     dependencies:
       '@formatjs/intl-utils': 3.8.4

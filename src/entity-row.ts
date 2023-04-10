@@ -1,6 +1,5 @@
 import { provideHass } from "card-tools/src/hass";
-import { createEntityRow } from "card-tools/src/lovelace-element";
-import { HomeAssistant, fireEvent } from "custom-card-helpers";
+import { HomeAssistant, createThing, fireEvent } from "custom-card-helpers";
 import { LitElement, PropertyValues } from "lit";
 import { ExternalPaperButtonRowConfig } from "./types";
 
@@ -34,10 +33,13 @@ createModule("hui-generic-entity-row", function () {
     const pbConfig = this.config
       .extend_paper_buttons_row as ExternalPaperButtonRowConfig;
 
-    const paperButtons = createEntityRow({
-      type: "custom:paper-buttons-row",
-      ...pbConfig,
-    });
+    const paperButtons = createThing(
+      {
+        type: "custom:paper-buttons-row",
+        ...pbConfig,
+      },
+      true
+    );
 
     provideHass(paperButtons);
 
