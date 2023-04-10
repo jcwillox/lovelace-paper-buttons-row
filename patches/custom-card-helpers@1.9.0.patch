@@ -1,0 +1,13 @@
+diff --git a/src/get-lovelace.ts b/src/get-lovelace.ts
+index ebde3e6bf5d86f793d9697d8c88b57bf7b004e7b..6a8afc3d32539a4f8a257926a7cf9972841c8343 100644
+--- a/src/get-lovelace.ts
++++ b/src/get-lovelace.ts
+@@ -3,7 +3,7 @@ export const getLovelace = () => {
+     root = root && root.shadowRoot;
+     root = root && root.querySelector('home-assistant-main');
+     root = root && root.shadowRoot;
+-    root = root && root.querySelector('app-drawer-layout partial-panel-resolver');
++    root = root && root.querySelector('ha-drawer partial-panel-resolver');
+     root = root && root.shadowRoot || root;
+     root = root && root.querySelector('ha-panel-lovelace');
+     root = root && root.shadowRoot;
