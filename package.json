@@ -23,25 +23,25 @@
     "custom-card-helpers": "1.9.0",
     "deepmerge": "4.3.1",
     "home-assistant-js-websocket": "8.0.1",
-    "lit": "2.7.1",
-    "vite": "4.2.1"
+    "lit": "2.7.4",
+    "vite": "4.3.4"
   },
   "devDependencies": {
-    "@types/node": "18.15.11",
-    "@typescript-eslint/eslint-plugin": "5.57.1",
-    "@typescript-eslint/parser": "5.57.1",
-    "eslint": "8.37.0",
+    "@types/node": "18.16.4",
+    "@typescript-eslint/eslint-plugin": "5.59.2",
+    "@typescript-eslint/parser": "5.59.2",
+    "eslint": "8.39.0",
     "eslint-config-prettier": "8.8.0",
-    "eslint-import-resolver-typescript": "3.5.4",
+    "eslint-import-resolver-typescript": "3.5.5",
     "eslint-plugin-import": "2.27.5",
     "eslint-plugin-only-warn": "1.1.0",
     "eslint-plugin-prettier": "4.2.1",
     "husky": "8.0.3",
-    "lint-staged": "13.2.0",
-    "prettier": "2.8.7",
-    "typescript": "5.0.3"
+    "lint-staged": "13.2.2",
+    "prettier": "2.8.8",
+    "typescript": "5.0.4"
   },
-  "packageManager": "pnpm@8.1.1",
+  "packageManager": "pnpm@8.4.0",
   "engines": {
     "node": ">=16.x"
   }
