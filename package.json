@@ -37,7 +37,7 @@
     "eslint-plugin-only-warn": "1.1.0",
     "eslint-plugin-prettier": "4.2.1",
     "husky": "8.0.3",
-    "lint-staged": "13.2.3",
+    "lint-staged": "14.0.1",
     "prettier": "2.8.8",
     "typescript": "5.1.6"
   },
