@@ -3,7 +3,6 @@ import {
   ActionHandlerEvent,
   HomeAssistant,
   computeDomain,
-  stateIcon,
 } from "custom-card-helpers";
 import deepmerge from "deepmerge";
 import { HassEntity } from "home-assistant-js-websocket";
@@ -320,9 +319,7 @@ export class PaperButtonsRow extends LitElement {
   renderIcon(config: ButtonConfig, style: StyleInfo, entity?: HassEntity) {
     const icon =
       config.icon !== false && (config.icon || config.entity)
-        ? computeStateIcon(config) ||
-          config.icon ||
-          (entity && stateIcon(entity))
+        ? computeStateIcon(config) || config.icon
         : false;
 
     return config.image
@@ -332,8 +329,12 @@ export class PaperButtonsRow extends LitElement {
           style="${styleMap(style)}"
           alt="icon"
         />`
-      : icon
-      ? html` <ha-icon style="${styleMap(style)}" .icon="${icon}" />`
+      : icon || entity
+      ? html` <ha-state-icon
+          style="${styleMap(style)}"
+          .state="${entity}"
+          .icon="${icon}"
+        />`
       : "";
   }
 
