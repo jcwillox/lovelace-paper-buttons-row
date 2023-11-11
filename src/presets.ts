@@ -16,7 +16,7 @@ let lovelace = getLovelace();
 
 export function handleButtonPreset(
   bConfig: ButtonConfig,
-  config?: PaperButtonRowConfig
+  config?: PaperButtonRowConfig,
 ): ButtonConfig {
   if (!lovelace) lovelace = getLovelace();
   const userPresets = lovelace?.config?.paper_buttons_row?.presets || {};
@@ -28,7 +28,7 @@ export function handleButtonPreset(
         }[preset] ||
           userPresets[preset] ||
           {},
-        bConfig
+        bConfig,
       )
     : bConfig;
 }

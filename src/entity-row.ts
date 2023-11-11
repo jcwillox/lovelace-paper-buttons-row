@@ -11,7 +11,7 @@ interface LovelaceElement extends LitElement {
 
 type FirstUpdatedFn = (
   this: LovelaceElement,
-  changedProperties: PropertyValues
+  changedProperties: PropertyValues,
 ) => void;
 
 export function createModule(element: string, firstUpdated: FirstUpdatedFn) {
@@ -38,7 +38,7 @@ createModule("hui-generic-entity-row", function () {
         type: "custom:paper-buttons-row",
         ...pbConfig,
       },
-      true
+      true,
     );
 
     provideHass(paperButtons);

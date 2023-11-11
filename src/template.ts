@@ -60,7 +60,7 @@ export function subscribeTemplate(this: PaperButtonsRow, config, object, key) {
       {
         template: option,
         variables: { config: config },
-      }
+      },
     );
     object[key] = "";
   }
