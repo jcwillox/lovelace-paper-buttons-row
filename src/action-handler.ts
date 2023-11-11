@@ -34,7 +34,7 @@ interface IActionHandler extends HTMLElement {
   holdTime: number;
   bind: (
     element: ActionHandlerElement,
-    options?: CustomActionHandlerOptions
+    options?: CustomActionHandlerOptions,
   ) => void;
 }
 
@@ -115,14 +115,14 @@ class ActionHandler extends HTMLElement implements IActionHandler {
             }
           }
         },
-        { passive: true }
+        { passive: true },
       );
     });
   }
 
   public bind(
     element: ActionHandlerElement,
-    options: CustomActionHandlerOptions = {}
+    options: CustomActionHandlerOptions = {},
   ): void {
     if (
       element.actionHandler &&
@@ -283,12 +283,12 @@ const getActionHandler = (): ActionHandler => {
   const body = document.body;
   if (body.querySelector("paper-buttons-row-action-handler")) {
     return body.querySelector(
-      "paper-buttons-row-action-handler"
+      "paper-buttons-row-action-handler",
     ) as ActionHandler;
   }
 
   const actionHandler = document.createElement(
-    "paper-buttons-row-action-handler"
+    "paper-buttons-row-action-handler",
   );
   body.appendChild(actionHandler);
 
@@ -297,7 +297,7 @@ const getActionHandler = (): ActionHandler => {
 
 export const actionHandlerBind = (
   element: ActionHandlerElement,
-  options?: CustomActionHandlerOptions
+  options?: CustomActionHandlerOptions,
 ): void => {
   const actionHandler: ActionHandler = getActionHandler();
   if (!actionHandler) {
@@ -315,5 +315,5 @@ export const actionHandler = directive(
 
     // eslint-disable-next-line @typescript-eslint/no-empty-function,@typescript-eslint/no-unused-vars
     render(_options?: CustomActionHandlerOptions) {}
-  }
+  },
 );
