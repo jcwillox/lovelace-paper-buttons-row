@@ -23,7 +23,7 @@
     "custom-card-helpers": "1.9.0",
     "deepmerge": "4.3.1",
     "home-assistant-js-websocket": "9.1.0",
-    "lit": "2.8.0",
+    "lit": "3.0.2",
     "vite": "4.5.0"
   },
   "devDependencies": {
