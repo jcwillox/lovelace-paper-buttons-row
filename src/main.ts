@@ -332,7 +332,9 @@ export class PaperButtonsRow extends LitElement {
       : icon || entity
       ? html` <ha-state-icon
           style="${styleMap(style)}"
-          .state="${entity}"
+          .hass=${this.hass}
+          .stateObj=${entity}
+          .state=${entity}
           .icon="${icon}"
         />`
       : "";
