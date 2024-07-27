@@ -7,3 +7,6 @@
 
 # refactor: reformat and sort imports
 8b31e632dbf8a17dd4f52c05f6fc620bfc6ddbf1
+
+# refactor: use default prettier config
+1b5fa9a994cba8295141a56b2973397291d55255
