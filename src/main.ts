@@ -333,8 +333,8 @@ export class PaperButtonsRow extends LitElement {
           alt="icon"
         />`
       : icon
-      ? html` <ha-icon style="${styleMap(style)}" .icon="${icon}" />`
-      : "";
+        ? html` <ha-icon style="${styleMap(style)}" .icon="${icon}" />`
+        : "";
   }
 
   renderName(config: ButtonConfig, style: StyleInfo, stateObj?: HassEntity) {
