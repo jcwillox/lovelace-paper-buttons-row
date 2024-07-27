@@ -1,8 +1,25 @@
-name: "Publish"
+name: "Release"
 
 on:
-  release:
-    types: [published]
+  push:
+    branches:
+      - "beta"
+      - "alpha"
+  workflow_dispatch:
+    inputs:
+      draft:
+        type: boolean
+        description: "Draft release"
+        default: false
+      release_type:
+        type: choice
+        description: "Release type"
+        default: "auto"
+        options:
+          - "auto"
+          - "patch"
+          - "minor"
+          - "major"
 
 jobs:
   publish:
@@ -24,11 +41,11 @@ jobs:
       - name: "Install dependencies"
         run: pnpm install
 
-      - name: "Run Build"
-        run: pnpm run build
-
-      - name: "Upload assets"
+      - name: "Release Package 📦"
+        run: pnpm dlx @jcwillox/semantic-release-config
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: |
-          gh release upload ${{ github.event.release.tag_name }} dist/*
+          SEMANTIC_RELEASE_GITHUB_DRAFT: ${{ inputs.draft }}
+          SEMANTIC_RELEASE_FORCE_RELEASE: ${{ inputs.release_type }}
+          SEMANTIC_RELEASE_GITHUB_ASSETS: "dist/*.js"
+          SEMANTIC_RELEASE_CMD_PREPARE: "VERSION=${nextRelease.version} pnpm build"
