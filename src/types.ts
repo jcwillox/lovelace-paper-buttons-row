@@ -11,7 +11,6 @@ declare global {
   const __BRANCH__: string;
   const __COMMIT__: string;
   const __VERSION__: string;
-  const __REPO_URL__: string;
   const __BUILD_TIME__: string;
 }
 

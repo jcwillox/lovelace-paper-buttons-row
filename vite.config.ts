@@ -1,35 +1,35 @@
-// https://vitejs.dev/config/
-import { execSync } from "child_process";
-import { defineConfig } from "vite";
+import { exec } from "node:child_process";
+import { promisify } from "node:util";
+import { UserConfig, defineConfig } from "vite";
 import pkg from "./package.json";
 
-const quoteCommand = command => {
-  return JSON.stringify(execSync(command).toString().trim());
-};
+const $ = async (command: string, env = "") =>
+  process.env[env] ?? (await promisify(exec)(command)).stdout.trim();
 
-const quoteCommandOrEnv = (command, env) => {
-  if (process.env[env]) {
-    return JSON.stringify(process.env[env]);
-  }
-  return quoteCommand(command);
-};
+const all = async (obj: Record<string, string | Promise<string>>) =>
+  Object.fromEntries(
+    await Promise.all(
+      Object.entries(obj).map(async ([k, v]) => [k, JSON.stringify(await v)]),
+    ),
+  );
 
-export default defineConfig({
-  build: {
-    lib: {
-      entry: "src/main.ts",
-      formats: ["es"],
+export default defineConfig(
+  async (): Promise<UserConfig> => ({
+    build: {
+      lib: {
+        entry: "src/main.ts",
+        formats: ["es"],
+      },
     },
-  },
-  esbuild: {
-    legalComments: "none",
-  },
-  define: {
-    __NAME__: JSON.stringify(pkg.name.toUpperCase()),
-    __BRANCH__: quoteCommand("git rev-parse --abbrev-ref HEAD"),
-    __COMMIT__: quoteCommandOrEnv("git rev-parse HEAD", "GITHUB_SHA"),
-    __VERSION__: quoteCommand("git describe --tags --dirty --always"),
-    __REPO_URL__: quoteCommand("git remote get-url origin").replace(".git", ""),
-    __BUILD_TIME__: JSON.stringify(new Date().toISOString()),
-  },
-});
+    esbuild: {
+      legalComments: "none",
+    },
+    define: await all({
+      __NAME__: pkg.name.toUpperCase(),
+      __BRANCH__: $("git rev-parse --abbrev-ref HEAD", "GITHUB_REF_NAME"),
+      __VERSION__: $("git describe --tags --dirty --always", "VERSION"),
+      __COMMIT__: $("git rev-parse HEAD", "GITHUB_SHA"),
+      __BUILD_TIME__: new Date().toISOString(),
+    }),
+  }),
+);
