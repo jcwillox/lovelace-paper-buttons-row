@@ -17,6 +17,7 @@ const all = async (obj: Record<string, string | Promise<string>>) =>
 export default defineConfig(
   async (): Promise<UserConfig> => ({
     build: {
+      target: "es6",
       lib: {
         entry: "src/main.ts",
         formats: ["es"],
