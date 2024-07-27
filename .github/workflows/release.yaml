@@ -47,5 +47,5 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           SEMANTIC_RELEASE_GITHUB_DRAFT: ${{ inputs.draft }}
           SEMANTIC_RELEASE_FORCE_RELEASE: ${{ inputs.release_type }}
-          SEMANTIC_RELEASE_GITHUB_ASSETS: "dist/*.js"
+          SEMANTIC_RELEASE_GITHUB_ASSETS: "dist/*"
           SEMANTIC_RELEASE_CMD_PREPARE: "VERSION=${nextRelease.version} pnpm build"
