@@ -16,16 +16,16 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: "Checkout the repository"
-        uses: actions/checkout@v4
+        uses: actions/checkout@v4.1.7
 
       - name: "Setup pnpm"
-        uses: pnpm/action-setup@v2
+        uses: pnpm/action-setup@v4.0.0
 
       - name: "Setup node"
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@v4.0.3
         with:
           node-version-file: package.json
-          cache: ${{ !env.ACT && 'pnpm' || '' }}
+          cache: "pnpm"
 
       - name: "Install dependencies"
         run: pnpm install
@@ -41,16 +41,16 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: "Checkout the repository"
-        uses: actions/checkout@v4
+        uses: actions/checkout@v4.1.7
 
       - name: "Setup pnpm"
-        uses: pnpm/action-setup@v2
+        uses: pnpm/action-setup@v4.0.0
 
       - name: "Setup node"
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@v4.0.3
         with:
           node-version-file: package.json
-          cache: ${{ !env.ACT && 'pnpm' || '' }}
+          cache: "pnpm"
 
       - name: "Install dependencies"
         run: pnpm install
