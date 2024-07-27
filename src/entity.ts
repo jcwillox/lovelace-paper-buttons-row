@@ -1,7 +1,7 @@
 import { HomeAssistant, computeEntity } from "custom-card-helpers";
 import { ButtonConfig } from "./types";
 
-export const computeStateName = stateObj => {
+export const computeStateName = (stateObj) => {
   if (stateObj.attributes && stateObj.attributes.friendly_name) {
     return stateObj.attributes.friendly_name;
   }

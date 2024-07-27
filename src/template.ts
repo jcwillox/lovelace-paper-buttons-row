@@ -2,7 +2,7 @@ import { hasTemplate, subscribeRenderTemplate } from "card-tools/src/templates";
 import { PaperButtonsRow } from "./main";
 
 export function renderTemplateObjects(templates, hass) {
-  templates.forEach(item => {
+  templates.forEach((item) => {
     item.callback(renderTemplateObject(item.template, hass));
   });
 }
@@ -48,12 +48,12 @@ export function subscribeTemplate(this: PaperButtonsRow, config, object, key) {
 
     this._templates?.push({
       template: option,
-      callback: res => res && (object[key] = res),
+      callback: (res) => res && (object[key] = res),
     });
   } else if (hasTemplate(option)) {
     subscribeRenderTemplate(
       null,
-      res => {
+      (res) => {
         object[key] = res;
         this.requestUpdate();
       },

@@ -102,9 +102,9 @@ export class PaperButtonsRow extends LitElement {
     config = JSON.parse(JSON.stringify(config));
 
     // ensure we always have 1 row
-    if (config.buttons.every(item => !Array.isArray(item))) {
+    if (config.buttons.every((item) => !Array.isArray(item))) {
       config.buttons = [config.buttons as Array<ExternalButtonType>];
-    } else if (!config.buttons.every(item => Array.isArray(item))) {
+    } else if (!config.buttons.every((item) => Array.isArray(item))) {
       throw new Error("Cannot mix rows and buttons");
     }
 
@@ -119,8 +119,8 @@ export class PaperButtonsRow extends LitElement {
     }
 
     config.buttons = (config.buttons as Array<Array<ExternalButtonType>>).map(
-      row => {
-        return row.map(bConfig => {
+      (row) => {
+        return row.map((bConfig) => {
           // handle when config is not defined as a dictionary.
           if (typeof bConfig === "string") {
             bConfig = { entity: bConfig };
@@ -132,7 +132,7 @@ export class PaperButtonsRow extends LitElement {
           if (typeof bConfig.layout === "string") {
             bConfig.layout = bConfig.layout
               .split("|")
-              .map(column =>
+              .map((column) =>
                 column.includes("_") ? column.split("_") : column,
               );
           }
@@ -186,8 +186,8 @@ export class PaperButtonsRow extends LitElement {
     this._templates = [];
 
     // fix config.
-    this._config.buttons = this._config.buttons.map(row => {
-      return row.map(config => {
+    this._config.buttons = this._config.buttons.map((row) => {
+      return row.map((config) => {
         config = handleButtonPreset(config, this._config);
 
         // create list of entities to monitor for changes.
@@ -196,14 +196,14 @@ export class PaperButtonsRow extends LitElement {
         }
 
         // subscribe template options
-        TEMPLATE_OPTIONS.forEach(key =>
+        TEMPLATE_OPTIONS.forEach((key) =>
           subscribeTemplate.call(this, config, config, key),
         );
 
         // subscribe template styles
-        Object.values(config.styles).forEach(styles => {
+        Object.values(config.styles).forEach((styles) => {
           if (typeof styles === "object")
-            Object.keys(styles).forEach(key =>
+            Object.keys(styles).forEach((key) =>
               subscribeTemplate.call(this, config, styles, key),
             );
         });
@@ -228,13 +228,13 @@ export class PaperButtonsRow extends LitElement {
             </style>
           `
         : ""}
-      ${this._config.buttons.map(row => {
+      ${this._config.buttons.map((row) => {
         return html`
           <div
             class="flex-box"
             style="${styleMap(this._config?.styles as StyleInfo)}"
           >
-            ${row.map(config => {
+            ${row.map((config) => {
               const stateObj =
                 (config.entity != undefined &&
                   this.hass?.states[config.entity]) ||
@@ -274,11 +274,11 @@ export class PaperButtonsRow extends LitElement {
                       config.state.toLowerCase(),
                   )}"
                 >
-                  ${config.layout?.map(column => {
+                  ${config.layout?.map((column) => {
                     if (Array.isArray(column))
                       return html`
                         <div class="flex-column">
-                          ${column.map(row =>
+                          ${column.map((row) =>
                             this.renderElement(row, config, styles, stateObj),
                           )}
                         </div>
@@ -434,7 +434,7 @@ export class PaperButtonsRow extends LitElement {
   };
 
   _hexToRgb(hex: string) {
-    return hex.match(/[A-Za-z0-9]{2}/g)?.map(v => parseInt(v, 16));
+    return hex.match(/[A-Za-z0-9]{2}/g)?.map((v) => parseInt(v, 16));
   }
 
   _getRippleClass(config: ButtonConfig) {
@@ -524,7 +524,7 @@ export class PaperButtonsRow extends LitElement {
       }
       // only update if monitored entity changed state.
       return this._entities.some(
-        entity => oldHass.states[entity] !== this.hass?.states[entity],
+        (entity) => oldHass.states[entity] !== this.hass?.states[entity],
       );
     }
     return false;

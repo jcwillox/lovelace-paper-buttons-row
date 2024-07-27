@@ -100,7 +100,7 @@ class ActionHandler extends HTMLElement implements IActionHandler {
       "mousewheel",
       "wheel",
       "scroll",
-    ].forEach(ev => {
+    ].forEach((ev) => {
       document.addEventListener(
         ev,
         () => {
