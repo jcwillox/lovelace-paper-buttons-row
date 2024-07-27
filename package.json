@@ -5,7 +5,7 @@
   "license": "MIT",
   "type": "module",
   "scripts": {
-    "prepare": "husky install",
+    "prepare": "husky",
     "build": "vite build",
     "build:tsc": "tsc && vite build",
     "typecheck": "tsc",
