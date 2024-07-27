@@ -5,6 +5,7 @@
   "private": true,
   "scripts": {
     "prepare": "husky",
+    "dev": "vite build --watch",
     "build": "vite build",
     "build:tsc": "tsc && vite build",
     "typecheck": "tsc",
@@ -38,7 +39,8 @@
     "husky": "9.1.1",
     "lint-staged": "15.2.7",
     "prettier": "3.3.3",
-    "typescript": "5.5.4"
+    "typescript": "5.5.4",
+    "vite-plugin-compression": "0.5.1"
   },
   "packageManager": "pnpm@9.6.0",
   "engines": {

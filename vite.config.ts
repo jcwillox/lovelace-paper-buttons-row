@@ -1,6 +1,7 @@
 import { exec } from "node:child_process";
 import { promisify } from "node:util";
 import { UserConfig, defineConfig } from "vite";
+import viteCompression from "vite-plugin-compression";
 import pkg from "./package.json";
 
 const $ = async (command: string, env = "") =>
@@ -24,6 +25,7 @@ export default defineConfig(
     esbuild: {
       legalComments: "none",
     },
+    plugins: [viteCompression({ verbose: false })],
     define: await all({
       __NAME__: pkg.name.toUpperCase(),
       __BRANCH__: $("git rev-parse --abbrev-ref HEAD", "GITHUB_REF_NAME"),
