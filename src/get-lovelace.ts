@@ -1,4 +1,4 @@
-import { LovelaceConfig } from "custom-card-helpers";
+import type { LovelaceConfig } from "custom-card-helpers";
 
 type HuiRootElement = HTMLElement & {
   lovelace: {

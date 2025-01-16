@@ -1,7 +1,11 @@
 import { provideHass } from "card-tools/src/hass";
-import { HomeAssistant, createThing, fireEvent } from "custom-card-helpers";
-import { LitElement, PropertyValues } from "lit";
-import { ExternalPaperButtonRowConfig } from "./types";
+import {
+  type HomeAssistant,
+  createThing,
+  fireEvent,
+} from "custom-card-helpers";
+import type { LitElement, PropertyValues } from "lit";
+import type { ExternalPaperButtonRowConfig } from "./types";
 
 interface LovelaceElement extends LitElement {
   hass?: HomeAssistant;

@@ -1,6 +1,6 @@
 import { exec } from "node:child_process";
 import { promisify } from "node:util";
-import { UserConfig, defineConfig } from "vite";
+import { type UserConfig, defineConfig } from "vite";
 import viteCompression from "vite-plugin-compression";
 import pkg from "./package.json";
 

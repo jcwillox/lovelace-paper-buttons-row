@@ -1,6 +1,7 @@
 // From https://github.com/epoberezkin/fast-deep-equal
 // MIT License - Copyright (c) 2017 Evgeny Poberezkin
 /* eslint-disable @typescript-eslint/no-explicit-any */
+// biome-ignore lint/suspicious/noExplicitAny: This is a third-party library
 export const deepEqual = (a: any, b: any): boolean => {
   if (a === b) {
     return true;
@@ -11,6 +12,7 @@ export const deepEqual = (a: any, b: any): boolean => {
       return false;
     }
 
+    // biome-ignore lint/suspicious/noExplicitAny: This is a third-party library
     let i: number | [any, any];
     let length: number;
     if (Array.isArray(a)) {
@@ -106,5 +108,6 @@ export const deepEqual = (a: any, b: any): boolean => {
 
   // true if both NaN, false otherwise
   // eslint-disable-next-line no-self-compare
+  // biome-ignore lint/suspicious/noSelfCompare: <explanation>
   return a !== a && b !== b;
 };

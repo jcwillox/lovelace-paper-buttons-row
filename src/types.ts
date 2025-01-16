@@ -1,6 +1,6 @@
-import { ActionConfig, LovelaceCard } from "custom-card-helpers";
-import { HapticType } from "custom-card-helpers/src/haptic";
-import { BaseActionConfig } from "custom-card-helpers/src/types";
+import type { ActionConfig, LovelaceCard } from "custom-card-helpers";
+import type { HapticType } from "custom-card-helpers/src/haptic";
+import type { BaseActionConfig } from "custom-card-helpers/src/types";
 
 declare global {
   interface HTMLElementTagNameMap {

@@ -1,21 +1,27 @@
 import {
-  ActionHandlerDetail,
-  ActionHandlerOptions,
+  type ActionHandlerDetail,
+  type ActionHandlerOptions,
   fireEvent,
 } from "custom-card-helpers";
 import { noChange } from "lit";
 import {
-  AttributePart,
+  type AttributePart,
   Directive,
-  DirectiveParameters,
+  type DirectiveParameters,
   directive,
 } from "lit/directive.js";
 import { deepEqual } from "./deep-equal";
 
+declare global {
+  interface Navigator {
+    msMaxTouchPoints: number;
+  }
+}
+
 const isTouch =
   "ontouchstart" in window ||
   navigator.maxTouchPoints > 0 ||
-  navigator["msMaxTouchPoints"] > 0;
+  navigator.msMaxTouchPoints > 0;
 
 export interface CustomActionHandlerOptions extends ActionHandlerOptions {
   disabled?: boolean;
@@ -92,7 +98,7 @@ class ActionHandler extends HTMLElement implements IActionHandler {
     this.appendChild(this.ripple);
     this.ripple.primary = true;
 
-    [
+    for (const ev of [
       "touchcancel",
       "mouseout",
       "mouseup",
@@ -100,7 +106,7 @@ class ActionHandler extends HTMLElement implements IActionHandler {
       "mousewheel",
       "wheel",
       "scroll",
-    ].forEach((ev) => {
+    ]) {
       document.addEventListener(
         ev,
         () => {
@@ -117,7 +123,7 @@ class ActionHandler extends HTMLElement implements IActionHandler {
         },
         { passive: true },
       );
-    });
+    }
   }
 
   public bind(
@@ -167,8 +173,8 @@ class ActionHandler extends HTMLElement implements IActionHandler {
 
     element.actionHandler.start = (ev: Event) => {
       this.cancelled = false;
-      let x;
-      let y;
+      let x: number;
+      let y: number;
       if ((ev as TouchEvent).touches) {
         x = (ev as TouchEvent).touches[0].pageX;
         y = (ev as TouchEvent).touches[0].pageY;
@@ -313,7 +319,6 @@ export const actionHandler = directive(
       return noChange;
     }
 
-    // eslint-disable-next-line @typescript-eslint/no-empty-function,@typescript-eslint/no-unused-vars
     render(_options?: CustomActionHandlerOptions) {}
   },
 );

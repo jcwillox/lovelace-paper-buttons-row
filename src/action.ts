@@ -1,11 +1,11 @@
 import {
-  HomeAssistant,
+  type HomeAssistant,
   fireEvent,
   forwardHaptic,
   navigate,
   toggleEntity,
 } from "custom-card-helpers";
-import { ButtonActionConfig, ButtonConfig } from "./types";
+import type { ButtonActionConfig, ButtonConfig } from "./types";
 import { showToast } from "./utils";
 
 export const handleAction = (

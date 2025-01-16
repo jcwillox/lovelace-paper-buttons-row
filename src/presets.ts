@@ -1,6 +1,6 @@
 import deepmerge from "deepmerge";
 import { getLovelace } from "./get-lovelace";
-import { ButtonConfig, PaperButtonRowConfig } from "./types";
+import type { ButtonConfig, PaperButtonRowConfig } from "./types";
 
 declare module "custom-card-helpers" {
   interface LovelaceConfig {
