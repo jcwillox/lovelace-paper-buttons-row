@@ -16,7 +16,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: "Checkout the repository"
-        uses: actions/checkout@v4.1.7
+        uses: actions/checkout@v4.2.2
 
       - name: "Setup Biome"
         uses: biomejs/setup-biome@v2.3.0
@@ -29,13 +29,13 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: "Checkout the repository"
-        uses: actions/checkout@v4.1.7
+        uses: actions/checkout@v4.2.2
 
       - name: "Setup pnpm"
         uses: pnpm/action-setup@v4.0.0
 
       - name: "Setup node"
-        uses: actions/setup-node@v4.0.3
+        uses: actions/setup-node@v4.1.0
         with:
           node-version-file: package.json
           cache: "pnpm"
