@@ -24,8 +24,8 @@ importers:
         specifier: 2.8.0
         version: 2.8.0
       vite:
-        specifier: 6.0.7
-        version: 6.0.7(@types/node@22.10.5)(yaml@2.6.1)
+        specifier: 6.0.9
+        version: 6.0.9(@types/node@22.10.5)(yaml@2.6.1)
     devDependencies:
       '@biomejs/biome':
         specifier: 1.9.4
@@ -44,7 +44,7 @@ importers:
         version: 5.7.3
       vite-plugin-compression:
         specifier: 0.5.1
-        version: 0.5.1(vite@6.0.7(@types/node@22.10.5)(yaml@2.6.1))
+        version: 0.5.1(vite@6.0.9(@types/node@22.10.5)(yaml@2.6.1))
 
 packages:
 
@@ -723,8 +723,8 @@ packages:
     peerDependencies:
       vite: '>=2.0.0'
 
-  vite@6.0.7:
-    resolution: {integrity: sha512-RDt8r/7qx9940f8FcOIAH9PTViRrghKaK2K1jY3RaAURrEUbm9Du1mJ72G+jlhtG3WwodnfzY8ORQZbBavZEAQ==}
+  vite@6.0.9:
+    resolution: {integrity: sha512-MSgUxHcaXLtnBPktkbUSoQUANApKYuxZ6DrbVENlIorbhL2dZydTLaZ01tjUoE3szeFzlFk9ANOKk0xurh4MKA==}
     engines: {node: ^18.0.0 || ^20.0.0 || >=22.0.0}
     hasBin: true
     peerDependencies:
@@ -1339,16 +1339,16 @@ snapshots:
 
   universalify@2.0.1: {}
 
-  vite-plugin-compression@0.5.1(vite@6.0.7(@types/node@22.10.5)(yaml@2.6.1)):
+  vite-plugin-compression@0.5.1(vite@6.0.9(@types/node@22.10.5)(yaml@2.6.1)):
     dependencies:
       chalk: 4.1.2
       debug: 4.4.0
       fs-extra: 10.1.0
-      vite: 6.0.7(@types/node@22.10.5)(yaml@2.6.1)
+      vite: 6.0.9(@types/node@22.10.5)(yaml@2.6.1)
     transitivePeerDependencies:
       - supports-color
 
-  vite@6.0.7(@types/node@22.10.5)(yaml@2.6.1):
+  vite@6.0.9(@types/node@22.10.5)(yaml@2.6.1):
     dependencies:
       esbuild: 0.24.2
       postcss: 8.5.1
