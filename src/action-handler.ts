@@ -87,7 +87,7 @@ class ActionHandler extends HTMLElement implements IActionHandler {
 
   public connectedCallback(): void {
     Object.assign(this.style, {
-      position: "absolute",
+      position: "fixed",
       width: isTouch ? "100px" : "50px",
       height: isTouch ? "100px" : "50px",
       transform: "translate(-50%, -50%)",
