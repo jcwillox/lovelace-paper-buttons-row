@@ -3,6 +3,7 @@ import {
   type ActionHandlerOptions,
   fireEvent,
 } from "custom-card-helpers";
+import deepEqual from "fast-deep-equal";
 import { noChange } from "lit";
 import {
   type AttributePart,
@@ -10,7 +11,6 @@ import {
   type DirectiveParameters,
   directive,
 } from "lit/directive.js";
-import { deepEqual } from "./deep-equal";
 
 declare global {
   interface Navigator {
