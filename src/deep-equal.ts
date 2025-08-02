@@ -90,6 +90,7 @@ export const deepEqual = (a: any, b: any): boolean => {
       return false;
     }
     for (i = length; i-- !== 0; ) {
+      // biome-ignore lint/suspicious/noPrototypeBuiltins: This is a third-party library
       if (!Object.prototype.hasOwnProperty.call(b, keys[i])) {
         return false;
       }
@@ -108,6 +109,6 @@ export const deepEqual = (a: any, b: any): boolean => {
 
   // true if both NaN, false otherwise
   // eslint-disable-next-line no-self-compare
-  // biome-ignore lint/suspicious/noSelfCompare: <explanation>
+  // biome-ignore lint/suspicious/noSelfCompare: This is a third-party library
   return a !== a && b !== b;
 };

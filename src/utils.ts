@@ -24,5 +24,6 @@ export const showToast = (el: HTMLElement, params: ShowToastParams) => {
 
 export const arrayToObject = (data) =>
   Array.isArray(data)
-    ? data.reduce((obj, item) => Object.assign(obj, item), {})
+    ? // biome-ignore lint/performance/noAccumulatingSpread: rework this
+      data.reduce((obj, item) => Object.assign(obj, item), {})
     : data;

@@ -1,12 +1,12 @@
 import { hass } from "card-tools/src/hass";
 import {
   type ActionHandlerEvent,
-  type HomeAssistant,
   computeDomain,
+  type HomeAssistant,
 } from "custom-card-helpers";
 import deepmerge from "deepmerge";
 import type { HassEntity } from "home-assistant-js-websocket";
-import { LitElement, type PropertyValues, html, unsafeCSS } from "lit";
+import { html, LitElement, type PropertyValues, unsafeCSS } from "lit";
 import { customElement, property } from "lit/decorators.js";
 import { ifDefined } from "lit/directives/if-defined.js";
 import { type StyleInfo, styleMap } from "lit/directives/style-map.js";
@@ -14,10 +14,10 @@ import { handleAction, hasAction } from "./action";
 import { actionHandler } from "./action-handler";
 import {
   DOMAINS_TOGGLE,
-  STATES_ON,
   STATE_OFF,
   STATE_ON,
   STATE_UNAVAILABLE,
+  STATES_ON,
   TEMPLATE_OPTIONS,
 } from "./const";
 import { computeStateName, computeTooltip } from "./entity";
