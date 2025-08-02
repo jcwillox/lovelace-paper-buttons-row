@@ -49,7 +49,7 @@ interface ActionHandlerElement extends HTMLElement {
     options: ActionHandlerOptions;
     start?: (ev: Event) => void;
     end?: (ev: Event) => void;
-    handleEnter?: (ev: KeyboardEvent) => void;
+    handleKeyDown?: (ev: KeyboardEvent) => void;
   };
 }
 
@@ -90,9 +90,14 @@ class ActionHandler extends HTMLElement implements IActionHandler {
       position: "fixed",
       width: isTouch ? "100px" : "50px",
       height: isTouch ? "100px" : "50px",
-      transform: "translate(-50%, -50%)",
+      transform: "translate(-50%, -50%) scale(0)",
       pointerEvents: "none",
       zIndex: "999",
+      background: "var(--primary-color)",
+      display: null,
+      opacity: "0.2",
+      borderRadius: "50%",
+      transition: "transform 180ms ease-in-out",
     });
 
     this.appendChild(this.ripple);
@@ -112,7 +117,7 @@ class ActionHandler extends HTMLElement implements IActionHandler {
         () => {
           this.cancelled = true;
           if (this.timer) {
-            this.stopAnimation();
+            this._stopAnimation();
             clearTimeout(this.timer);
             this.timer = undefined;
             if (this.isRepeating && this.repeatTimeout) {
@@ -147,8 +152,11 @@ class ActionHandler extends HTMLElement implements IActionHandler {
         element.removeEventListener("touchcancel", element.actionHandler.end);
         element.removeEventListener("click", element.actionHandler.end);
       }
-      if (element.actionHandler.handleEnter) {
-        element.removeEventListener("keyup", element.actionHandler.handleEnter);
+      if (element.actionHandler.handleKeyDown) {
+        element.removeEventListener(
+          "keydown",
+          element.actionHandler.handleKeyDown,
+        );
       }
     } else {
       element.addEventListener("contextmenu", (ev: Event) => {
@@ -177,17 +185,17 @@ class ActionHandler extends HTMLElement implements IActionHandler {
       let x: number;
       let y: number;
       if ((ev as TouchEvent).touches) {
-        x = (ev as TouchEvent).touches[0].pageX;
-        y = (ev as TouchEvent).touches[0].pageY;
+        x = (ev as TouchEvent).touches[0].clientX;
+        y = (ev as TouchEvent).touches[0].clientY;
       } else {
-        x = (ev as MouseEvent).pageX;
-        y = (ev as MouseEvent).pageY;
+        x = (ev as MouseEvent).clientX;
+        y = (ev as MouseEvent).clientY;
       }
 
       if (options.hasHold) {
         this.held = false;
         this.timer = window.setTimeout(() => {
-          this.startAnimation(x, y);
+          this._startAnimation(x, y);
           this.held = true;
           if (options.repeat && !this.isRepeating) {
             this.isRepeating = true;
@@ -202,7 +210,10 @@ class ActionHandler extends HTMLElement implements IActionHandler {
     element.actionHandler.end = (ev: Event) => {
       ev.stopPropagation();
       // Don't respond when moved or scrolled while touch
-      if (["touchend", "touchcancel"].includes(ev.type) && this.cancelled) {
+      if (
+        ev.type === "touchcancel" ||
+        (ev.type === "touchend" && this.cancelled)
+      ) {
         if (this.isRepeating && this.repeatTimeout) {
           clearInterval(this.repeatTimeout);
           this.isRepeating = false;
@@ -220,7 +231,7 @@ class ActionHandler extends HTMLElement implements IActionHandler {
           clearInterval(this.repeatTimeout);
         }
         this.isRepeating = false;
-        this.stopAnimation();
+        this._stopAnimation();
         this.timer = undefined;
       }
       if (options.hasHold && this.held) {
@@ -246,8 +257,8 @@ class ActionHandler extends HTMLElement implements IActionHandler {
       }
     };
 
-    element.actionHandler.handleEnter = (ev: KeyboardEvent) => {
-      if (ev.keyCode !== 13) {
+    element.actionHandler.handleKeyDown = (ev: KeyboardEvent) => {
+      if (!["Enter", " "].includes(ev.key)) {
         return;
       }
       (ev.currentTarget as ActionHandlerElement).actionHandler?.end?.(ev);
@@ -264,24 +275,28 @@ class ActionHandler extends HTMLElement implements IActionHandler {
     });
     element.addEventListener("click", element.actionHandler.end);
 
-    element.addEventListener("keyup", element.actionHandler.handleEnter);
+    element.addEventListener("keydown", element.actionHandler.handleKeyDown);
   }
 
-  private startAnimation(x: number, y: number): void {
+  private _startAnimation(x: number, y: number) {
     Object.assign(this.style, {
       left: `${x}px`,
       top: `${y}px`,
-      display: null,
+      transform: "translate(-50%, -50%) scale(1)",
     });
     this.ripple.disabled = false;
     this.ripple.startPress();
     this.ripple.unbounded = true;
   }
 
-  private stopAnimation(): void {
+  private _stopAnimation() {
     this.ripple.endPress();
     this.ripple.disabled = true;
-    this.style.display = "none";
+    Object.assign(this.style, {
+      left: null,
+      top: null,
+      transform: "translate(-50%, -50%) scale(0)",
+    });
   }
 }
 
