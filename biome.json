@@ -1,15 +1,13 @@
 {
   "$schema": "https://biomejs.dev/schemas/2.1.3/schema.json",
   "files": {
-    "ignore": ["**/pnpm-lock.yaml", "**/dist/**/*"]
+    "includes": ["**/pnpm-lock.yaml", "**/dist"]
   },
   "formatter": {
     "enabled": true,
     "useEditorconfig": true
   },
-  "organizeImports": {
-    "enabled": true
-  },
+  "assist": { "actions": { "source": { "organizeImports": "on" } } },
   "linter": {
     "enabled": true,
     "rules": {

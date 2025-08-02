@@ -1,7 +1,7 @@
 import {
-  type HomeAssistant,
   fireEvent,
   forwardHaptic,
+  type HomeAssistant,
   navigate,
   toggleEntity,
 } from "custom-card-helpers";
