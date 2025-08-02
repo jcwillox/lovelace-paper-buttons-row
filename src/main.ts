@@ -465,11 +465,10 @@ export class PaperButtonsRow extends LitElement {
   }
 
   _getStyles(config: ButtonConfig): StyleConfig {
-    if (!config.state || !config.state_styles) {
+    if (!config.state || !config.state_styles || config.state !== "string") {
       return config.styles;
     }
-    const stateStyle =
-      config.state_styles[(config.state as string).toLowerCase()];
+    const stateStyle = config.state_styles[config.state.toLowerCase()];
     if (!stateStyle) {
       return config.styles;
     }
