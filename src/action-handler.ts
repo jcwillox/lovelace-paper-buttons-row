@@ -172,6 +172,7 @@ class ActionHandler extends HTMLElement implements IActionHandler {
     }
 
     element.actionHandler.start = (ev: Event) => {
+      ev.stopPropagation();
       this.cancelled = false;
       let x: number;
       let y: number;
@@ -199,6 +200,7 @@ class ActionHandler extends HTMLElement implements IActionHandler {
     };
 
     element.actionHandler.end = (ev: Event) => {
+      ev.stopPropagation();
       // Don't respond when moved or scrolled while touch
       if (["touchend", "touchcancel"].includes(ev.type) && this.cancelled) {
         if (this.isRepeating && this.repeatTimeout) {

@@ -360,6 +360,7 @@ export class PaperButtonsRow extends LitElement {
 
   private _handleAction(ev: ActionHandlerEvent, config: ButtonConfig): void {
     if (this.hass && config && ev.detail.action) {
+      ev.stopPropagation();
       handleAction(this, this.hass, config, ev.detail.action);
     }
   }
