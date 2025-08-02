@@ -13,3 +13,6 @@
 
 # refactor: replace eslint with biome
 c119669d580673b29d3aed0c8f19a0491f4680c0
+
+# refactor: migrate to biome v2
+1f72b1f60595db38bfe10b76fc8cbf668725dc2b
