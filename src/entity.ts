@@ -1,8 +1,8 @@
-import { HomeAssistant, computeEntity } from "custom-card-helpers";
-import { ButtonConfig } from "./types";
+import { type HomeAssistant, computeEntity } from "custom-card-helpers";
+import type { ButtonConfig } from "./types";
 
-export const computeStateName = stateObj => {
-  if (stateObj.attributes && stateObj.attributes.friendly_name) {
+export const computeStateName = (stateObj) => {
+  if (stateObj.attributes?.friendly_name) {
     return stateObj.attributes.friendly_name;
   }
   return stateObj.entity_id
@@ -14,44 +14,45 @@ function computeActionTooltip(hass, state, config, isHold) {
   if (!config || !config.action || config.action === "none") {
     return "";
   }
-  let tooltip =
-    (isHold
+  let tooltip = `${
+    isHold
       ? hass.localize("ui.panel.lovelace.cards.picture-elements.hold")
-      : hass.localize("ui.panel.lovelace.cards.picture-elements.tap")) + " ";
+      : hass.localize("ui.panel.lovelace.cards.picture-elements.tap")
+  } `;
   switch (config.action) {
     case "navigate":
       tooltip += `${hass.localize(
         "ui.panel.lovelace.cards.picture-elements.navigate_to",
         "location",
-        config.navigation_path
+        config.navigation_path,
       )}`;
       break;
     case "url":
       tooltip += `${hass.localize(
         "ui.panel.lovelace.cards.picture-elements.url",
         "url_path",
-        config.url_path
+        config.url_path,
       )}`;
       break;
     case "toggle":
       tooltip += `${hass.localize(
         "ui.panel.lovelace.cards.picture-elements.toggle",
         "name",
-        state
+        state,
       )}`;
       break;
     case "call-service":
       tooltip += `${hass.localize(
         "ui.panel.lovelace.cards.picture-elements.call_service",
         "name",
-        config.service
+        config.service,
       )}`;
       break;
     case "more-info":
       tooltip += `${hass.localize(
         "ui.panel.lovelace.cards.picture-elements.more_info",
         "name",
-        state
+        state,
       )}`;
       break;
   }

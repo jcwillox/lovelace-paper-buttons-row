@@ -16,41 +16,29 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: "Checkout the repository"
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4.2.2
 
-      - name: "Setup pnpm"
-        uses: pnpm/action-setup@v2
+      - name: "Setup Biome"
+        uses: biomejs/setup-biome@v2.6.0
 
-      - name: "Setup node"
-        uses: actions/setup-node@v3
-        with:
-          node-version-file: package.json
-          cache: ${{ !env.ACT && 'pnpm' || '' }}
-
-      - name: "Install dependencies"
-        run: pnpm install
-
-      - name: "Run Lint"
-        run: pnpm run lint
-
-      - name: "Check format"
-        run: pnpm run format:check
+      - name: "Run Biome"
+        run: biome ci .
 
   build:
     name: "Build & Test"
     runs-on: ubuntu-latest
     steps:
       - name: "Checkout the repository"
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4.2.2
 
       - name: "Setup pnpm"
-        uses: pnpm/action-setup@v2
+        uses: pnpm/action-setup@v4.1.0
 
       - name: "Setup node"
-        uses: actions/setup-node@v3
+        uses: actions/setup-node@v4.4.0
         with:
           node-version-file: package.json
-          cache: ${{ !env.ACT && 'pnpm' || '' }}
+          cache: "pnpm"
 
       - name: "Install dependencies"
         run: pnpm install

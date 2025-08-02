@@ -1,11 +1,11 @@
 {
   "name": "paper-buttons-row",
-  "version": "0-dev",
-  "author": "Joshua Cowie-Willox",
-  "license": "MIT",
+  "version": "0.0.0-dev",
   "type": "module",
+  "private": true,
   "scripts": {
-    "prepare": "husky install",
+    "prepare": "husky",
+    "dev": "vite build --watch",
     "build": "vite build",
     "build:tsc": "tsc && vite build",
     "typecheck": "tsc",
@@ -15,34 +15,26 @@
     "format:check": "prettier --cache --check ."
   },
   "lint-staged": {
-    "*.{js,cjs,mjs,jsx,ts,tsx}": "eslint --cache --max-warnings=0 --fix",
-    "*.!(js|cjs|mjs|jsx|ts|tsx)": "prettier --ignore-unknown --cache --write"
+    "*": "biome check --write --no-errors-on-unmatched --files-ignore-unknown=true"
   },
   "dependencies": {
     "card-tools": "github:thomasloven/lovelace-card-tools#477f3d4",
     "custom-card-helpers": "1.9.0",
     "deepmerge": "4.3.1",
-    "home-assistant-js-websocket": "8.2.0",
+    "home-assistant-js-websocket": "9.5.0",
     "lit": "2.8.0",
-    "vite": "4.4.9"
+    "vite": "6.1.6"
   },
   "devDependencies": {
-    "@types/node": "18.17.3",
-    "@typescript-eslint/eslint-plugin": "5.62.0",
-    "@typescript-eslint/parser": "5.62.0",
-    "eslint": "8.46.0",
-    "eslint-config-prettier": "8.10.0",
-    "eslint-import-resolver-typescript": "3.5.5",
-    "eslint-plugin-import": "2.28.0",
-    "eslint-plugin-only-warn": "1.1.0",
-    "eslint-plugin-prettier": "4.2.1",
-    "husky": "8.0.3",
-    "lint-staged": "13.2.3",
-    "prettier": "2.8.8",
-    "typescript": "5.1.6"
+    "@biomejs/biome": "1.9.4",
+    "@types/node": "22.17.0",
+    "husky": "9.1.7",
+    "lint-staged": "15.5.2",
+    "typescript": "5.8.3",
+    "vite-plugin-compression": "0.5.1"
   },
-  "packageManager": "pnpm@8.6.12",
+  "packageManager": "pnpm@10.13.1",
   "engines": {
-    "node": ">=16.x"
+    "node": ">=20.x"
   }
 }

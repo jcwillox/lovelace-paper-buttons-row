@@ -1,7 +1,11 @@
 import { provideHass } from "card-tools/src/hass";
-import { HomeAssistant, createThing, fireEvent } from "custom-card-helpers";
-import { LitElement, PropertyValues } from "lit";
-import { ExternalPaperButtonRowConfig } from "./types";
+import {
+  type HomeAssistant,
+  createThing,
+  fireEvent,
+} from "custom-card-helpers";
+import type { LitElement, PropertyValues } from "lit";
+import type { ExternalPaperButtonRowConfig } from "./types";
 
 interface LovelaceElement extends LitElement {
   hass?: HomeAssistant;
@@ -11,7 +15,7 @@ interface LovelaceElement extends LitElement {
 
 type FirstUpdatedFn = (
   this: LovelaceElement,
-  changedProperties: PropertyValues
+  changedProperties: PropertyValues,
 ) => void;
 
 export function createModule(element: string, firstUpdated: FirstUpdatedFn) {
@@ -38,7 +42,7 @@ createModule("hui-generic-entity-row", function () {
         type: "custom:paper-buttons-row",
         ...pbConfig,
       },
-      true
+      true,
     );
 
     provideHass(paperButtons);

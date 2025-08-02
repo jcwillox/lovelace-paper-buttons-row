@@ -1,0 +1,51 @@
+name: "Release"
+
+on:
+  push:
+    branches:
+      - "beta"
+      - "alpha"
+  workflow_dispatch:
+    inputs:
+      draft:
+        type: boolean
+        description: "Draft release"
+        default: false
+      release_type:
+        type: choice
+        description: "Release type"
+        default: "auto"
+        options:
+          - "auto"
+          - "patch"
+          - "minor"
+          - "major"
+
+jobs:
+  publish:
+    name: "Publish"
+    runs-on: ubuntu-latest
+    steps:
+      - name: "Checkout the repository"
+        uses: actions/checkout@v4.2.2
+
+      - name: "Setup pnpm"
+        uses: pnpm/action-setup@v4.1.0
+
+      - name: "Setup node"
+        uses: actions/setup-node@v4.4.0
+        with:
+          node-version-file: package.json
+          cache: "pnpm"
+
+      - name: "Install dependencies"
+        run: pnpm install
+
+      - name: "Release Package 📦"
+        run: pnpm dlx @jcwillox/semantic-release-config
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          SEMANTIC_RELEASE_GITHUB_DRAFT: ${{ inputs.draft }}
+          SEMANTIC_RELEASE_FORCE_RELEASE: ${{ inputs.release_type }}
+          SEMANTIC_RELEASE_GITHUB_ASSETS: "dist/*"
+          SEMANTIC_RELEASE_CMD_PREPARE: "VERSION=${nextRelease.version} pnpm build"

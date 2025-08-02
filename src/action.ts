@@ -1,18 +1,18 @@
 import {
-  HomeAssistant,
+  type HomeAssistant,
   fireEvent,
   forwardHaptic,
   navigate,
   toggleEntity,
 } from "custom-card-helpers";
-import { ButtonActionConfig, ButtonConfig } from "./types";
+import type { ButtonActionConfig, ButtonConfig } from "./types";
 import { showToast } from "./utils";
 
 export const handleAction = (
   node: HTMLElement,
   hass: HomeAssistant,
   config: ButtonConfig,
-  action: string
+  action: string,
 ): void => {
   let actionConfig: ButtonActionConfig | undefined;
 
@@ -31,7 +31,7 @@ export function handleActionConfig(
   node: HTMLElement,
   hass: HomeAssistant,
   config: ButtonConfig,
-  actionConfig: ButtonActionConfig | undefined
+  actionConfig: ButtonActionConfig | undefined,
 ) {
   if (!actionConfig) {
     actionConfig = {
@@ -43,7 +43,7 @@ export function handleActionConfig(
     actionConfig.confirmation &&
     (!actionConfig.confirmation.exemptions ||
       !actionConfig.confirmation.exemptions.some(
-        e => e.user === hass?.user?.id
+        (e) => e.user === hass?.user?.id,
       ))
   ) {
     forwardHaptic("warning");
@@ -51,7 +51,7 @@ export function handleActionConfig(
     if (
       !confirm(
         actionConfig.confirmation.text ||
-          `Are you sure you want to ${actionConfig.action}?`
+          `Are you sure you want to ${actionConfig.action}?`,
       )
     ) {
       return;
@@ -66,7 +66,7 @@ export function handleActionConfig(
       } else {
         showToast(node, {
           message: hass.localize(
-            "ui.panel.lovelace.cards.actions.no_entity_more_info"
+            "ui.panel.lovelace.cards.actions.no_entity_more_info",
           ),
         });
         forwardHaptic("failure");
@@ -77,7 +77,7 @@ export function handleActionConfig(
       if (!actionConfig.navigation_path) {
         showToast(node, {
           message: hass.localize(
-            "ui.panel.lovelace.cards.actions.no_navigation_path"
+            "ui.panel.lovelace.cards.actions.no_navigation_path",
           ),
         });
         forwardHaptic("failure");
@@ -101,7 +101,7 @@ export function handleActionConfig(
       if (!config.entity) {
         showToast(node, {
           message: hass.localize(
-            "ui.panel.lovelace.cards.actions.no_entity_toggle"
+            "ui.panel.lovelace.cards.actions.no_entity_toggle",
           ),
         });
         forwardHaptic("failure");
@@ -123,7 +123,7 @@ export function handleActionConfig(
         domain,
         service,
         actionConfig.service_data,
-        actionConfig.target
+        actionConfig.target,
       );
       forwardHaptic("light");
       break;
@@ -139,7 +139,7 @@ export function handleActionConfig(
       hass.callApi(
         "POST",
         `events/${actionConfig.event_type}`,
-        actionConfig.event_data || {}
+        actionConfig.event_data || {},
       );
       forwardHaptic("light");
       break;

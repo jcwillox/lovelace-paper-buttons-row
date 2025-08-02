@@ -7,7 +7,7 @@
     "strings": true
   },
   "editor.codeActionsOnSave": {
-    "source.fixAll": true
+    "source.fixAll": "explicit"
   },
   "[javascript][javascriptreact][typescript][typescriptreact][json][jsonc][yaml][html][markdown][postcss][css]": {
     "editor.defaultFormatter": "esbenp.prettier-vscode"
