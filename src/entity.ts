@@ -2,10 +2,10 @@ import { type HomeAssistant, computeEntity } from "custom-card-helpers";
 import type { ButtonConfig } from "./types";
 
 export const computeStateName = (stateObj) => {
-  if (stateObj.attributes?.friendly_name) {
+  if (stateObj?.attributes?.friendly_name) {
     return stateObj.attributes.friendly_name;
   }
-  return stateObj.entity_id
+  return stateObj?.entity_id
     ? computeEntity(stateObj.entity_id).replace(/_/g, " ")
     : "Unknown";
 };
