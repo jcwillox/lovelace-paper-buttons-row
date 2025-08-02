@@ -19,7 +19,7 @@ jobs:
         uses: actions/checkout@v4.2.2
 
       - name: "Setup Biome"
-        uses: biomejs/setup-biome@v2.3.0
+        uses: biomejs/setup-biome@v2.6.0
 
       - name: "Run Biome"
         run: biome ci .
@@ -32,10 +32,10 @@ jobs:
         uses: actions/checkout@v4.2.2
 
       - name: "Setup pnpm"
-        uses: pnpm/action-setup@v4.0.0
+        uses: pnpm/action-setup@v4.1.0
 
       - name: "Setup node"
-        uses: actions/setup-node@v4.1.0
+        uses: actions/setup-node@v4.4.0
         with:
           node-version-file: package.json
           cache: "pnpm"
