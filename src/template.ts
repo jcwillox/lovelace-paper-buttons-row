@@ -13,13 +13,9 @@ export function renderTemplateObject(template, hass) {
   if (!state) return;
 
   if (template.attribute) {
-    state = hass.formatEntityAttributeValue
-      ? hass.formatEntityAttributeValue(state, template.attribute)
-      : state.attributes[template.attribute];
+    state = state.attributes[template.attribute];
   } else {
-    state = hass.formatEntityState
-      ? hass.formatEntityState(state)
-      : state.state;
+    state = state.state;
   }
 
   let result = (template.prefix || "") + state + (template.postfix || "");
