@@ -26,6 +26,7 @@ const isTouch =
 export interface CustomActionHandlerOptions extends ActionHandlerOptions {
   disabled?: boolean;
   repeat?: number;
+  stopPropagation?: boolean;
 }
 
 interface Ripple extends HTMLElement {
@@ -180,7 +181,9 @@ class ActionHandler extends HTMLElement implements IActionHandler {
     }
 
     element.actionHandler.start = (ev: Event) => {
-      ev.stopPropagation();
+      if (options.stopPropagation) {
+        ev.stopPropagation();
+      }
       this.cancelled = false;
       let x: number;
       let y: number;
@@ -208,7 +211,9 @@ class ActionHandler extends HTMLElement implements IActionHandler {
     };
 
     element.actionHandler.end = (ev: Event) => {
-      ev.stopPropagation();
+      if (options.stopPropagation) {
+        ev.stopPropagation();
+      }
       // Don't respond when moved or scrolled while touch
       if (
         ev.type === "touchcancel" ||

@@ -260,6 +260,7 @@ export class PaperButtonsRow extends LitElement {
                     hasHold: hasAction(config.hold_action),
                     hasDoubleClick: hasAction(config.double_tap_action),
                     repeat: config.hold_action?.repeat,
+                    stopPropagation: !!this._config?.is_extended_row,
                   })}"
                   style="${styleMap(buttonStyles)}"
                   class="${this._getClass(
@@ -363,7 +364,9 @@ export class PaperButtonsRow extends LitElement {
 
   private _handleAction(ev: ActionHandlerEvent, config: ButtonConfig): void {
     if (this.hass && config && ev.detail.action) {
-      ev.stopPropagation();
+      if (this._config?.is_extended_row) {
+        ev.stopPropagation();
+      }
       handleAction(this, this.hass, config, ev.detail.action);
     }
   }

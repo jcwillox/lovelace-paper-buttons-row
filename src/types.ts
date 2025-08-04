@@ -63,6 +63,7 @@ export interface PaperButtonRowConfig {
   position?: "center" | "right";
   hide_badge?: boolean;
   hide_state?: boolean;
+  is_extended_row?: boolean;
 }
 
 export interface ExternalButtonConfig
@@ -79,6 +80,7 @@ export interface ExternalPaperButtonRowConfig
   extends Omit<PaperButtonRowConfig, "buttons" | "styles"> {
   buttons: Array<ExternalButtonType | Array<ExternalButtonType>>;
   styles?: Record<string, string | Template>;
+  is_extended_row?: boolean;
 }
 
 export interface FireEventActionConfig extends BaseActionConfig {

@@ -41,6 +41,7 @@ createModule("hui-generic-entity-row", function () {
       {
         type: "custom:paper-buttons-row",
         ...pbConfig,
+        is_extended_row: true,
       },
       true,
     );
