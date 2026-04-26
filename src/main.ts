@@ -98,7 +98,7 @@ export class PaperButtonsRow extends LitElement {
       throw new Error("At least one button required.");
 
     // deep copy config
-    config = JSON.parse(JSON.stringify(config));
+    config = structuredClone(config);
 
     // ensure we always have 1 row
     if (config.buttons.every((item) => !Array.isArray(item))) {
