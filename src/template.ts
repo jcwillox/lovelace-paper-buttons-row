@@ -49,7 +49,7 @@ export function subscribeTemplate(this: PaperButtonsRow, config, object, key) {
     this._templates?.push({
       template: option,
       callback: (res) => {
-        if (res) {
+        if (res !== undefined) {
           object[key] = res;
         }
       },
