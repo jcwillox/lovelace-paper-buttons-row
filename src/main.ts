@@ -84,6 +84,7 @@ export class PaperButtonsRow extends LitElement {
 
   _templates?: unknown[];
   _entities?: string[];
+  _unsubTemplates?: Promise<() => void>[];
 
   // convert an externally set config to the correct internal structure
   private _transformConfig(
@@ -177,12 +178,14 @@ export class PaperButtonsRow extends LitElement {
   }
 
   setConfig(config: ExternalPaperButtonRowConfig) {
+    this._unsubscribeTemplates();
     this._config = this._transformConfig(config);
     if (!this.hass) {
       this.hass = hass() as HomeAssistant;
     }
     this._entities = [];
     this._templates = [];
+    this._unsubTemplates = [];
 
     // fix config.
     this._config.buttons = this._config.buttons.map((row) => {
@@ -538,5 +541,18 @@ export class PaperButtonsRow extends LitElement {
       );
     }
     return false;
+  }
+
+  override disconnectedCallback() {
+    super.disconnectedCallback();
+    this._unsubscribeTemplates();
+  }
+
+  private _unsubscribeTemplates() {
+    if (!this._unsubTemplates) return;
+    for (const promise of this._unsubTemplates) {
+      promise.then((unsub) => unsub()).catch(() => {});
+    }
+    this._unsubTemplates = undefined;
   }
 }
