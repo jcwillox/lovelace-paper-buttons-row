@@ -49,22 +49,24 @@ export function subscribeTemplate(this: PaperButtonsRow, config, object, key) {
     this._templates?.push({
       template: option,
       callback: (res) => {
-        if (res) {
+        if (res !== undefined) {
           object[key] = res;
         }
       },
     });
   } else if (hasTemplate(option)) {
-    subscribeRenderTemplate(
-      null,
-      (res) => {
-        object[key] = res;
-        this.requestUpdate();
-      },
-      {
-        template: option,
-        variables: { config: config },
-      },
+    this._unsubTemplates?.push(
+      subscribeRenderTemplate(
+        null,
+        (res) => {
+          object[key] = res;
+          this.requestUpdate("_config", null);
+        },
+        {
+          template: option,
+          variables: { config: config },
+        },
+      ),
     );
     object[key] = "";
   }

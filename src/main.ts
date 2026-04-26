@@ -84,6 +84,7 @@ export class PaperButtonsRow extends LitElement {
 
   _templates?: unknown[];
   _entities?: string[];
+  _unsubTemplates?: Promise<() => void>[];
 
   // convert an externally set config to the correct internal structure
   private _transformConfig(
@@ -98,7 +99,7 @@ export class PaperButtonsRow extends LitElement {
       throw new Error("At least one button required.");
 
     // deep copy config
-    config = JSON.parse(JSON.stringify(config));
+    config = structuredClone(config);
 
     // ensure we always have 1 row
     if (config.buttons.every((item) => !Array.isArray(item))) {
@@ -177,39 +178,47 @@ export class PaperButtonsRow extends LitElement {
   }
 
   setConfig(config: ExternalPaperButtonRowConfig) {
-    this._config = this._transformConfig(config);
+    this._unsubscribeTemplates();
     if (!this.hass) {
       this.hass = hass() as HomeAssistant;
     }
     this._entities = [];
     this._templates = [];
+    this._unsubTemplates = [];
 
-    // fix config.
-    this._config.buttons = this._config.buttons.map((row) => {
-      return row.map((config) => {
-        config = handleButtonPreset(config, this._config);
+    // Build the fully-prepared config first, then assign to `_config`
+    // once. The @property setter fires a single update with the final
+    // shape rather than two (one for the bare transform, one for the
+    // post-fix mutation of `_config.buttons`), avoiding a transient
+    // intermediate state where downstream consumers see a `_config`
+    // whose buttons have not yet been preset-merged or template-bound.
+    const transformed = this._transformConfig(config);
+    transformed.buttons = transformed.buttons.map((row) => {
+      return row.map((bConfig) => {
+        bConfig = handleButtonPreset(bConfig, transformed);
 
         // create list of entities to monitor for changes.
-        if (config.entity) {
-          this._entities?.push(config.entity);
+        if (bConfig.entity) {
+          this._entities?.push(bConfig.entity);
         }
 
         // subscribe template options
         for (const key of TEMPLATE_OPTIONS) {
-          subscribeTemplate.call(this, config, config, key);
+          subscribeTemplate.call(this, bConfig, bConfig, key);
         }
 
         // subscribe template styles
-        for (const styles of Object.values(config.styles)) {
+        for (const styles of Object.values(bConfig.styles)) {
           if (typeof styles === "object")
             for (const key of Object.keys(styles)) {
-              subscribeTemplate.call(this, config, styles, key);
+              subscribeTemplate.call(this, bConfig, styles, key);
             }
         }
 
-        return config;
+        return bConfig;
       });
     });
+    this._config = transformed;
   }
 
   render() {
@@ -538,5 +547,18 @@ export class PaperButtonsRow extends LitElement {
       );
     }
     return false;
+  }
+
+  override disconnectedCallback() {
+    super.disconnectedCallback();
+    this._unsubscribeTemplates();
+  }
+
+  private _unsubscribeTemplates() {
+    if (!this._unsubTemplates) return;
+    for (const promise of this._unsubTemplates) {
+      promise.then((unsub) => unsub()).catch(() => {});
+    }
+    this._unsubTemplates = undefined;
   }
 }
