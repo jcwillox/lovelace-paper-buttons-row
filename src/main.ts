@@ -179,7 +179,6 @@ export class PaperButtonsRow extends LitElement {
 
   setConfig(config: ExternalPaperButtonRowConfig) {
     this._unsubscribeTemplates();
-    this._config = this._transformConfig(config);
     if (!this.hass) {
       this.hass = hass() as HomeAssistant;
     }
@@ -187,32 +186,39 @@ export class PaperButtonsRow extends LitElement {
     this._templates = [];
     this._unsubTemplates = [];
 
-    // fix config.
-    this._config.buttons = this._config.buttons.map((row) => {
-      return row.map((config) => {
-        config = handleButtonPreset(config, this._config);
+    // Build the fully-prepared config first, then assign to `_config`
+    // once. The @property setter fires a single update with the final
+    // shape rather than two (one for the bare transform, one for the
+    // post-fix mutation of `_config.buttons`), avoiding a transient
+    // intermediate state where downstream consumers see a `_config`
+    // whose buttons have not yet been preset-merged or template-bound.
+    const transformed = this._transformConfig(config);
+    transformed.buttons = transformed.buttons.map((row) => {
+      return row.map((bConfig) => {
+        bConfig = handleButtonPreset(bConfig, transformed);
 
         // create list of entities to monitor for changes.
-        if (config.entity) {
-          this._entities?.push(config.entity);
+        if (bConfig.entity) {
+          this._entities?.push(bConfig.entity);
         }
 
         // subscribe template options
         for (const key of TEMPLATE_OPTIONS) {
-          subscribeTemplate.call(this, config, config, key);
+          subscribeTemplate.call(this, bConfig, bConfig, key);
         }
 
         // subscribe template styles
-        for (const styles of Object.values(config.styles)) {
+        for (const styles of Object.values(bConfig.styles)) {
           if (typeof styles === "object")
             for (const key of Object.keys(styles)) {
-              subscribeTemplate.call(this, config, styles, key);
+              subscribeTemplate.call(this, bConfig, styles, key);
             }
         }
 
-        return config;
+        return bConfig;
       });
     });
+    this._config = transformed;
   }
 
   render() {
