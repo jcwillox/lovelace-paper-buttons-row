@@ -21,6 +21,10 @@ type FirstUpdatedFn = (
 export function createModule(element: string, firstUpdated: FirstUpdatedFn) {
   customElements.whenDefined(element).then(() => {
     const el = customElements.get(element) as CustomElementConstructor;
+    const sentinel = `__paper_buttons_row_patched_${element}`;
+    if ((el.prototype as Record<string, unknown>)[sentinel]) return;
+    (el.prototype as Record<string, unknown>)[sentinel] = true;
+
     const oFirstUpdated = el.prototype.firstUpdated;
 
     el.prototype.firstUpdated = function (changedProperties) {
