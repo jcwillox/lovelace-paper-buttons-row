@@ -59,7 +59,7 @@ export function subscribeTemplate(this: PaperButtonsRow, config, object, key) {
       null,
       (res) => {
         object[key] = res;
-        this.requestUpdate();
+        this.requestUpdate("_config", null);
       },
       {
         template: option,
