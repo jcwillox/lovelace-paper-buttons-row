@@ -18,7 +18,7 @@ jobs:
     name: "HACS"
     steps:
       - name: "Checkout the repository"
-        uses: actions/checkout@v4.2.2
+        uses: actions/checkout@v6.0.3
 
       - name: "Validate HACS"
         uses: hacs/action@main
