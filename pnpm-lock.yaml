@@ -10,7 +10,7 @@ importers:
     dependencies:
       card-tools:
         specifier: github:thomasloven/lovelace-card-tools#477f3d4
-        version: https://codeload.github.com/thomasloven/lovelace-card-tools/tar.gz/477f3d4
+        version: https://codeload.github.com/thomasloven/lovelace-card-tools/tar.gz/477f3d4eeb5c70cab047d418d19afb6b0f07bf49
       custom-card-helpers:
         specifier: 1.9.0
         version: 1.9.0
@@ -21,21 +21,21 @@ importers:
         specifier: 3.1.3
         version: 3.1.3
       home-assistant-js-websocket:
-        specifier: 9.5.0
-        version: 9.5.0
+        specifier: 9.6.0
+        version: 9.6.0
       lit:
         specifier: 2.8.0
         version: 2.8.0
       vite:
         specifier: 6.1.6
-        version: 6.1.6(@types/node@22.17.0)(yaml@2.8.0)
+        version: 6.1.6(@types/node@22.20.1)(yaml@2.8.0)
     devDependencies:
       '@biomejs/biome':
-        specifier: 2.1.3
-        version: 2.1.3
+        specifier: 2.5.11
+        version: 2.5.11
       '@types/node':
-        specifier: 22.17.0
-        version: 22.17.0
+        specifier: 22.20.1
+        version: 22.20.1
       husky:
         specifier: 9.1.7
         version: 9.1.7
@@ -43,63 +43,67 @@ importers:
         specifier: 15.5.2
         version: 15.5.2
       typescript:
-        specifier: 5.8.3
-        version: 5.8.3
+        specifier: 5.9.3
+        version: 5.9.3
       vite-plugin-compression:
         specifier: 0.5.1
-        version: 0.5.1(vite@6.1.6(@types/node@22.17.0)(yaml@2.8.0))
+        version: 0.5.1(vite@6.1.6(@types/node@22.20.1)(yaml@2.8.0))
 
 packages:
 
-  '@biomejs/biome@2.1.3':
-    resolution: {integrity: sha512-KE/tegvJIxTkl7gJbGWSgun7G6X/n2M6C35COT6ctYrAy7SiPyNvi6JtoQERVK/VRbttZfgGq96j2bFmhmnH4w==}
+  '@biomejs/biome@2.5.11':
+    resolution: {integrity: sha512-Tj0dnkLPdW0ASjHfj2D/ZkkvPU2wrFmnE1jWTD2xzV1ycapV1DutbYXk4NDnR3rYTi1ZCbNFD4G2gRMEY65WaA==}
     engines: {node: '>=14.21.3'}
     hasBin: true
 
-  '@biomejs/cli-darwin-arm64@2.1.3':
-    resolution: {integrity: sha512-LFLkSWRoSGS1wVUD/BE6Nlt2dSn0ulH3XImzg2O/36BoToJHKXjSxzPEMAqT9QvwVtk7/9AQhZpTneERU9qaXA==}
+  '@biomejs/cli-darwin-arm64@2.5.11':
+    resolution: {integrity: sha512-6SGZxoKbXvUjMn1t6A98HqWISPnGNbYs0R/Rt2JarmXBSev+lva4QxUMWEBX9lX1Wo1XTJ78uk5xVDtG58SRZg==}
     engines: {node: '>=14.21.3'}
     cpu: [arm64]
     os: [darwin]
 
-  '@biomejs/cli-darwin-x64@2.1.3':
-    resolution: {integrity: sha512-Q/4OTw8P9No9QeowyxswcWdm0n2MsdCwWcc5NcKQQvzwPjwuPdf8dpPPf4r+x0RWKBtl1FLiAUtJvBlri6DnYw==}
+  '@biomejs/cli-darwin-x64@2.5.11':
+    resolution: {integrity: sha512-nYkXY7tLBEgnGbYapDKAyKzgt44ZEyG+AKalvTXtCWKYgepI9dw327q+cVgedxm+Udi1ZzHKUyZrIusHi/KQbw==}
     engines: {node: '>=14.21.3'}
     cpu: [x64]
     os: [darwin]
 
-  '@biomejs/cli-linux-arm64-musl@2.1.3':
-    resolution: {integrity: sha512-KXouFSBnoxAWZYDQrnNRzZBbt5s9UJkIm40hdvSL9mBxSSoxRFQJbtg1hP3aa8A2SnXyQHxQfpiVeJlczZt76w==}
+  '@biomejs/cli-linux-arm64-musl@2.5.11':
+    resolution: {integrity: sha512-qhyZUMyCbWYFV2bAwRNVvfMVZ+hv7WYl6mossGrxC+uiQQXhvsuWWU8zz6jYX0mChZd9MgQZbm4vozTmG/5iGw==}
     engines: {node: '>=14.21.3'}
     cpu: [arm64]
     os: [linux]
+    libc: [musl]
 
-  '@biomejs/cli-linux-arm64@2.1.3':
-    resolution: {integrity: sha512-2hS6LgylRqMFmAZCOFwYrf77QMdUwJp49oe8PX/O8+P2yKZMSpyQTf3Eo5ewnsMFUEmYbPOskafdV1ds1MZMJA==}
+  '@biomejs/cli-linux-arm64@2.5.11':
+    resolution: {integrity: sha512-3PVLSTD9RR73rvVPt5G3T1gc+ycggWEGfTD7RvzzbtcDPD27NxgxBbAFfpm7DXJKW6VLHWE1lLMGvFt2Qxjcow==}
     engines: {node: '>=14.21.3'}
     cpu: [arm64]
     os: [linux]
+    libc: [glibc]
 
-  '@biomejs/cli-linux-x64-musl@2.1.3':
-    resolution: {integrity: sha512-KaLAxnROouzIWtl6a0Y88r/4hW5oDUJTIqQorOTVQITaKQsKjZX4XCUmHIhdEk8zMnaiLZzRTAwk1yIAl+mIew==}
+  '@biomejs/cli-linux-x64-musl@2.5.11':
+    resolution: {integrity: sha512-oRRlrchG5EfrEL/EmtT1qUjSNHk3/5LGeZhQqADBBAJF1b1ET6964xEKe7aGlGARzDfza8H/seEsFJl7S6Ql9w==}
     engines: {node: '>=14.21.3'}
     cpu: [x64]
     os: [linux]
+    libc: [musl]
 
-  '@biomejs/cli-linux-x64@2.1.3':
-    resolution: {integrity: sha512-NxlSCBhLvQtWGagEztfAZ4WcE1AkMTntZV65ZvR+J9jp06+EtOYEBPQndA70ZGhHbEDG57bR6uNvqkd1WrEYVA==}
+  '@biomejs/cli-linux-x64@2.5.11':
+    resolution: {integrity: sha512-JOytptlsgM33B2MMFUg8iBrb4IKpbD5JnJrSeYiaFEeAj4vuXx0iQSQZ4qK7sqyMtfjZxxPdNdMZZVL4y/mFyA==}
     engines: {node: '>=14.21.3'}
     cpu: [x64]
     os: [linux]
+    libc: [glibc]
 
-  '@biomejs/cli-win32-arm64@2.1.3':
-    resolution: {integrity: sha512-V9CUZCtWH4u0YwyCYbQ3W5F4ZGPWp2C2TYcsiWFNNyRfmOW1j/TY/jAurl33SaRjgZPO5UUhGyr9m6BN9t84NQ==}
+  '@biomejs/cli-win32-arm64@2.5.11':
+    resolution: {integrity: sha512-e49E6K9hzH/ohJNx8Y26mY8HaV4I4ZViIeoqhKsmoXLKHhQnMeBAVqCgsGf2Wa3lXlS7RkporDXMHHWkzvZzFw==}
     engines: {node: '>=14.21.3'}
     cpu: [arm64]
     os: [win32]
 
-  '@biomejs/cli-win32-x64@2.1.3':
-    resolution: {integrity: sha512-dxy599q6lgp8ANPpR8sDMscwdp9oOumEsVXuVCVT9N2vAho8uYXlCz53JhxX6LtJOXaE73qzgkGQ7QqvFlMC0g==}
+  '@biomejs/cli-win32-x64@2.5.11':
+    resolution: {integrity: sha512-QSQr/KjOgXA7OzXJUWS+oguKyAZ3Q0l/lnlDGbu397eKo83atuWUjBPJrsqbKNF6CARGw8XXJLGzpHC8Ryhd4Q==}
     engines: {node: '>=14.21.3'}
     cpu: [x64]
     os: [win32]
@@ -313,56 +317,67 @@ packages:
     resolution: {integrity: sha512-EtP8aquZ0xQg0ETFcxUbU71MZlHaw9MChwrQzatiE8U/bvi5uv/oChExXC4mWhjiqK7azGJBqU0tt5H123SzVA==}
     cpu: [arm]
     os: [linux]
+    libc: [glibc]
 
   '@rollup/rollup-linux-arm-musleabihf@4.46.2':
     resolution: {integrity: sha512-qO7F7U3u1nfxYRPM8HqFtLd+raev2K137dsV08q/LRKRLEc7RsiDWihUnrINdsWQxPR9jqZ8DIIZ1zJJAm5PjQ==}
     cpu: [arm]
     os: [linux]
+    libc: [musl]
 
   '@rollup/rollup-linux-arm64-gnu@4.46.2':
     resolution: {integrity: sha512-3dRaqLfcOXYsfvw5xMrxAk9Lb1f395gkoBYzSFcc/scgRFptRXL9DOaDpMiehf9CO8ZDRJW2z45b6fpU5nwjng==}
     cpu: [arm64]
     os: [linux]
+    libc: [glibc]
 
   '@rollup/rollup-linux-arm64-musl@4.46.2':
     resolution: {integrity: sha512-fhHFTutA7SM+IrR6lIfiHskxmpmPTJUXpWIsBXpeEwNgZzZZSg/q4i6FU4J8qOGyJ0TR+wXBwx/L7Ho9z0+uDg==}
     cpu: [arm64]
     os: [linux]
+    libc: [musl]
 
   '@rollup/rollup-linux-loongarch64-gnu@4.46.2':
     resolution: {integrity: sha512-i7wfGFXu8x4+FRqPymzjD+Hyav8l95UIZ773j7J7zRYc3Xsxy2wIn4x+llpunexXe6laaO72iEjeeGyUFmjKeA==}
     cpu: [loong64]
     os: [linux]
+    libc: [glibc]
 
   '@rollup/rollup-linux-ppc64-gnu@4.46.2':
     resolution: {integrity: sha512-B/l0dFcHVUnqcGZWKcWBSV2PF01YUt0Rvlurci5P+neqY/yMKchGU8ullZvIv5e8Y1C6wOn+U03mrDylP5q9Yw==}
     cpu: [ppc64]
     os: [linux]
+    libc: [glibc]
 
   '@rollup/rollup-linux-riscv64-gnu@4.46.2':
     resolution: {integrity: sha512-32k4ENb5ygtkMwPMucAb8MtV8olkPT03oiTxJbgkJa7lJ7dZMr0GCFJlyvy+K8iq7F/iuOr41ZdUHaOiqyR3iQ==}
     cpu: [riscv64]
     os: [linux]
+    libc: [glibc]
 
   '@rollup/rollup-linux-riscv64-musl@4.46.2':
     resolution: {integrity: sha512-t5B2loThlFEauloaQkZg9gxV05BYeITLvLkWOkRXogP4qHXLkWSbSHKM9S6H1schf/0YGP/qNKtiISlxvfmmZw==}
     cpu: [riscv64]
     os: [linux]
+    libc: [musl]
 
   '@rollup/rollup-linux-s390x-gnu@4.46.2':
     resolution: {integrity: sha512-YKjekwTEKgbB7n17gmODSmJVUIvj8CX7q5442/CK80L8nqOUbMtf8b01QkG3jOqyr1rotrAnW6B/qiHwfcuWQA==}
     cpu: [s390x]
     os: [linux]
+    libc: [glibc]
 
   '@rollup/rollup-linux-x64-gnu@4.46.2':
     resolution: {integrity: sha512-Jj5a9RUoe5ra+MEyERkDKLwTXVu6s3aACP51nkfnK9wJTraCC8IMe3snOfALkrjTYd2G1ViE1hICj0fZ7ALBPA==}
     cpu: [x64]
     os: [linux]
+    libc: [glibc]
 
   '@rollup/rollup-linux-x64-musl@4.46.2':
     resolution: {integrity: sha512-7kX69DIrBeD7yNp4A5b81izs8BqoZkCIaxQaOpumcJ1S/kmqNFjPhDu1LHeVXv0SexfHQv5cqHsxLOjETuqDuA==}
     cpu: [x64]
     os: [linux]
+    libc: [musl]
 
   '@rollup/rollup-win32-arm64-msvc@4.46.2':
     resolution: {integrity: sha512-wiJWMIpeaak/jsbaq2HMh/rzZxHVW1rU6coyeNNpMwk5isiPjSTx0a4YLSlYDwBH/WBvLz+EtsNqQScZTLJy3g==}
@@ -382,8 +397,8 @@ packages:
   '@types/estree@1.0.8':
     resolution: {integrity: sha512-dWHzHa2WqEXI/O1E9OjrocMTKJl2mSrEolh1Iomrv6U+JuNwaHXsXx9bLu5gG7BUWFIN0skIQJQ/L1rIex4X6w==}
 
-  '@types/node@22.17.0':
-    resolution: {integrity: sha512-bbAKTCqX5aNVryi7qXVMi+OkB3w/OyblodicMbvE38blyAz7GxXf6XYhklokijuPwwVg9sDLKRxt0ZHXQwZVfQ==}
+  '@types/node@22.20.1':
+    resolution: {integrity: sha512-EANqOCF9QFyra+4pfxUcX9STKJpCLjMbObVzljIJomAWSnuSIEAvyzEU53GaajbXJEgdh0iEcPL+DGvpUd4k1Q==}
 
   '@types/trusted-types@2.0.7':
     resolution: {integrity: sha512-ScaPdn1dQczgbl0QFTeTOmVHFULt394XJgOQNoyVhZ6r2vLnMLJfBPd53SB52T/3G36VI1/g2MZaX0cwDuXsfw==}
@@ -408,8 +423,8 @@ packages:
     resolution: {integrity: sha512-yQbXgO/OSZVD2IsiLlro+7Hf6Q18EJrKSEsdoMzKePKXct3gvD8oLcOQdIzGupr5Fj+EDe8gO/lxc1BzfMpxvA==}
     engines: {node: '>=8'}
 
-  card-tools@https://codeload.github.com/thomasloven/lovelace-card-tools/tar.gz/477f3d4:
-    resolution: {tarball: https://codeload.github.com/thomasloven/lovelace-card-tools/tar.gz/477f3d4}
+  card-tools@https://codeload.github.com/thomasloven/lovelace-card-tools/tar.gz/477f3d4eeb5c70cab047d418d19afb6b0f07bf49:
+    resolution: {gitHosted: true, integrity: sha512-WZs9ppkc21myeU+I/UvSWtmig43d+qY9UHJXRoa6GqlKPq2DSnvXUurlEe/8fhv8zkx+5hADH0m1QP5pC6wAaA==, tarball: https://codeload.github.com/thomasloven/lovelace-card-tools/tar.gz/477f3d4eeb5c70cab047d418d19afb6b0f07bf49}
     version: 2.1.2
 
   chalk@4.1.2:
@@ -519,8 +534,8 @@ packages:
   home-assistant-js-websocket@6.1.1:
     resolution: {integrity: sha512-TnZFzF4mn5F/v0XKUTK2GMQXrn/+eQpgaSDSELl6U0HSwSbFwRhGWLz330YT+hiKMspDflamsye//RPL+zwhDw==}
 
-  home-assistant-js-websocket@9.5.0:
-    resolution: {integrity: sha512-gCBX0ulIPW3o5EhYxyNKgztBwNIs7u4hypZ+rcWir65wjLKL3b5uDx1jzU7RceyuANxvVKwBVLNujBeFohjnUw==}
+  home-assistant-js-websocket@9.6.0:
+    resolution: {integrity: sha512-TK8HWW6UjCsUdjIBQRB2sBbEya0VniOBFqFjgqSznJiB7YriNgN8jghyThxOkgxwrnt2eN6oWoZMCTSp1o7H+w==}
 
   human-signals@5.0.0:
     resolution: {integrity: sha512-AXcZb6vzzrFAUE61HnN4mpLqd/cSIwNQjtNWR0euPm6y0iqx3G4gOXaIDdtdDwZmhwe82LA6+zinmW4UBWVePQ==}
@@ -717,8 +732,8 @@ packages:
     engines: {node: '>=4.2.0'}
     hasBin: true
 
-  typescript@5.8.3:
-    resolution: {integrity: sha512-p1diW6TqL9L07nNxvRMM7hMMw4c5XOo/1ibL4aAIGmSAt9slTE1Xgw5KWuof2uTOvCg9BY7ZRi+GaF+7sfgPeQ==}
+  typescript@5.9.3:
+    resolution: {integrity: sha512-jl1vZzPDinLr9eUt3J/t7V6FgNEw9QjvBPdysz9KfQDD41fQrC2Y4vKQdiaUpFT4bXlb1RHhLpp8wtm6M5TgSw==}
     engines: {node: '>=14.17'}
     hasBin: true
 
@@ -790,39 +805,39 @@ packages:
 
 snapshots:
 
-  '@biomejs/biome@2.1.3':
+  '@biomejs/biome@2.5.11':
     optionalDependencies:
-      '@biomejs/cli-darwin-arm64': 2.1.3
-      '@biomejs/cli-darwin-x64': 2.1.3
-      '@biomejs/cli-linux-arm64': 2.1.3
-      '@biomejs/cli-linux-arm64-musl': 2.1.3
-      '@biomejs/cli-linux-x64': 2.1.3
-      '@biomejs/cli-linux-x64-musl': 2.1.3
-      '@biomejs/cli-win32-arm64': 2.1.3
-      '@biomejs/cli-win32-x64': 2.1.3
+      '@biomejs/cli-darwin-arm64': 2.5.11
+      '@biomejs/cli-darwin-x64': 2.5.11
+      '@biomejs/cli-linux-arm64': 2.5.11
+      '@biomejs/cli-linux-arm64-musl': 2.5.11
+      '@biomejs/cli-linux-x64': 2.5.11
+      '@biomejs/cli-linux-x64-musl': 2.5.11
+      '@biomejs/cli-win32-arm64': 2.5.11
+      '@biomejs/cli-win32-x64': 2.5.11
 
-  '@biomejs/cli-darwin-arm64@2.1.3':
+  '@biomejs/cli-darwin-arm64@2.5.11':
     optional: true
 
-  '@biomejs/cli-darwin-x64@2.1.3':
+  '@biomejs/cli-darwin-x64@2.5.11':
     optional: true
 
-  '@biomejs/cli-linux-arm64-musl@2.1.3':
+  '@biomejs/cli-linux-arm64-musl@2.5.11':
     optional: true
 
-  '@biomejs/cli-linux-arm64@2.1.3':
+  '@biomejs/cli-linux-arm64@2.5.11':
     optional: true
 
-  '@biomejs/cli-linux-x64-musl@2.1.3':
+  '@biomejs/cli-linux-x64-musl@2.5.11':
     optional: true
 
-  '@biomejs/cli-linux-x64@2.1.3':
+  '@biomejs/cli-linux-x64@2.5.11':
     optional: true
 
-  '@biomejs/cli-win32-arm64@2.1.3':
+  '@biomejs/cli-win32-arm64@2.5.11':
     optional: true
 
-  '@biomejs/cli-win32-x64@2.1.3':
+  '@biomejs/cli-win32-x64@2.5.11':
     optional: true
 
   '@esbuild/aix-ppc64@0.24.2':
@@ -996,7 +1011,7 @@ snapshots:
 
   '@types/estree@1.0.8': {}
 
-  '@types/node@22.17.0':
+  '@types/node@22.20.1':
     dependencies:
       undici-types: 6.21.0
 
@@ -1018,7 +1033,7 @@ snapshots:
     dependencies:
       fill-range: 7.1.1
 
-  card-tools@https://codeload.github.com/thomasloven/lovelace-card-tools/tar.gz/477f3d4: {}
+  card-tools@https://codeload.github.com/thomasloven/lovelace-card-tools/tar.gz/477f3d4eeb5c70cab047d418d19afb6b0f07bf49: {}
 
   chalk@4.1.2:
     dependencies:
@@ -1141,7 +1156,7 @@ snapshots:
 
   home-assistant-js-websocket@6.1.1: {}
 
-  home-assistant-js-websocket@9.5.0: {}
+  home-assistant-js-websocket@9.6.0: {}
 
   human-signals@5.0.0: {}
 
@@ -1350,28 +1365,28 @@ snapshots:
 
   typescript@4.9.5: {}
 
-  typescript@5.8.3: {}
+  typescript@5.9.3: {}
 
   undici-types@6.21.0: {}
 
   universalify@2.0.1: {}
 
-  vite-plugin-compression@0.5.1(vite@6.1.6(@types/node@22.17.0)(yaml@2.8.0)):
+  vite-plugin-compression@0.5.1(vite@6.1.6(@types/node@22.20.1)(yaml@2.8.0)):
     dependencies:
       chalk: 4.1.2
       debug: 4.4.1
       fs-extra: 10.1.0
-      vite: 6.1.6(@types/node@22.17.0)(yaml@2.8.0)
+      vite: 6.1.6(@types/node@22.20.1)(yaml@2.8.0)
     transitivePeerDependencies:
       - supports-color
 
-  vite@6.1.6(@types/node@22.17.0)(yaml@2.8.0):
+  vite@6.1.6(@types/node@22.20.1)(yaml@2.8.0):
     dependencies:
       esbuild: 0.24.2
       postcss: 8.5.6
       rollup: 4.46.2
     optionalDependencies:
-      '@types/node': 22.17.0
+      '@types/node': 22.20.1
       fsevents: 2.3.3
       yaml: 2.8.0
 
