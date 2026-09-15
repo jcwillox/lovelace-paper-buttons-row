@@ -348,7 +348,7 @@ export class PaperButtonsRow extends LitElement {
     return config.name !== false && (config.name || config.entity)
       ? html`
         <span style="${styleMap(style)}">
-            ${config.name || computeStateName(stateObj)}
+            ${config.name || computeStateName(this.hass, stateObj)}
           </span>
       `
       : "";
