@@ -51,7 +51,8 @@ createModule("hui-generic-entity-row", function () {
     let el = this.shadowRoot.querySelector<HTMLElement>("slot");
     if (!el) return;
 
-    if (el.parentElement) {
+    // Modern entity rows place the controls slot directly inside .row.
+    if (el.parentElement && !el.parentElement.classList.contains("row")) {
       if (el.parentElement.parentElement) {
         if (
           el.parentElement.classList.contains("state") &&
